@@ -80,16 +80,6 @@ Tracking nutrition is essential for health, but most apps require tedious manual
 
 ---
 
-## 🤝 Contributors
-
-- **Manon Cesbron Darnaud** (Proposal & Progress Report Part I)
-- **Mathis Richard** (Progress Report Part II)
-- **Arthur Margeat** (Progress Report Part III)
-
-All contributors worked on the implementation notebooks independently to ensure a deep understanding of each module (auto-regressive transformers, masked models, multimodal models).
-
----
-
 ## ⚠️ Limitations & Risks
 
 - Misclassification in complex/mixed dishes
