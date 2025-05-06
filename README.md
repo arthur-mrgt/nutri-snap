@@ -14,11 +14,6 @@ Tracking nutrition is essential for health, but most apps require tedious manual
 - Explore the impact of additional modalities (e.g., text) on model performance.
 - Achieve fast and accurate estimations to encourage healthy eating habits.
 
-## Research Questions
-
-1. How accurately can a multimodal model estimate a meal’s nutritional content?
-2. How do additional modalities (text, depth) improve estimation quality?
-
 ## Methodology
 
 ### Datasets
@@ -53,24 +48,6 @@ Tracking nutrition is essential for health, but most apps require tedious manual
 - Span Masking for better training robustness
 - (Optional) Classifier-Free Guidance & Optimizer Variants
 - (Optional) Speed Run for real-time use cases
-
-## Timeline Overview
-
-| Week | Milestone |
-|------|-----------|
-| 10   | Dataset setup and nano4M pipeline initialization |
-| 11   | Start joint fine-tuning and initial results |
-| 12   | Integrate text modality, apply Span Masking |
-| 13   | Final model tuning and validation |
-| 14   | Evaluation, documentation, and reporting |
-
-## Limitations & Risks
-
-- Misclassification in complex/mixed dishes
-- Visual-only estimation limitations
-- Domain shift between datasets
-- Dataset bias and privacy concerns
-- Risk of reinforcing disordered eating habits
 
 ## References
 
