@@ -77,10 +77,4 @@ Tracking nutrition is essential for health, but most apps require tedious manual
 1. H. Nogay et al., “Image-based food groups and portion prediction,” *Food Science Wiley*, 2025. [DOI](https://ift.onlinelibrary.wiley.com/doi/10.1111/1750-3841.70116)
 2. F. Konstantakopoulos et al., “Food weight estimation with boosting algorithms,” *Scientific Reports*, 2023. [DOI](https://doi.org/10.1038/s41598-023-47885-0)
 
-## Contact
-
-For questions or contributions, feel free to open an issue or submit a pull request!
-
----
-
 This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/
