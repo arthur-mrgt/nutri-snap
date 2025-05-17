@@ -1,0 +1,148 @@
+"""
+Utilities for parsing Nutrition5k dataset files.
+"""
+import os
+import csv
+import logging
+from . import config
+from .common_utils import read_text_file_lines
+
+def get_dish_ids_and_splits():
+    """
+    Loads all dish IDs and determines their train/test split.
+    Returns: A dictionary mapping dish_id to its split ('train' or 'test').
+    """
+    all_dish_ids_path = os.path.join(config.N5K_SPLITS_DIR, "..", "dish_ids_all.txt") # one level up from splits
+    train_ids_path = os.path.join(config.N5K_SPLITS_DIR, "rgb_train_ids.txt")
+    test_ids_path = os.path.join(config.N5K_SPLITS_DIR, "rgb_test_ids.txt")
+
+    all_ids = set(read_text_file_lines(all_dish_ids_path))
+    train_ids = set(read_text_file_lines(train_ids_path))
+    test_ids = set(read_text_file_lines(test_ids_path))
+
+    dish_splits = {}
+    for dish_id in all_ids:
+        if dish_id in train_ids:
+            dish_splits[dish_id] = "train"
+        elif dish_id in test_ids:
+            dish_splits[dish_id] = "test"
+        else:
+            # Fallback if not in specific rgb lists, could assign to train or skip
+            logging.warning(f"Dish ID {dish_id} not found in train/test RGB splits. Assigning to 'train' by default.")
+            dish_splits[dish_id] = "train"
+            
+    if not all_ids:
+        logging.error(f"No dish IDs found. Check path: {all_dish_ids_path}")
+
+    return dish_splits
+
+def parse_dish_metadata_csv(dish_id):
+    """
+    Parses the dish_metadata_cafeX.csv file to retrieve nutritional information for a specific dish.
+    Nutrition5k has two main metadata files, so we check both.
+
+    Args:
+        dish_id (str): The ID of the dish (e.g., "dish_1556572657").
+
+    Returns:
+        dict: A dictionary containing dish totals and a list of ingredients, 
+              or None if the dish_id is not found or an error occurs.
+              Format:
+              {
+                  "dish_total_calories_kcal": float,
+                  "dish_total_fat_g": float,
+                  "dish_total_carbs_g": float,
+                  "dish_total_protein_g": float,
+                  "dish_total_mass_g": float, # Added for completeness
+                  "ingredients": [
+                      {
+                          "ingredient_name": str,
+                          "weight_g": float,
+                          "calories_kcal": float,
+                          "fat_g": float,
+                          "carbs_g": float,
+                          "protein_g": float
+                      }, ...
+                  ]
+              }
+    """
+    # Determine which metadata file to search (cafe1 or cafe2)
+    # This might require a lookup or trying both, as Nutrition5k doesn't explicitly map dish_id to cafe file directly.
+    # For now, we try both.
+    metadata_files = [
+        os.path.join(config.N5K_METADATA_DIR, "dish_metadata_cafe1.csv"),
+        os.path.join(config.N5K_METADATA_DIR, "dish_metadata_cafe2.csv")
+    ]
+
+    dish_data = None
+    for file_path in metadata_files:
+        if not os.path.exists(file_path):
+            logging.warning(f"Metadata file not found: {file_path}")
+            continue
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                reader = csv.reader(f)
+                for row in reader:
+                    if not row or row[0] != dish_id:
+                        continue
+                    
+                    # Found the dish
+                    dish_data = {
+                        "dish_total_calories_kcal": float(row[1]),
+                        "dish_total_mass_g": float(row[2]),
+                        "dish_total_fat_g": float(row[3]),
+                        "dish_total_carbs_g": float(row[4]),
+                        "dish_total_protein_g": float(row[5]),
+                        "ingredients": []
+                    }
+                    
+                    num_fixed_cols = 6
+                    if (len(row) - num_fixed_cols) % 7 != 0:
+                        logging.error(f"Malformed ingredient data for dish {dish_id} in {file_path}. Row length: {len(row)}")
+                        return None # Or handle error more gracefully
+
+                    num_ingredients = (len(row) - num_fixed_cols) // 7
+                    for i in range(num_ingredients):
+                        base_idx = num_fixed_cols + (i * 7)
+                        ingredient_info = {
+                            # row[base_idx] is ingredient_id, not used in target format
+                            "ingredient_name": row[base_idx + 1],
+                            "weight_g": float(row[base_idx + 2]),
+                            "calories_kcal": float(row[base_idx + 3]),
+                            "fat_g": float(row[base_idx + 4]),
+                            "carbs_g": float(row[base_idx + 5]),
+                            "protein_g": float(row[base_idx + 6])
+                        }
+                        dish_data["ingredients"].append(ingredient_info)
+                    return dish_data # Found and parsed
+        except Exception as e:
+            logging.error(f"Error parsing metadata file {file_path} for dish {dish_id}: {e}")
+            return None # Critical error during parsing of this file
+    
+    if dish_data is None:
+        logging.warning(f"Dish ID {dish_id} not found in any metadata CSVs.")
+    return dish_data
+
+# Example usage (for testing this module independently):
+if __name__ == '__main__':
+    # Test get_dish_ids_and_splits
+    # Ensure you have dummy files in expected locations if N5K_ROOT is not set for a real dataset
+    # For example, create dummy versions of dish_ids_all.txt, rgb_train_ids.txt, rgb_test_ids.txt
+    # in appropriate subdirectories of where this script might think N5K_ROOT is.
+    # This will likely fail if config.py cannot resolve N5K_SPLITS_DIR correctly without the full project structure.
+    
+    print("Testing get_dish_ids_and_splits...")
+    splits = get_dish_ids_and_splits()
+    print(f"Found {len(splits)} dishes. First 5: {list(splits.items())[:5]}")
+
+    # Test parse_dish_metadata_csv
+    # You would need actual or dummy dish_metadata_cafe1/2.csv files for this to work.
+    # And a valid dish_id from those files.
+    # Example: test_dish_id = "dish_1563207364" 
+    # metadata = parse_dish_metadata_csv(test_dish_id)
+    # if metadata:
+    #     print(f"\nSuccessfully parsed metadata for {test_dish_id}:")
+    #     print(json.dumps(metadata, indent=2))
+    # else:
+    #     print(f"\nCould not parse metadata for {test_dish_id}.")
+    pass
