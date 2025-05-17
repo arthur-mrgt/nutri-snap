@@ -5,7 +5,7 @@ Pipeline for each dish:
 1. Identify dish and its split (train/test).
 2. Create output directory: data/processed/<split>/<dish_id>/.
 3. Copy rgb.png and depth_color.png from Nutrition5k.
-4. Generate FoodSAM related modalities directly (semseg.png, masks.npy, sam_mask_label.txt):
+4. Generate FoodSAM related modalities directly:
    - Outputs to a temporary dish-specific directory (e.g., data/tmp_foodsam_outputs/<dish_id>/).
    - Key outputs: enhanced_mask.png, masks.npy, sam_mask_label.txt.
 5. Retrieve directly generated FoodSAM outputs:
