@@ -136,22 +136,33 @@ def generate_direct_foodsam_outputs(dish_id, rgb_image_path, temp_dish_output_di
 
         # --- C. Generate Semantic Prediction (pred_mask.png) ---
         logging.info(f"[{dish_id}] Generating semantic prediction...")
-        # semantic_predict tool directly calls init_segmentor and inference_segmentor
-        # We use the cached model. inference_segmentor expects a list of images or image paths.
         with torch.no_grad(): # Ensure no gradients for inference
-            semantic_result = inference_segmentor(semantic_model, rgb_image_path) # semantic_model is already MMDataParallel if on GPU
-        
-        # Use the save_result from FoodSAM_tools to save pred_mask.png (and avoid _vis.png)
-        # semantic_save_result args: img_path, result, color_list_path, win_name, show, wait_time, out_file, vis_save_name, mask_save_name
-        semantic_save_result(rgb_image_path, semantic_result, color_list_full_path, 
-                               out_file=temp_dish_output_dir, 
-                               vis_save_name=None, # Do not save visualization
-                               mask_save_name="pred_mask.png",
-                               show=False)
-        if not os.path.exists(pred_mask_png_path):
-            logging.error(f"[{dish_id}] Failed to generate {pred_mask_png_path}")
+            model_for_inference = semantic_model
+            if isinstance(semantic_model, MMDataParallel):
+                model_for_inference = semantic_model.module
+            semantic_result = inference_segmentor(model_for_inference, rgb_image_path)
+
+        if not semantic_result or len(semantic_result) == 0:
+            logging.error(f"[{dish_id}] Semantic inference failed or returned empty result for {rgb_image_path}.")
             return None
-        logging.info(f"[{dish_id}] Saved semantic prediction to {pred_mask_png_path}")
+
+        try:
+            # Directly save the raw semantic mask (class IDs)
+            # semantic_result[0] is the segmentation map
+            raw_semantic_mask = semantic_result[0].astype(np.uint8)
+            # pred_mask_png_path is defined earlier in the function as:
+            # os.path.join(temp_dish_output_dir, "pred_mask.png")
+            mmcv.imwrite(raw_semantic_mask, pred_mask_png_path)
+            logging.info(f"[{dish_id}] Saved raw semantic prediction to {pred_mask_png_path}")
+        except Exception as e_save:
+            logging.error(f"[{dish_id}] Failed to save semantic prediction {pred_mask_png_path}: {e_save}", exc_info=True)
+            return None
+
+        # Ensure the file was actually created
+        if not os.path.exists(pred_mask_png_path):
+            logging.error(f"[{dish_id}] {pred_mask_png_path} was not created after mmcv.imwrite call.")
+            return None
+        # logging.info(f"[{dish_id}] Saved semantic prediction to {pred_mask_png_path}") # This log is now covered above
 
         # --- D. Generate SAM Mask Labels (sam_mask_label.txt) ---
         # This uses masks.npy and pred_mask.png
