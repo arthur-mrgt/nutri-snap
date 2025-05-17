@@ -1,1 +1,4 @@
-data/raw/nutrition5k_dataset/ 
+data/raw/
+data/processed
+data/tmp_foodsamp_outputs
+external_libs/
