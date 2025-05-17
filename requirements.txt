@@ -1,0 +1,2 @@
+(base) PS C:\Users\arthu\Desktop\EPFL\BA6\AI Project\nutri-snap> cd external_libs
+(base) PS C:\Users\arthu\Desktop\EPFL\BA6\AI Project\nutri-snap\external_libs> git clone https://github.com/jamesjg/FoodSAM
