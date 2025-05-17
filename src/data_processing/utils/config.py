@@ -10,7 +10,7 @@ PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..
 
 # --- Input Nutrition5k Dataset Paths ---
 N5K_ROOT = os.path.join(PROJECT_ROOT, "data", "raw", "nutrition5k_dataset")
-N5K_IMAGERY_DIR = os.path.join(N5K_ROOT, "imagery")
+N5K_IMAGERY_DIR = os.path.join(N5K_ROOT, "imagery", "realsense_overhead")
 N5K_METADATA_DIR = os.path.join(N5K_ROOT, "metadata")
 N5K_SPLITS_DIR = os.path.join(N5K_ROOT, "dish_ids", "splits")
 
