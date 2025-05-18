@@ -1,0 +1,8802 @@
+{
+  "0": {
+    "foodsam_id": "0",
+    "foodsam_name": "background",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "0",
+        "n5k_name": "background"
+      },
+      {
+        "n5k_id": "423",
+        "n5k_name": "plate only"
+      }
+    ]
+  },
+  "1": {
+    "foodsam_id": "1",
+    "foodsam_name": "candy",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "387",
+        "n5k_name": "candies"
+      },
+      {
+        "n5k_id": "99",
+        "n5k_name": "marshmallows"
+      },
+      {
+        "n5k_id": "255",
+        "n5k_name": "nougat"
+      },
+      {
+        "n5k_id": "305",
+        "n5k_name": "fudge"
+      },
+      {
+        "n5k_id": "431",
+        "n5k_name": "licorice"
+      },
+      {
+        "n5k_id": "131",
+        "n5k_name": "dark chocolate"
+      },
+      {
+        "n5k_id": "324",
+        "n5k_name": "chocolate"
+      },
+      {
+        "n5k_id": "293",
+        "n5k_name": "sandwich cookies"
+      },
+      {
+        "n5k_id": "455",
+        "n5k_name": "cookies"
+      },
+      {
+        "n5k_id": "303",
+        "n5k_name": "chocolate chip cookies"
+      },
+      {
+        "n5k_id": "257",
+        "n5k_name": "brownies"
+      },
+      {
+        "n5k_id": "270",
+        "n5k_name": "cocoa"
+      },
+      {
+        "n5k_id": "151",
+        "n5k_name": "agave nectar"
+      },
+      {
+        "n5k_id": "328",
+        "n5k_name": "sugar"
+      },
+      {
+        "n5k_id": "460",
+        "n5k_name": "nectar"
+      },
+      {
+        "n5k_id": "154",
+        "n5k_name": "brown sugar"
+      },
+      {
+        "n5k_id": "67",
+        "n5k_name": "syrup"
+      },
+      {
+        "n5k_id": "452",
+        "n5k_name": "maple syrup"
+      },
+      {
+        "n5k_id": "359",
+        "n5k_name": "honey"
+      },
+      {
+        "n5k_id": "230",
+        "n5k_name": "frostings"
+      },
+      {
+        "n5k_id": "120",
+        "n5k_name": "gelatin"
+      },
+      {
+        "n5k_id": "494",
+        "n5k_name": "jams"
+      },
+      {
+        "n5k_id": "503",
+        "n5k_name": "applesauce"
+      },
+      {
+        "n5k_id": "447",
+        "n5k_name": "nutrition bars"
+      },
+      {
+        "n5k_id": "311",
+        "n5k_name": "granola bars"
+      }
+    ]
+  },
+  "2": {
+    "foodsam_id": "2",
+    "foodsam_name": "egg tart",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "139",
+        "n5k_name": "egg rolls"
+      },
+      {
+        "n5k_id": "179",
+        "n5k_name": "eggs"
+      },
+      {
+        "n5k_id": "300",
+        "n5k_name": "egg yolks"
+      },
+      {
+        "n5k_id": "128",
+        "n5k_name": "egg whites"
+      },
+      {
+        "n5k_id": "348",
+        "n5k_name": "egg salad"
+      },
+      {
+        "n5k_id": "248",
+        "n5k_name": "hard boiled eggs"
+      },
+      {
+        "n5k_id": "136",
+        "n5k_name": "poached eggs"
+      },
+      {
+        "n5k_id": "388",
+        "n5k_name": "fried eggs"
+      },
+      {
+        "n5k_id": "8",
+        "n5k_name": "scrambled eggs"
+      },
+      {
+        "n5k_id": "118",
+        "n5k_name": "eggnog"
+      },
+      {
+        "n5k_id": "279",
+        "n5k_name": "omelets"
+      },
+      {
+        "n5k_id": "178",
+        "n5k_name": "pies"
+      },
+      {
+        "n5k_id": "365",
+        "n5k_name": "quiche"
+      },
+      {
+        "n5k_id": "266",
+        "n5k_name": "pot pies"
+      },
+      {
+        "n5k_id": "127",
+        "n5k_name": "pastries"
+      },
+      {
+        "n5k_id": "239",
+        "n5k_name": "custard"
+      },
+      {
+        "n5k_id": "346",
+        "n5k_name": "turnover"
+      },
+      {
+        "n5k_id": "104",
+        "n5k_name": "strudels"
+      },
+      {
+        "n5k_id": "302",
+        "n5k_name": "pie crust"
+      },
+      {
+        "n5k_id": "280",
+        "n5k_name": "souffle"
+      },
+      {
+        "n5k_id": "175",
+        "n5k_name": "apple pie"
+      },
+      {
+        "n5k_id": "235",
+        "n5k_name": "pecan pie"
+      },
+      {
+        "n5k_id": "172",
+        "n5k_name": "cherry pie"
+      },
+      {
+        "n5k_id": "247",
+        "n5k_name": "blueberry pie"
+      },
+      {
+        "n5k_id": "486",
+        "n5k_name": "cakes"
+      }
+    ]
+  },
+  "3": {
+    "foodsam_id": "3",
+    "foodsam_name": "french fries",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "356",
+        "n5k_name": "french fries"
+      },
+      {
+        "n5k_id": "109",
+        "n5k_name": "french toast"
+      },
+      {
+        "n5k_id": "176",
+        "n5k_name": "french dressing"
+      },
+      {
+        "n5k_id": "5",
+        "n5k_name": "potatoes"
+      },
+      {
+        "n5k_id": "464",
+        "n5k_name": "baked potatoes"
+      },
+      {
+        "n5k_id": "254",
+        "n5k_name": "mashed potatoes"
+      },
+      {
+        "n5k_id": "437",
+        "n5k_name": "sweet potato"
+      },
+      {
+        "n5k_id": "433",
+        "n5k_name": "roasted potatoes"
+      },
+      {
+        "n5k_id": "15",
+        "n5k_name": "hash browns"
+      },
+      {
+        "n5k_id": "432",
+        "n5k_name": "red potatoes"
+      },
+      {
+        "n5k_id": "224",
+        "n5k_name": "potato salad"
+      },
+      {
+        "n5k_id": "61",
+        "n5k_name": "potato chips"
+      },
+      {
+        "n5k_id": "404",
+        "n5k_name": "potato skins"
+      },
+      {
+        "n5k_id": "333",
+        "n5k_name": "potato bread"
+      },
+      {
+        "n5k_id": "183",
+        "n5k_name": "chips"
+      },
+      {
+        "n5k_id": "207",
+        "n5k_name": "fried chicken"
+      },
+      {
+        "n5k_id": "194",
+        "n5k_name": "fried rice"
+      },
+      {
+        "n5k_id": "388",
+        "n5k_name": "fried eggs"
+      },
+      {
+        "n5k_id": "269",
+        "n5k_name": "onion rings"
+      },
+      {
+        "n5k_id": "509",
+        "n5k_name": "tempura"
+      },
+      {
+        "n5k_id": "369",
+        "n5k_name": "fritters"
+      },
+      {
+        "n5k_id": "251",
+        "n5k_name": "tortilla chips"
+      },
+      {
+        "n5k_id": "310",
+        "n5k_name": "corn chips"
+      },
+      {
+        "n5k_id": "103",
+        "n5k_name": "pretzels"
+      },
+      {
+        "n5k_id": "355",
+        "n5k_name": "crackers"
+      }
+    ]
+  },
+  "4": {
+    "foodsam_id": "4",
+    "foodsam_name": "chocolate",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "324",
+        "n5k_name": "chocolate"
+      },
+      {
+        "n5k_id": "131",
+        "n5k_name": "dark chocolate"
+      },
+      {
+        "n5k_id": "210",
+        "n5k_name": "chocolate milk"
+      },
+      {
+        "n5k_id": "276",
+        "n5k_name": "chocolate cake"
+      },
+      {
+        "n5k_id": "237",
+        "n5k_name": "hot chocolate"
+      },
+      {
+        "n5k_id": "303",
+        "n5k_name": "chocolate chip cookies"
+      },
+      {
+        "n5k_id": "270",
+        "n5k_name": "cocoa"
+      },
+      {
+        "n5k_id": "387",
+        "n5k_name": "candies"
+      },
+      {
+        "n5k_id": "305",
+        "n5k_name": "fudge"
+      },
+      {
+        "n5k_id": "257",
+        "n5k_name": "brownies"
+      },
+      {
+        "n5k_id": "255",
+        "n5k_name": "nougat"
+      },
+      {
+        "n5k_id": "455",
+        "n5k_name": "cookies"
+      },
+      {
+        "n5k_id": "230",
+        "n5k_name": "frostings"
+      },
+      {
+        "n5k_id": "99",
+        "n5k_name": "marshmallows"
+      },
+      {
+        "n5k_id": "431",
+        "n5k_name": "licorice"
+      },
+      {
+        "n5k_id": "293",
+        "n5k_name": "sandwich cookies"
+      },
+      {
+        "n5k_id": "263",
+        "n5k_name": "mousse"
+      },
+      {
+        "n5k_id": "272",
+        "n5k_name": "cupcakes"
+      },
+      {
+        "n5k_id": "486",
+        "n5k_name": "cakes"
+      },
+      {
+        "n5k_id": "191",
+        "n5k_name": "cheesecake"
+      },
+      {
+        "n5k_id": "188",
+        "n5k_name": "carrot cake"
+      },
+      {
+        "n5k_id": "362",
+        "n5k_name": "ice creams"
+      },
+      {
+        "n5k_id": "268",
+        "n5k_name": "soft serve ice creams"
+      }
+    ]
+  },
+  "5": {
+    "foodsam_id": "5",
+    "foodsam_name": "biscuit",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "134",
+        "n5k_name": "biscuits"
+      },
+      {
+        "n5k_id": "455",
+        "n5k_name": "cookies"
+      },
+      {
+        "n5k_id": "293",
+        "n5k_name": "sandwich cookies"
+      },
+      {
+        "n5k_id": "303",
+        "n5k_name": "chocolate chip cookies"
+      },
+      {
+        "n5k_id": "355",
+        "n5k_name": "crackers"
+      },
+      {
+        "n5k_id": "241",
+        "n5k_name": "scones"
+      },
+      {
+        "n5k_id": "195",
+        "n5k_name": "wafers"
+      },
+      {
+        "n5k_id": "19",
+        "n5k_name": "bread"
+      },
+      {
+        "n5k_id": "443",
+        "n5k_name": "crispbread"
+      },
+      {
+        "n5k_id": "250",
+        "n5k_name": "rolls"
+      },
+      {
+        "n5k_id": "206",
+        "n5k_name": "muffins"
+      },
+      {
+        "n5k_id": "301",
+        "n5k_name": "english muffins"
+      },
+      {
+        "n5k_id": "127",
+        "n5k_name": "pastries"
+      },
+      {
+        "n5k_id": "264",
+        "n5k_name": "bagels"
+      },
+      {
+        "n5k_id": "132",
+        "n5k_name": "croissants"
+      },
+      {
+        "n5k_id": "478",
+        "n5k_name": "sweet rolls"
+      },
+      {
+        "n5k_id": "198",
+        "n5k_name": "breadsticks"
+      },
+      {
+        "n5k_id": "400",
+        "n5k_name": "cornbread"
+      },
+      {
+        "n5k_id": "98",
+        "n5k_name": "multigrain bread"
+      },
+      {
+        "n5k_id": "287",
+        "n5k_name": "toast"
+      },
+      {
+        "n5k_id": "318",
+        "n5k_name": "flour"
+      },
+      {
+        "n5k_id": "174",
+        "n5k_name": "bread crumbs"
+      },
+      {
+        "n5k_id": "450",
+        "n5k_name": "buns"
+      },
+      {
+        "n5k_id": "334",
+        "n5k_name": "white bread"
+      },
+      {
+        "n5k_id": "104",
+        "n5k_name": "strudels"
+      },
+      {
+        "n5k_id": "459",
+        "n5k_name": "cereal bars"
+      }
+    ]
+  },
+  "6": {
+    "foodsam_id": "6",
+    "foodsam_name": "popcorn",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "258",
+        "n5k_name": "popcorn"
+      },
+      {
+        "n5k_id": "47",
+        "n5k_name": "corn"
+      },
+      {
+        "n5k_id": "205",
+        "n5k_name": "corn on the cob"
+      },
+      {
+        "n5k_id": "547",
+        "n5k_name": "corn nuts"
+      },
+      {
+        "n5k_id": "310",
+        "n5k_name": "corn chips"
+      },
+      {
+        "n5k_id": "228",
+        "n5k_name": "cornmeal"
+      },
+      {
+        "n5k_id": "400",
+        "n5k_name": "cornbread"
+      },
+      {
+        "n5k_id": "315",
+        "n5k_name": "corn dogs"
+      },
+      {
+        "n5k_id": "259",
+        "n5k_name": "corned beef"
+      },
+      {
+        "n5k_id": "544",
+        "n5k_name": "corn starch"
+      },
+      {
+        "n5k_id": "183",
+        "n5k_name": "chips"
+      },
+      {
+        "n5k_id": "61",
+        "n5k_name": "potato chips"
+      },
+      {
+        "n5k_id": "251",
+        "n5k_name": "tortilla chips"
+      },
+      {
+        "n5k_id": "103",
+        "n5k_name": "pretzels"
+      },
+      {
+        "n5k_id": "53",
+        "n5k_name": "nuts"
+      },
+      {
+        "n5k_id": "107",
+        "n5k_name": "mixed nuts"
+      },
+      {
+        "n5k_id": "214",
+        "n5k_name": "seeds"
+      },
+      {
+        "n5k_id": "355",
+        "n5k_name": "crackers"
+      },
+      {
+        "n5k_id": "77",
+        "n5k_name": "almonds"
+      },
+      {
+        "n5k_id": "336",
+        "n5k_name": "peanuts"
+      },
+      {
+        "n5k_id": "249",
+        "n5k_name": "cashews"
+      },
+      {
+        "n5k_id": "124",
+        "n5k_name": "walnuts"
+      },
+      {
+        "n5k_id": "82",
+        "n5k_name": "pecans"
+      },
+      {
+        "n5k_id": "415",
+        "n5k_name": "cereal"
+      },
+      {
+        "n5k_id": "274",
+        "n5k_name": "trail mix"
+      }
+    ]
+  },
+  "7": {
+    "foodsam_id": "7",
+    "foodsam_name": "pudding",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "304",
+        "n5k_name": "puddings"
+      },
+      {
+        "n5k_id": "239",
+        "n5k_name": "custard"
+      },
+      {
+        "n5k_id": "263",
+        "n5k_name": "mousse"
+      },
+      {
+        "n5k_id": "262",
+        "n5k_name": "yogurt"
+      },
+      {
+        "n5k_id": "182",
+        "n5k_name": "soy yogurt"
+      },
+      {
+        "n5k_id": "275",
+        "n5k_name": "frozen yogurt"
+      },
+      {
+        "n5k_id": "545",
+        "n5k_name": "greek yogurt"
+      },
+      {
+        "n5k_id": "120",
+        "n5k_name": "gelatin"
+      },
+      {
+        "n5k_id": "362",
+        "n5k_name": "ice creams"
+      },
+      {
+        "n5k_id": "268",
+        "n5k_name": "soft serve ice creams"
+      },
+      {
+        "n5k_id": "208",
+        "n5k_name": "ice cream cones"
+      },
+      {
+        "n5k_id": "480",
+        "n5k_name": "ice cream soda"
+      },
+      {
+        "n5k_id": "144",
+        "n5k_name": "sorbet"
+      },
+      {
+        "n5k_id": "406",
+        "n5k_name": "sherbet"
+      },
+      {
+        "n5k_id": "280",
+        "n5k_name": "souffle"
+      },
+      {
+        "n5k_id": "503",
+        "n5k_name": "applesauce"
+      },
+      {
+        "n5k_id": "341",
+        "n5k_name": "cream"
+      },
+      {
+        "n5k_id": "106",
+        "n5k_name": "half and half"
+      },
+      {
+        "n5k_id": "434",
+        "n5k_name": "sour cream"
+      },
+      {
+        "n5k_id": "495",
+        "n5k_name": "cream cheese"
+      },
+      {
+        "n5k_id": "191",
+        "n5k_name": "cheesecake"
+      },
+      {
+        "n5k_id": "1",
+        "n5k_name": "cottage cheese"
+      },
+      {
+        "n5k_id": "230",
+        "n5k_name": "frostings"
+      },
+      {
+        "n5k_id": "59",
+        "n5k_name": "oatmeal"
+      }
+    ]
+  },
+  "8": {
+    "foodsam_id": "8",
+    "foodsam_name": "ice cream",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "362",
+        "n5k_name": "ice creams"
+      },
+      {
+        "n5k_id": "268",
+        "n5k_name": "soft serve ice creams"
+      },
+      {
+        "n5k_id": "208",
+        "n5k_name": "ice cream cones"
+      },
+      {
+        "n5k_id": "480",
+        "n5k_name": "ice cream soda"
+      },
+      {
+        "n5k_id": "275",
+        "n5k_name": "frozen yogurt"
+      },
+      {
+        "n5k_id": "144",
+        "n5k_name": "sorbet"
+      },
+      {
+        "n5k_id": "406",
+        "n5k_name": "sherbet"
+      },
+      {
+        "n5k_id": "420",
+        "n5k_name": "ice pop"
+      },
+      {
+        "n5k_id": "239",
+        "n5k_name": "custard"
+      },
+      {
+        "n5k_id": "263",
+        "n5k_name": "mousse"
+      },
+      {
+        "n5k_id": "341",
+        "n5k_name": "cream"
+      },
+      {
+        "n5k_id": "296",
+        "n5k_name": "sundaes"
+      },
+      {
+        "n5k_id": "304",
+        "n5k_name": "puddings"
+      },
+      {
+        "n5k_id": "260",
+        "n5k_name": "iced tea"
+      },
+      {
+        "n5k_id": "181",
+        "n5k_name": "milk shakes"
+      },
+      {
+        "n5k_id": "234",
+        "n5k_name": "smoothies"
+      },
+      {
+        "n5k_id": "262",
+        "n5k_name": "yogurt"
+      },
+      {
+        "n5k_id": "106",
+        "n5k_name": "half and half"
+      },
+      {
+        "n5k_id": "191",
+        "n5k_name": "cheesecake"
+      },
+      {
+        "n5k_id": "434",
+        "n5k_name": "sour cream"
+      },
+      {
+        "n5k_id": "495",
+        "n5k_name": "cream cheese"
+      },
+      {
+        "n5k_id": "120",
+        "n5k_name": "gelatin"
+      },
+      {
+        "n5k_id": "502",
+        "n5k_name": "milk"
+      }
+    ]
+  },
+  "9": {
+    "foodsam_id": "9",
+    "foodsam_name": "cheese butter",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "52",
+        "n5k_name": "cheese"
+      },
+      {
+        "n5k_id": "441",
+        "n5k_name": "butter"
+      },
+      {
+        "n5k_id": "1",
+        "n5k_name": "cottage cheese"
+      },
+      {
+        "n5k_id": "290",
+        "n5k_name": "cheddar cheese"
+      },
+      {
+        "n5k_id": "243",
+        "n5k_name": "mozzarella cheese"
+      },
+      {
+        "n5k_id": "148",
+        "n5k_name": "parmesan cheese"
+      },
+      {
+        "n5k_id": "495",
+        "n5k_name": "cream cheese"
+      },
+      {
+        "n5k_id": "199",
+        "n5k_name": "swiss cheese"
+      },
+      {
+        "n5k_id": "35",
+        "n5k_name": "blue cheese"
+      },
+      {
+        "n5k_id": "319",
+        "n5k_name": "feta cheese"
+      },
+      {
+        "n5k_id": "295",
+        "n5k_name": "provolone cheese"
+      },
+      {
+        "n5k_id": "425",
+        "n5k_name": "goat cheese"
+      },
+      {
+        "n5k_id": "83",
+        "n5k_name": "muenster cheese"
+      },
+      {
+        "n5k_id": "171",
+        "n5k_name": "almond butter"
+      },
+      {
+        "n5k_id": "313",
+        "n5k_name": "peanut butter"
+      },
+      {
+        "n5k_id": "84",
+        "n5k_name": "brie cheese"
+      },
+      {
+        "n5k_id": "157",
+        "n5k_name": "colby cheese"
+      },
+      {
+        "n5k_id": "465",
+        "n5k_name": "american cheese"
+      },
+      {
+        "n5k_id": "286",
+        "n5k_name": "romano cheese"
+      },
+      {
+        "n5k_id": "381",
+        "n5k_name": "gouda cheese"
+      },
+      {
+        "n5k_id": "394",
+        "n5k_name": "gorgonzola cheese"
+      },
+      {
+        "n5k_id": "412",
+        "n5k_name": "havarti cheese"
+      },
+      {
+        "n5k_id": "468",
+        "n5k_name": "camembert cheese"
+      },
+      {
+        "n5k_id": "488",
+        "n5k_name": "mexican cheese"
+      },
+      {
+        "n5k_id": "553",
+        "n5k_name": "nut cheese"
+      },
+      {
+        "n5k_id": "395",
+        "n5k_name": "string cheese"
+      },
+      {
+        "n5k_id": "88",
+        "n5k_name": "margarine"
+      }
+    ]
+  },
+  "10": {
+    "foodsam_id": "10",
+    "foodsam_name": "cake",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "486",
+        "n5k_name": "cakes"
+      },
+      {
+        "n5k_id": "276",
+        "n5k_name": "chocolate cake"
+      },
+      {
+        "n5k_id": "191",
+        "n5k_name": "cheesecake"
+      },
+      {
+        "n5k_id": "188",
+        "n5k_name": "carrot cake"
+      },
+      {
+        "n5k_id": "272",
+        "n5k_name": "cupcakes"
+      },
+      {
+        "n5k_id": "454",
+        "n5k_name": "rice cakes"
+      },
+      {
+        "n5k_id": "178",
+        "n5k_name": "pies"
+      },
+      {
+        "n5k_id": "206",
+        "n5k_name": "muffins"
+      },
+      {
+        "n5k_id": "127",
+        "n5k_name": "pastries"
+      },
+      {
+        "n5k_id": "257",
+        "n5k_name": "brownies"
+      },
+      {
+        "n5k_id": "331",
+        "n5k_name": "pancakes"
+      },
+      {
+        "n5k_id": "241",
+        "n5k_name": "scones"
+      },
+      {
+        "n5k_id": "132",
+        "n5k_name": "croissants"
+      },
+      {
+        "n5k_id": "368",
+        "n5k_name": "donuts"
+      },
+      {
+        "n5k_id": "104",
+        "n5k_name": "strudels"
+      },
+      {
+        "n5k_id": "301",
+        "n5k_name": "english muffins"
+      },
+      {
+        "n5k_id": "487",
+        "n5k_name": "crepes"
+      },
+      {
+        "n5k_id": "230",
+        "n5k_name": "frostings"
+      },
+      {
+        "n5k_id": "175",
+        "n5k_name": "apple pie"
+      },
+      {
+        "n5k_id": "134",
+        "n5k_name": "biscuits"
+      },
+      {
+        "n5k_id": "337",
+        "n5k_name": "waffles"
+      },
+      {
+        "n5k_id": "266",
+        "n5k_name": "pot pies"
+      },
+      {
+        "n5k_id": "391",
+        "n5k_name": "cobbler"
+      },
+      {
+        "n5k_id": "172",
+        "n5k_name": "cherry pie"
+      }
+    ]
+  },
+  "11": {
+    "foodsam_id": "11",
+    "foodsam_name": "wine",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "92",
+        "n5k_name": "wine"
+      },
+      {
+        "n5k_id": "428",
+        "n5k_name": "white wine"
+      },
+      {
+        "n5k_id": "64",
+        "n5k_name": "alcohol"
+      },
+      {
+        "n5k_id": "398",
+        "n5k_name": "champagne"
+      },
+      {
+        "n5k_id": "278",
+        "n5k_name": "beer"
+      },
+      {
+        "n5k_id": "142",
+        "n5k_name": "india pale ale beer"
+      },
+      {
+        "n5k_id": "396",
+        "n5k_name": "wheat beer"
+      },
+      {
+        "n5k_id": "446",
+        "n5k_name": "stout beer"
+      },
+      {
+        "n5k_id": "477",
+        "n5k_name": "light beer"
+      },
+      {
+        "n5k_id": "493",
+        "n5k_name": "lager"
+      },
+      {
+        "n5k_id": "309",
+        "n5k_name": "rum"
+      },
+      {
+        "n5k_id": "233",
+        "n5k_name": "vodka"
+      },
+      {
+        "n5k_id": "419",
+        "n5k_name": "hard cider"
+      },
+      {
+        "n5k_id": "159",
+        "n5k_name": "apple cider"
+      },
+      {
+        "n5k_id": "390",
+        "n5k_name": "margarita"
+      },
+      {
+        "n5k_id": "65",
+        "n5k_name": "grape juice"
+      },
+      {
+        "n5k_id": "282",
+        "n5k_name": "energy drinks"
+      },
+      {
+        "n5k_id": "118",
+        "n5k_name": "eggnog"
+      },
+      {
+        "n5k_id": "327",
+        "n5k_name": "root beer"
+      },
+      {
+        "n5k_id": "440",
+        "n5k_name": "grapes"
+      },
+      {
+        "n5k_id": "13",
+        "n5k_name": "berries"
+      },
+      {
+        "n5k_id": "321",
+        "n5k_name": "water"
+      },
+      {
+        "n5k_id": "69",
+        "n5k_name": "fruit punch"
+      }
+    ]
+  },
+  "12": {
+    "foodsam_id": "12",
+    "foodsam_name": "milkshake",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "181",
+        "n5k_name": "milk shakes"
+      },
+      {
+        "n5k_id": "234",
+        "n5k_name": "smoothies"
+      },
+      {
+        "n5k_id": "502",
+        "n5k_name": "milk"
+      },
+      {
+        "n5k_id": "210",
+        "n5k_name": "chocolate milk"
+      },
+      {
+        "n5k_id": "165",
+        "n5k_name": "skim milk"
+      },
+      {
+        "n5k_id": "299",
+        "n5k_name": "soy milk"
+      },
+      {
+        "n5k_id": "476",
+        "n5k_name": "almond milk"
+      },
+      {
+        "n5k_id": "200",
+        "n5k_name": "buttermilk"
+      },
+      {
+        "n5k_id": "548",
+        "n5k_name": "coconut milk"
+      },
+      {
+        "n5k_id": "362",
+        "n5k_name": "ice creams"
+      },
+      {
+        "n5k_id": "268",
+        "n5k_name": "soft serve ice creams"
+      },
+      {
+        "n5k_id": "275",
+        "n5k_name": "frozen yogurt"
+      },
+      {
+        "n5k_id": "480",
+        "n5k_name": "ice cream soda"
+      },
+      {
+        "n5k_id": "208",
+        "n5k_name": "ice cream cones"
+      },
+      {
+        "n5k_id": "106",
+        "n5k_name": "half and half"
+      },
+      {
+        "n5k_id": "341",
+        "n5k_name": "cream"
+      },
+      {
+        "n5k_id": "262",
+        "n5k_name": "yogurt"
+      },
+      {
+        "n5k_id": "237",
+        "n5k_name": "hot chocolate"
+      },
+      {
+        "n5k_id": "239",
+        "n5k_name": "custard"
+      },
+      {
+        "n5k_id": "118",
+        "n5k_name": "eggnog"
+      },
+      {
+        "n5k_id": "436",
+        "n5k_name": "coffee creamer"
+      },
+      {
+        "n5k_id": "263",
+        "n5k_name": "mousse"
+      },
+      {
+        "n5k_id": "182",
+        "n5k_name": "soy yogurt"
+      }
+    ]
+  },
+  "13": {
+    "foodsam_id": "13",
+    "foodsam_name": "coffee",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "384",
+        "n5k_name": "coffee"
+      },
+      {
+        "n5k_id": "449",
+        "n5k_name": "cappuccino"
+      },
+      {
+        "n5k_id": "499",
+        "n5k_name": "latte"
+      },
+      {
+        "n5k_id": "436",
+        "n5k_name": "coffee creamer"
+      },
+      {
+        "n5k_id": "237",
+        "n5k_name": "hot chocolate"
+      },
+      {
+        "n5k_id": "490",
+        "n5k_name": "tea"
+      },
+      {
+        "n5k_id": "260",
+        "n5k_name": "iced tea"
+      },
+      {
+        "n5k_id": "270",
+        "n5k_name": "cocoa"
+      },
+      {
+        "n5k_id": "282",
+        "n5k_name": "energy drinks"
+      },
+      {
+        "n5k_id": "321",
+        "n5k_name": "water"
+      },
+      {
+        "n5k_id": "210",
+        "n5k_name": "chocolate milk"
+      },
+      {
+        "n5k_id": "502",
+        "n5k_name": "milk"
+      },
+      {
+        "n5k_id": "115",
+        "n5k_name": "lemonade"
+      },
+      {
+        "n5k_id": "69",
+        "n5k_name": "fruit punch"
+      },
+      {
+        "n5k_id": "181",
+        "n5k_name": "milk shakes"
+      },
+      {
+        "n5k_id": "234",
+        "n5k_name": "smoothies"
+      },
+      {
+        "n5k_id": "65",
+        "n5k_name": "grape juice"
+      },
+      {
+        "n5k_id": "498",
+        "n5k_name": "orange juice"
+      },
+      {
+        "n5k_id": "85",
+        "n5k_name": "apple juice"
+      },
+      {
+        "n5k_id": "520",
+        "n5k_name": "lemon juice"
+      },
+      {
+        "n5k_id": "166",
+        "n5k_name": "grapefruit juice"
+      },
+      {
+        "n5k_id": "343",
+        "n5k_name": "cranberry juice"
+      }
+    ]
+  },
+  "14": {
+    "foodsam_id": "14",
+    "foodsam_name": "juice",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "65",
+        "n5k_name": "grape juice"
+      },
+      {
+        "n5k_id": "498",
+        "n5k_name": "orange juice"
+      },
+      {
+        "n5k_id": "85",
+        "n5k_name": "apple juice"
+      },
+      {
+        "n5k_id": "520",
+        "n5k_name": "lemon juice"
+      },
+      {
+        "n5k_id": "166",
+        "n5k_name": "grapefruit juice"
+      },
+      {
+        "n5k_id": "343",
+        "n5k_name": "cranberry juice"
+      },
+      {
+        "n5k_id": "504",
+        "n5k_name": "vegetable juice"
+      },
+      {
+        "n5k_id": "115",
+        "n5k_name": "lemonade"
+      },
+      {
+        "n5k_id": "69",
+        "n5k_name": "fruit punch"
+      },
+      {
+        "n5k_id": "234",
+        "n5k_name": "smoothies"
+      },
+      {
+        "n5k_id": "460",
+        "n5k_name": "nectar"
+      },
+      {
+        "n5k_id": "151",
+        "n5k_name": "agave nectar"
+      },
+      {
+        "n5k_id": "282",
+        "n5k_name": "energy drinks"
+      },
+      {
+        "n5k_id": "159",
+        "n5k_name": "apple cider"
+      },
+      {
+        "n5k_id": "419",
+        "n5k_name": "hard cider"
+      },
+      {
+        "n5k_id": "403",
+        "n5k_name": "fruit cocktail"
+      },
+      {
+        "n5k_id": "375",
+        "n5k_name": "fruit salad"
+      },
+      {
+        "n5k_id": "321",
+        "n5k_name": "water"
+      },
+      {
+        "n5k_id": "503",
+        "n5k_name": "applesauce"
+      },
+      {
+        "n5k_id": "490",
+        "n5k_name": "tea"
+      },
+      {
+        "n5k_id": "260",
+        "n5k_name": "iced tea"
+      },
+      {
+        "n5k_id": "384",
+        "n5k_name": "coffee"
+      },
+      {
+        "n5k_id": "502",
+        "n5k_name": "milk"
+      }
+    ]
+  },
+  "15": {
+    "foodsam_id": "15",
+    "foodsam_name": "milk",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "502",
+        "n5k_name": "milk"
+      },
+      {
+        "n5k_id": "210",
+        "n5k_name": "chocolate milk"
+      },
+      {
+        "n5k_id": "165",
+        "n5k_name": "skim milk"
+      },
+      {
+        "n5k_id": "299",
+        "n5k_name": "soy milk"
+      },
+      {
+        "n5k_id": "476",
+        "n5k_name": "almond milk"
+      },
+      {
+        "n5k_id": "200",
+        "n5k_name": "buttermilk"
+      },
+      {
+        "n5k_id": "548",
+        "n5k_name": "coconut milk"
+      },
+      {
+        "n5k_id": "181",
+        "n5k_name": "milk shakes"
+      },
+      {
+        "n5k_id": "106",
+        "n5k_name": "half and half"
+      },
+      {
+        "n5k_id": "341",
+        "n5k_name": "cream"
+      },
+      {
+        "n5k_id": "262",
+        "n5k_name": "yogurt"
+      },
+      {
+        "n5k_id": "436",
+        "n5k_name": "coffee creamer"
+      },
+      {
+        "n5k_id": "182",
+        "n5k_name": "soy yogurt"
+      },
+      {
+        "n5k_id": "275",
+        "n5k_name": "frozen yogurt"
+      },
+      {
+        "n5k_id": "545",
+        "n5k_name": "greek yogurt"
+      },
+      {
+        "n5k_id": "495",
+        "n5k_name": "cream cheese"
+      },
+      {
+        "n5k_id": "434",
+        "n5k_name": "sour cream"
+      },
+      {
+        "n5k_id": "118",
+        "n5k_name": "eggnog"
+      },
+      {
+        "n5k_id": "1",
+        "n5k_name": "cottage cheese"
+      },
+      {
+        "n5k_id": "237",
+        "n5k_name": "hot chocolate"
+      },
+      {
+        "n5k_id": "362",
+        "n5k_name": "ice creams"
+      },
+      {
+        "n5k_id": "239",
+        "n5k_name": "custard"
+      },
+      {
+        "n5k_id": "52",
+        "n5k_name": "cheese"
+      }
+    ]
+  },
+  "16": {
+    "foodsam_id": "16",
+    "foodsam_name": "tea",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "490",
+        "n5k_name": "tea"
+      },
+      {
+        "n5k_id": "260",
+        "n5k_name": "iced tea"
+      },
+      {
+        "n5k_id": "384",
+        "n5k_name": "coffee"
+      },
+      {
+        "n5k_id": "449",
+        "n5k_name": "cappuccino"
+      },
+      {
+        "n5k_id": "499",
+        "n5k_name": "latte"
+      },
+      {
+        "n5k_id": "237",
+        "n5k_name": "hot chocolate"
+      },
+      {
+        "n5k_id": "321",
+        "n5k_name": "water"
+      },
+      {
+        "n5k_id": "282",
+        "n5k_name": "energy drinks"
+      },
+      {
+        "n5k_id": "436",
+        "n5k_name": "coffee creamer"
+      },
+      {
+        "n5k_id": "115",
+        "n5k_name": "lemonade"
+      },
+      {
+        "n5k_id": "69",
+        "n5k_name": "fruit punch"
+      },
+      {
+        "n5k_id": "520",
+        "n5k_name": "lemon juice"
+      },
+      {
+        "n5k_id": "270",
+        "n5k_name": "cocoa"
+      },
+      {
+        "n5k_id": "181",
+        "n5k_name": "milk shakes"
+      },
+      {
+        "n5k_id": "234",
+        "n5k_name": "smoothies"
+      },
+      {
+        "n5k_id": "502",
+        "n5k_name": "milk"
+      },
+      {
+        "n5k_id": "210",
+        "n5k_name": "chocolate milk"
+      },
+      {
+        "n5k_id": "65",
+        "n5k_name": "grape juice"
+      },
+      {
+        "n5k_id": "498",
+        "n5k_name": "orange juice"
+      },
+      {
+        "n5k_id": "85",
+        "n5k_name": "apple juice"
+      },
+      {
+        "n5k_id": "166",
+        "n5k_name": "grapefruit juice"
+      },
+      {
+        "n5k_id": "343",
+        "n5k_name": "cranberry juice"
+      }
+    ]
+  },
+  "17": {
+    "foodsam_id": "17",
+    "foodsam_name": "almond",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "77",
+        "n5k_name": "almonds"
+      },
+      {
+        "n5k_id": "171",
+        "n5k_name": "almond butter"
+      },
+      {
+        "n5k_id": "476",
+        "n5k_name": "almond milk"
+      },
+      {
+        "n5k_id": "53",
+        "n5k_name": "nuts"
+      },
+      {
+        "n5k_id": "107",
+        "n5k_name": "mixed nuts"
+      },
+      {
+        "n5k_id": "124",
+        "n5k_name": "walnuts"
+      },
+      {
+        "n5k_id": "249",
+        "n5k_name": "cashews"
+      },
+      {
+        "n5k_id": "336",
+        "n5k_name": "peanuts"
+      },
+      {
+        "n5k_id": "82",
+        "n5k_name": "pecans"
+      },
+      {
+        "n5k_id": "466",
+        "n5k_name": "pistachios"
+      },
+      {
+        "n5k_id": "222",
+        "n5k_name": "pine nuts"
+      },
+      {
+        "n5k_id": "223",
+        "n5k_name": "macadamia nuts"
+      },
+      {
+        "n5k_id": "173",
+        "n5k_name": "chestnuts"
+      },
+      {
+        "n5k_id": "218",
+        "n5k_name": "brazil nuts"
+      },
+      {
+        "n5k_id": "354",
+        "n5k_name": "soy nuts"
+      },
+      {
+        "n5k_id": "547",
+        "n5k_name": "corn nuts"
+      },
+      {
+        "n5k_id": "214",
+        "n5k_name": "seeds"
+      },
+      {
+        "n5k_id": "313",
+        "n5k_name": "peanut butter"
+      },
+      {
+        "n5k_id": "274",
+        "n5k_name": "trail mix"
+      },
+      {
+        "n5k_id": "364",
+        "n5k_name": "sunflower seeds"
+      },
+      {
+        "n5k_id": "531",
+        "n5k_name": "pumpkin seeds"
+      },
+      {
+        "n5k_id": "294",
+        "n5k_name": "granola"
+      }
+    ]
+  },
+  "18": {
+    "foodsam_id": "18",
+    "foodsam_name": "red beans",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "163",
+        "n5k_name": "kidney beans"
+      },
+      {
+        "n5k_id": "320",
+        "n5k_name": "black beans"
+      },
+      {
+        "n5k_id": "75",
+        "n5k_name": "refried beans"
+      },
+      {
+        "n5k_id": "246",
+        "n5k_name": "baked beans"
+      },
+      {
+        "n5k_id": "506",
+        "n5k_name": "pinto beans"
+      },
+      {
+        "n5k_id": "379",
+        "n5k_name": "lima beans"
+      },
+      {
+        "n5k_id": "542",
+        "n5k_name": "white beans"
+      },
+      {
+        "n5k_id": "63",
+        "n5k_name": "bean(seed)"
+      },
+      {
+        "n5k_id": "43",
+        "n5k_name": "green beans"
+      },
+      {
+        "n5k_id": "187",
+        "n5k_name": "chickpeas"
+      },
+      {
+        "n5k_id": "357",
+        "n5k_name": "lentils"
+      },
+      {
+        "n5k_id": "281",
+        "n5k_name": "edamame"
+      },
+      {
+        "n5k_id": "44",
+        "n5k_name": "bean sprouts"
+      },
+      {
+        "n5k_id": "374",
+        "n5k_name": "peas"
+      },
+      {
+        "n5k_id": "186",
+        "n5k_name": "green peas"
+      },
+      {
+        "n5k_id": "102",
+        "n5k_name": "snow peas"
+      },
+      {
+        "n5k_id": "214",
+        "n5k_name": "seeds"
+      },
+      {
+        "n5k_id": "50",
+        "n5k_name": "tofu"
+      },
+      {
+        "n5k_id": "5",
+        "n5k_name": "potatoes"
+      }
+    ]
+  },
+  "19": {
+    "foodsam_id": "19",
+    "foodsam_name": "cashew",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "249",
+        "n5k_name": "cashews"
+      },
+      {
+        "n5k_id": "53",
+        "n5k_name": "nuts"
+      },
+      {
+        "n5k_id": "107",
+        "n5k_name": "mixed nuts"
+      },
+      {
+        "n5k_id": "77",
+        "n5k_name": "almonds"
+      },
+      {
+        "n5k_id": "124",
+        "n5k_name": "walnuts"
+      },
+      {
+        "n5k_id": "336",
+        "n5k_name": "peanuts"
+      },
+      {
+        "n5k_id": "82",
+        "n5k_name": "pecans"
+      },
+      {
+        "n5k_id": "466",
+        "n5k_name": "pistachios"
+      },
+      {
+        "n5k_id": "222",
+        "n5k_name": "pine nuts"
+      },
+      {
+        "n5k_id": "223",
+        "n5k_name": "macadamia nuts"
+      },
+      {
+        "n5k_id": "173",
+        "n5k_name": "chestnuts"
+      },
+      {
+        "n5k_id": "218",
+        "n5k_name": "brazil nuts"
+      },
+      {
+        "n5k_id": "354",
+        "n5k_name": "soy nuts"
+      },
+      {
+        "n5k_id": "547",
+        "n5k_name": "corn nuts"
+      },
+      {
+        "n5k_id": "214",
+        "n5k_name": "seeds"
+      },
+      {
+        "n5k_id": "171",
+        "n5k_name": "almond butter"
+      },
+      {
+        "n5k_id": "313",
+        "n5k_name": "peanut butter"
+      },
+      {
+        "n5k_id": "274",
+        "n5k_name": "trail mix"
+      },
+      {
+        "n5k_id": "553",
+        "n5k_name": "nut cheese"
+      },
+      {
+        "n5k_id": "364",
+        "n5k_name": "sunflower seeds"
+      },
+      {
+        "n5k_id": "531",
+        "n5k_name": "pumpkin seeds"
+      },
+      {
+        "n5k_id": "294",
+        "n5k_name": "granola"
+      }
+    ]
+  },
+  "20": {
+    "foodsam_id": "20",
+    "foodsam_name": "dried cranberries",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "473",
+        "n5k_name": "cranberries"
+      },
+      {
+        "n5k_id": "343",
+        "n5k_name": "cranberry juice"
+      },
+      {
+        "n5k_id": "129",
+        "n5k_name": "raisins"
+      },
+      {
+        "n5k_id": "424",
+        "n5k_name": "prunes"
+      },
+      {
+        "n5k_id": "444",
+        "n5k_name": "dates"
+      },
+      {
+        "n5k_id": "70",
+        "n5k_name": "figs"
+      },
+      {
+        "n5k_id": "13",
+        "n5k_name": "berries"
+      },
+      {
+        "n5k_id": "430",
+        "n5k_name": "apricots"
+      },
+      {
+        "n5k_id": "2",
+        "n5k_name": "strawberries"
+      },
+      {
+        "n5k_id": "201",
+        "n5k_name": "blueberries"
+      },
+      {
+        "n5k_id": "40",
+        "n5k_name": "raspberries"
+      },
+      {
+        "n5k_id": "41",
+        "n5k_name": "blackberries"
+      },
+      {
+        "n5k_id": "501",
+        "n5k_name": "cherries"
+      },
+      {
+        "n5k_id": "274",
+        "n5k_name": "trail mix"
+      },
+      {
+        "n5k_id": "86",
+        "n5k_name": "raisin bran"
+      },
+      {
+        "n5k_id": "399",
+        "n5k_name": "raisin bread"
+      },
+      {
+        "n5k_id": "403",
+        "n5k_name": "fruit cocktail"
+      },
+      {
+        "n5k_id": "375",
+        "n5k_name": "fruit salad"
+      }
+    ]
+  },
+  "21": {
+    "foodsam_id": "21",
+    "foodsam_name": "soy",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "299",
+        "n5k_name": "soy milk"
+      },
+      {
+        "n5k_id": "508",
+        "n5k_name": "soy sauce"
+      },
+      {
+        "n5k_id": "182",
+        "n5k_name": "soy yogurt"
+      },
+      {
+        "n5k_id": "354",
+        "n5k_name": "soy nuts"
+      },
+      {
+        "n5k_id": "554",
+        "n5k_name": "soy sausage"
+      },
+      {
+        "n5k_id": "50",
+        "n5k_name": "tofu"
+      },
+      {
+        "n5k_id": "281",
+        "n5k_name": "edamame"
+      },
+      {
+        "n5k_id": "177",
+        "n5k_name": "tempeh"
+      },
+      {
+        "n5k_id": "350",
+        "n5k_name": "miso soup"
+      },
+      {
+        "n5k_id": "63",
+        "n5k_name": "bean(seed)"
+      },
+      {
+        "n5k_id": "320",
+        "n5k_name": "black beans"
+      },
+      {
+        "n5k_id": "542",
+        "n5k_name": "white beans"
+      },
+      {
+        "n5k_id": "163",
+        "n5k_name": "kidney beans"
+      },
+      {
+        "n5k_id": "506",
+        "n5k_name": "pinto beans"
+      },
+      {
+        "n5k_id": "75",
+        "n5k_name": "refried beans"
+      },
+      {
+        "n5k_id": "246",
+        "n5k_name": "baked beans"
+      },
+      {
+        "n5k_id": "379",
+        "n5k_name": "lima beans"
+      },
+      {
+        "n5k_id": "187",
+        "n5k_name": "chickpeas"
+      },
+      {
+        "n5k_id": "357",
+        "n5k_name": "lentils"
+      },
+      {
+        "n5k_id": "502",
+        "n5k_name": "milk"
+      },
+      {
+        "n5k_id": "214",
+        "n5k_name": "seeds"
+      },
+      {
+        "n5k_id": "53",
+        "n5k_name": "nuts"
+      },
+      {
+        "n5k_id": "44",
+        "n5k_name": "bean sprouts"
+      }
+    ]
+  },
+  "22": {
+    "foodsam_id": "22",
+    "foodsam_name": "walnut",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "124",
+        "n5k_name": "walnuts"
+      },
+      {
+        "n5k_id": "53",
+        "n5k_name": "nuts"
+      },
+      {
+        "n5k_id": "107",
+        "n5k_name": "mixed nuts"
+      },
+      {
+        "n5k_id": "77",
+        "n5k_name": "almonds"
+      },
+      {
+        "n5k_id": "249",
+        "n5k_name": "cashews"
+      },
+      {
+        "n5k_id": "336",
+        "n5k_name": "peanuts"
+      },
+      {
+        "n5k_id": "82",
+        "n5k_name": "pecans"
+      },
+      {
+        "n5k_id": "466",
+        "n5k_name": "pistachios"
+      },
+      {
+        "n5k_id": "222",
+        "n5k_name": "pine nuts"
+      },
+      {
+        "n5k_id": "223",
+        "n5k_name": "macadamia nuts"
+      },
+      {
+        "n5k_id": "173",
+        "n5k_name": "chestnuts"
+      },
+      {
+        "n5k_id": "218",
+        "n5k_name": "brazil nuts"
+      },
+      {
+        "n5k_id": "354",
+        "n5k_name": "soy nuts"
+      },
+      {
+        "n5k_id": "547",
+        "n5k_name": "corn nuts"
+      },
+      {
+        "n5k_id": "214",
+        "n5k_name": "seeds"
+      },
+      {
+        "n5k_id": "274",
+        "n5k_name": "trail mix"
+      },
+      {
+        "n5k_id": "171",
+        "n5k_name": "almond butter"
+      },
+      {
+        "n5k_id": "313",
+        "n5k_name": "peanut butter"
+      },
+      {
+        "n5k_id": "553",
+        "n5k_name": "nut cheese"
+      },
+      {
+        "n5k_id": "364",
+        "n5k_name": "sunflower seeds"
+      },
+      {
+        "n5k_id": "531",
+        "n5k_name": "pumpkin seeds"
+      },
+      {
+        "n5k_id": "294",
+        "n5k_name": "granola"
+      }
+    ]
+  },
+  "23": {
+    "foodsam_id": "23",
+    "foodsam_name": "peanut",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "336",
+        "n5k_name": "peanuts"
+      },
+      {
+        "n5k_id": "313",
+        "n5k_name": "peanut butter"
+      },
+      {
+        "n5k_id": "53",
+        "n5k_name": "nuts"
+      },
+      {
+        "n5k_id": "107",
+        "n5k_name": "mixed nuts"
+      },
+      {
+        "n5k_id": "77",
+        "n5k_name": "almonds"
+      },
+      {
+        "n5k_id": "124",
+        "n5k_name": "walnuts"
+      },
+      {
+        "n5k_id": "249",
+        "n5k_name": "cashews"
+      },
+      {
+        "n5k_id": "82",
+        "n5k_name": "pecans"
+      },
+      {
+        "n5k_id": "466",
+        "n5k_name": "pistachios"
+      },
+      {
+        "n5k_id": "222",
+        "n5k_name": "pine nuts"
+      },
+      {
+        "n5k_id": "223",
+        "n5k_name": "macadamia nuts"
+      },
+      {
+        "n5k_id": "173",
+        "n5k_name": "chestnuts"
+      },
+      {
+        "n5k_id": "218",
+        "n5k_name": "brazil nuts"
+      },
+      {
+        "n5k_id": "354",
+        "n5k_name": "soy nuts"
+      },
+      {
+        "n5k_id": "547",
+        "n5k_name": "corn nuts"
+      },
+      {
+        "n5k_id": "214",
+        "n5k_name": "seeds"
+      },
+      {
+        "n5k_id": "274",
+        "n5k_name": "trail mix"
+      },
+      {
+        "n5k_id": "171",
+        "n5k_name": "almond butter"
+      },
+      {
+        "n5k_id": "553",
+        "n5k_name": "nut cheese"
+      },
+      {
+        "n5k_id": "364",
+        "n5k_name": "sunflower seeds"
+      },
+      {
+        "n5k_id": "531",
+        "n5k_name": "pumpkin seeds"
+      },
+      {
+        "n5k_id": "294",
+        "n5k_name": "granola"
+      }
+    ]
+  },
+  "24": {
+    "foodsam_id": "24",
+    "foodsam_name": "egg",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "179",
+        "n5k_name": "eggs"
+      },
+      {
+        "n5k_id": "300",
+        "n5k_name": "egg yolks"
+      },
+      {
+        "n5k_id": "128",
+        "n5k_name": "egg whites"
+      },
+      {
+        "n5k_id": "248",
+        "n5k_name": "hard boiled eggs"
+      },
+      {
+        "n5k_id": "136",
+        "n5k_name": "poached eggs"
+      },
+      {
+        "n5k_id": "388",
+        "n5k_name": "fried eggs"
+      },
+      {
+        "n5k_id": "8",
+        "n5k_name": "scrambled eggs"
+      },
+      {
+        "n5k_id": "348",
+        "n5k_name": "egg salad"
+      },
+      {
+        "n5k_id": "139",
+        "n5k_name": "egg rolls"
+      },
+      {
+        "n5k_id": "118",
+        "n5k_name": "eggnog"
+      },
+      {
+        "n5k_id": "279",
+        "n5k_name": "omelets"
+      },
+      {
+        "n5k_id": "365",
+        "n5k_name": "quiche"
+      },
+      {
+        "n5k_id": "280",
+        "n5k_name": "souffle"
+      },
+      {
+        "n5k_id": "239",
+        "n5k_name": "custard"
+      },
+      {
+        "n5k_id": "109",
+        "n5k_name": "french toast"
+      },
+      {
+        "n5k_id": "116",
+        "n5k_name": "mayonnaise"
+      },
+      {
+        "n5k_id": "71",
+        "n5k_name": "macaroni and cheese"
+      },
+      {
+        "n5k_id": "191",
+        "n5k_name": "cheesecake"
+      },
+      {
+        "n5k_id": "331",
+        "n5k_name": "pancakes"
+      },
+      {
+        "n5k_id": "486",
+        "n5k_name": "cakes"
+      },
+      {
+        "n5k_id": "307",
+        "n5k_name": "stuffing"
+      },
+      {
+        "n5k_id": "168",
+        "n5k_name": "lasagna"
+      },
+      {
+        "n5k_id": "337",
+        "n5k_name": "waffles"
+      }
+    ]
+  },
+  "25": {
+    "foodsam_id": "25",
+    "foodsam_name": "apple",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "54",
+        "n5k_name": "apple"
+      },
+      {
+        "n5k_id": "85",
+        "n5k_name": "apple juice"
+      },
+      {
+        "n5k_id": "175",
+        "n5k_name": "apple pie"
+      },
+      {
+        "n5k_id": "159",
+        "n5k_name": "apple cider"
+      },
+      {
+        "n5k_id": "503",
+        "n5k_name": "applesauce"
+      },
+      {
+        "n5k_id": "510",
+        "n5k_name": "chicken apple sausage"
+      },
+      {
+        "n5k_id": "213",
+        "n5k_name": "pears"
+      },
+      {
+        "n5k_id": "271",
+        "n5k_name": "peaches"
+      },
+      {
+        "n5k_id": "344",
+        "n5k_name": "peach"
+      },
+      {
+        "n5k_id": "430",
+        "n5k_name": "apricots"
+      },
+      {
+        "n5k_id": "211",
+        "n5k_name": "plums"
+      },
+      {
+        "n5k_id": "375",
+        "n5k_name": "fruit salad"
+      },
+      {
+        "n5k_id": "403",
+        "n5k_name": "fruit cocktail"
+      },
+      {
+        "n5k_id": "58",
+        "n5k_name": "orange"
+      },
+      {
+        "n5k_id": "55",
+        "n5k_name": "banana"
+      },
+      {
+        "n5k_id": "38",
+        "n5k_name": "pineapple"
+      },
+      {
+        "n5k_id": "440",
+        "n5k_name": "grapes"
+      }
+    ]
+  },
+  "26": {
+    "foodsam_id": "26",
+    "foodsam_name": "date",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "444",
+        "n5k_name": "dates"
+      },
+      {
+        "n5k_id": "424",
+        "n5k_name": "prunes"
+      },
+      {
+        "n5k_id": "129",
+        "n5k_name": "raisins"
+      },
+      {
+        "n5k_id": "70",
+        "n5k_name": "figs"
+      },
+      {
+        "n5k_id": "430",
+        "n5k_name": "apricots"
+      },
+      {
+        "n5k_id": "473",
+        "n5k_name": "cranberries"
+      },
+      {
+        "n5k_id": "211",
+        "n5k_name": "plums"
+      },
+      {
+        "n5k_id": "274",
+        "n5k_name": "trail mix"
+      },
+      {
+        "n5k_id": "13",
+        "n5k_name": "berries"
+      },
+      {
+        "n5k_id": "2",
+        "n5k_name": "strawberries"
+      },
+      {
+        "n5k_id": "501",
+        "n5k_name": "cherries"
+      },
+      {
+        "n5k_id": "201",
+        "n5k_name": "blueberries"
+      },
+      {
+        "n5k_id": "40",
+        "n5k_name": "raspberries"
+      },
+      {
+        "n5k_id": "41",
+        "n5k_name": "blackberries"
+      },
+      {
+        "n5k_id": "375",
+        "n5k_name": "fruit salad"
+      },
+      {
+        "n5k_id": "403",
+        "n5k_name": "fruit cocktail"
+      },
+      {
+        "n5k_id": "86",
+        "n5k_name": "raisin bran"
+      },
+      {
+        "n5k_id": "399",
+        "n5k_name": "raisin bread"
+      }
+    ]
+  },
+  "27": {
+    "foodsam_id": "27",
+    "foodsam_name": "apricot",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "430",
+        "n5k_name": "apricots"
+      },
+      {
+        "n5k_id": "271",
+        "n5k_name": "peaches"
+      },
+      {
+        "n5k_id": "344",
+        "n5k_name": "peach"
+      },
+      {
+        "n5k_id": "211",
+        "n5k_name": "plums"
+      },
+      {
+        "n5k_id": "325",
+        "n5k_name": "nectarines"
+      },
+      {
+        "n5k_id": "424",
+        "n5k_name": "prunes"
+      },
+      {
+        "n5k_id": "444",
+        "n5k_name": "dates"
+      },
+      {
+        "n5k_id": "70",
+        "n5k_name": "figs"
+      },
+      {
+        "n5k_id": "54",
+        "n5k_name": "apple"
+      },
+      {
+        "n5k_id": "213",
+        "n5k_name": "pears"
+      },
+      {
+        "n5k_id": "349",
+        "n5k_name": "mangos"
+      },
+      {
+        "n5k_id": "375",
+        "n5k_name": "fruit salad"
+      },
+      {
+        "n5k_id": "403",
+        "n5k_name": "fruit cocktail"
+      },
+      {
+        "n5k_id": "13",
+        "n5k_name": "berries"
+      },
+      {
+        "n5k_id": "445",
+        "n5k_name": "papayas"
+      },
+      {
+        "n5k_id": "473",
+        "n5k_name": "cranberries"
+      },
+      {
+        "n5k_id": "129",
+        "n5k_name": "raisins"
+      },
+      {
+        "n5k_id": "501",
+        "n5k_name": "cherries"
+      }
+    ]
+  },
+  "28": {
+    "foodsam_id": "28",
+    "foodsam_name": "avocado",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "42",
+        "n5k_name": "avocado"
+      },
+      {
+        "n5k_id": "22",
+        "n5k_name": "guacamole"
+      },
+      {
+        "n5k_id": "375",
+        "n5k_name": "fruit salad"
+      },
+      {
+        "n5k_id": "403",
+        "n5k_name": "fruit cocktail"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "6",
+        "n5k_name": "caesar salad"
+      },
+      {
+        "n5k_id": "409",
+        "n5k_name": "greek salad"
+      },
+      {
+        "n5k_id": "56",
+        "n5k_name": "kiwi"
+      },
+      {
+        "n5k_id": "349",
+        "n5k_name": "mangos"
+      },
+      {
+        "n5k_id": "445",
+        "n5k_name": "papayas"
+      },
+      {
+        "n5k_id": "55",
+        "n5k_name": "banana"
+      },
+      {
+        "n5k_id": "38",
+        "n5k_name": "pineapple"
+      },
+      {
+        "n5k_id": "37",
+        "n5k_name": "cantaloupe"
+      },
+      {
+        "n5k_id": "112",
+        "n5k_name": "honeydew melons"
+      },
+      {
+        "n5k_id": "21",
+        "n5k_name": "squash"
+      },
+      {
+        "n5k_id": "529",
+        "n5k_name": "chayote squash"
+      },
+      {
+        "n5k_id": "70",
+        "n5k_name": "figs"
+      }
+    ]
+  },
+  "29": {
+    "foodsam_id": "29",
+    "foodsam_name": "banana",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "55",
+        "n5k_name": "banana"
+      },
+      {
+        "n5k_id": "536",
+        "n5k_name": "banana with peel"
+      },
+      {
+        "n5k_id": "375",
+        "n5k_name": "fruit salad"
+      },
+      {
+        "n5k_id": "403",
+        "n5k_name": "fruit cocktail"
+      },
+      {
+        "n5k_id": "234",
+        "n5k_name": "smoothies"
+      },
+      {
+        "n5k_id": "54",
+        "n5k_name": "apple"
+      },
+      {
+        "n5k_id": "213",
+        "n5k_name": "pears"
+      },
+      {
+        "n5k_id": "271",
+        "n5k_name": "peaches"
+      },
+      {
+        "n5k_id": "344",
+        "n5k_name": "peach"
+      },
+      {
+        "n5k_id": "349",
+        "n5k_name": "mangos"
+      },
+      {
+        "n5k_id": "38",
+        "n5k_name": "pineapple"
+      },
+      {
+        "n5k_id": "56",
+        "n5k_name": "kiwi"
+      },
+      {
+        "n5k_id": "58",
+        "n5k_name": "orange"
+      },
+      {
+        "n5k_id": "445",
+        "n5k_name": "papayas"
+      },
+      {
+        "n5k_id": "13",
+        "n5k_name": "berries"
+      },
+      {
+        "n5k_id": "2",
+        "n5k_name": "strawberries"
+      }
+    ]
+  },
+  "30": {
+    "foodsam_id": "30",
+    "foodsam_name": "strawberry",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "2",
+        "n5k_name": "strawberries"
+      },
+      {
+        "n5k_id": "13",
+        "n5k_name": "berries"
+      },
+      {
+        "n5k_id": "40",
+        "n5k_name": "raspberries"
+      },
+      {
+        "n5k_id": "201",
+        "n5k_name": "blueberries"
+      },
+      {
+        "n5k_id": "41",
+        "n5k_name": "blackberries"
+      },
+      {
+        "n5k_id": "501",
+        "n5k_name": "cherries"
+      },
+      {
+        "n5k_id": "473",
+        "n5k_name": "cranberries"
+      },
+      {
+        "n5k_id": "375",
+        "n5k_name": "fruit salad"
+      },
+      {
+        "n5k_id": "403",
+        "n5k_name": "fruit cocktail"
+      },
+      {
+        "n5k_id": "247",
+        "n5k_name": "blueberry pie"
+      },
+      {
+        "n5k_id": "172",
+        "n5k_name": "cherry pie"
+      },
+      {
+        "n5k_id": "440",
+        "n5k_name": "grapes"
+      },
+      {
+        "n5k_id": "211",
+        "n5k_name": "plums"
+      },
+      {
+        "n5k_id": "234",
+        "n5k_name": "smoothies"
+      },
+      {
+        "n5k_id": "129",
+        "n5k_name": "raisins"
+      },
+      {
+        "n5k_id": "54",
+        "n5k_name": "apple"
+      },
+      {
+        "n5k_id": "271",
+        "n5k_name": "peaches"
+      },
+      {
+        "n5k_id": "344",
+        "n5k_name": "peach"
+      }
+    ]
+  },
+  "31": {
+    "foodsam_id": "31",
+    "foodsam_name": "cherry",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "501",
+        "n5k_name": "cherries"
+      },
+      {
+        "n5k_id": "172",
+        "n5k_name": "cherry pie"
+      },
+      {
+        "n5k_id": "471",
+        "n5k_name": "cherry tomatoes"
+      },
+      {
+        "n5k_id": "13",
+        "n5k_name": "berries"
+      },
+      {
+        "n5k_id": "2",
+        "n5k_name": "strawberries"
+      },
+      {
+        "n5k_id": "40",
+        "n5k_name": "raspberries"
+      },
+      {
+        "n5k_id": "201",
+        "n5k_name": "blueberries"
+      },
+      {
+        "n5k_id": "41",
+        "n5k_name": "blackberries"
+      },
+      {
+        "n5k_id": "473",
+        "n5k_name": "cranberries"
+      },
+      {
+        "n5k_id": "211",
+        "n5k_name": "plums"
+      },
+      {
+        "n5k_id": "375",
+        "n5k_name": "fruit salad"
+      },
+      {
+        "n5k_id": "403",
+        "n5k_name": "fruit cocktail"
+      },
+      {
+        "n5k_id": "440",
+        "n5k_name": "grapes"
+      },
+      {
+        "n5k_id": "271",
+        "n5k_name": "peaches"
+      },
+      {
+        "n5k_id": "344",
+        "n5k_name": "peach"
+      },
+      {
+        "n5k_id": "54",
+        "n5k_name": "apple"
+      },
+      {
+        "n5k_id": "213",
+        "n5k_name": "pears"
+      }
+    ]
+  },
+  "32": {
+    "foodsam_id": "32",
+    "foodsam_name": "blueberry",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "201",
+        "n5k_name": "blueberries"
+      },
+      {
+        "n5k_id": "247",
+        "n5k_name": "blueberry pie"
+      },
+      {
+        "n5k_id": "13",
+        "n5k_name": "berries"
+      },
+      {
+        "n5k_id": "2",
+        "n5k_name": "strawberries"
+      },
+      {
+        "n5k_id": "40",
+        "n5k_name": "raspberries"
+      },
+      {
+        "n5k_id": "41",
+        "n5k_name": "blackberries"
+      },
+      {
+        "n5k_id": "501",
+        "n5k_name": "cherries"
+      },
+      {
+        "n5k_id": "473",
+        "n5k_name": "cranberries"
+      },
+      {
+        "n5k_id": "375",
+        "n5k_name": "fruit salad"
+      },
+      {
+        "n5k_id": "403",
+        "n5k_name": "fruit cocktail"
+      },
+      {
+        "n5k_id": "440",
+        "n5k_name": "grapes"
+      },
+      {
+        "n5k_id": "211",
+        "n5k_name": "plums"
+      },
+      {
+        "n5k_id": "234",
+        "n5k_name": "smoothies"
+      },
+      {
+        "n5k_id": "35",
+        "n5k_name": "blue cheese"
+      },
+      {
+        "n5k_id": "129",
+        "n5k_name": "raisins"
+      },
+      {
+        "n5k_id": "54",
+        "n5k_name": "apple"
+      },
+      {
+        "n5k_id": "271",
+        "n5k_name": "peaches"
+      },
+      {
+        "n5k_id": "344",
+        "n5k_name": "peach"
+      }
+    ]
+  },
+  "33": {
+    "foodsam_id": "33",
+    "foodsam_name": "raspberry",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "40",
+        "n5k_name": "raspberries"
+      },
+      {
+        "n5k_id": "13",
+        "n5k_name": "berries"
+      },
+      {
+        "n5k_id": "2",
+        "n5k_name": "strawberries"
+      },
+      {
+        "n5k_id": "201",
+        "n5k_name": "blueberries"
+      },
+      {
+        "n5k_id": "41",
+        "n5k_name": "blackberries"
+      },
+      {
+        "n5k_id": "501",
+        "n5k_name": "cherries"
+      },
+      {
+        "n5k_id": "473",
+        "n5k_name": "cranberries"
+      },
+      {
+        "n5k_id": "375",
+        "n5k_name": "fruit salad"
+      },
+      {
+        "n5k_id": "403",
+        "n5k_name": "fruit cocktail"
+      },
+      {
+        "n5k_id": "440",
+        "n5k_name": "grapes"
+      },
+      {
+        "n5k_id": "211",
+        "n5k_name": "plums"
+      },
+      {
+        "n5k_id": "234",
+        "n5k_name": "smoothies"
+      },
+      {
+        "n5k_id": "129",
+        "n5k_name": "raisins"
+      },
+      {
+        "n5k_id": "54",
+        "n5k_name": "apple"
+      },
+      {
+        "n5k_id": "271",
+        "n5k_name": "peaches"
+      },
+      {
+        "n5k_id": "344",
+        "n5k_name": "peach"
+      },
+      {
+        "n5k_id": "213",
+        "n5k_name": "pears"
+      }
+    ]
+  },
+  "34": {
+    "foodsam_id": "34",
+    "foodsam_name": "mango",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "349",
+        "n5k_name": "mangos"
+      },
+      {
+        "n5k_id": "38",
+        "n5k_name": "pineapple"
+      },
+      {
+        "n5k_id": "445",
+        "n5k_name": "papayas"
+      },
+      {
+        "n5k_id": "56",
+        "n5k_name": "kiwi"
+      },
+      {
+        "n5k_id": "55",
+        "n5k_name": "banana"
+      },
+      {
+        "n5k_id": "375",
+        "n5k_name": "fruit salad"
+      },
+      {
+        "n5k_id": "403",
+        "n5k_name": "fruit cocktail"
+      },
+      {
+        "n5k_id": "271",
+        "n5k_name": "peaches"
+      },
+      {
+        "n5k_id": "344",
+        "n5k_name": "peach"
+      },
+      {
+        "n5k_id": "430",
+        "n5k_name": "apricots"
+      },
+      {
+        "n5k_id": "37",
+        "n5k_name": "cantaloupe"
+      },
+      {
+        "n5k_id": "112",
+        "n5k_name": "honeydew melons"
+      },
+      {
+        "n5k_id": "121",
+        "n5k_name": "watermelon"
+      },
+      {
+        "n5k_id": "234",
+        "n5k_name": "smoothies"
+      },
+      {
+        "n5k_id": "42",
+        "n5k_name": "avocado"
+      },
+      {
+        "n5k_id": "54",
+        "n5k_name": "apple"
+      }
+    ]
+  },
+  "35": {
+    "foodsam_id": "35",
+    "foodsam_name": "olives",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "12",
+        "n5k_name": "olives"
+      },
+      {
+        "n5k_id": "161",
+        "n5k_name": "olive oil"
+      },
+      {
+        "n5k_id": "81",
+        "n5k_name": "pickles"
+      },
+      {
+        "n5k_id": "496",
+        "n5k_name": "capers"
+      },
+      {
+        "n5k_id": "448",
+        "n5k_name": "jalapenos"
+      },
+      {
+        "n5k_id": "467",
+        "n5k_name": "relish"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "409",
+        "n5k_name": "greek salad"
+      },
+      {
+        "n5k_id": "6",
+        "n5k_name": "caesar salad"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "95",
+        "n5k_name": "artichokes"
+      },
+      {
+        "n5k_id": "32",
+        "n5k_name": "tomatoes"
+      },
+      {
+        "n5k_id": "457",
+        "n5k_name": "sun dried tomatoes"
+      },
+      {
+        "n5k_id": "471",
+        "n5k_name": "cherry tomatoes"
+      },
+      {
+        "n5k_id": "31",
+        "n5k_name": "cucumbers"
+      },
+      {
+        "n5k_id": "33",
+        "n5k_name": "bell peppers"
+      },
+      {
+        "n5k_id": "312",
+        "n5k_name": "pepper"
+      },
+      {
+        "n5k_id": "555",
+        "n5k_name": "oil"
+      },
+      {
+        "n5k_id": "221",
+        "n5k_name": "vegetable oil"
+      },
+      {
+        "n5k_id": "475",
+        "n5k_name": "salsa"
+      }
+    ]
+  },
+  "36": {
+    "foodsam_id": "36",
+    "foodsam_name": "peach",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "271",
+        "n5k_name": "peaches"
+      },
+      {
+        "n5k_id": "344",
+        "n5k_name": "peach"
+      },
+      {
+        "n5k_id": "430",
+        "n5k_name": "apricots"
+      },
+      {
+        "n5k_id": "325",
+        "n5k_name": "nectarines"
+      },
+      {
+        "n5k_id": "211",
+        "n5k_name": "plums"
+      },
+      {
+        "n5k_id": "54",
+        "n5k_name": "apple"
+      },
+      {
+        "n5k_id": "213",
+        "n5k_name": "pears"
+      },
+      {
+        "n5k_id": "375",
+        "n5k_name": "fruit salad"
+      },
+      {
+        "n5k_id": "403",
+        "n5k_name": "fruit cocktail"
+      },
+      {
+        "n5k_id": "349",
+        "n5k_name": "mangos"
+      },
+      {
+        "n5k_id": "501",
+        "n5k_name": "cherries"
+      },
+      {
+        "n5k_id": "13",
+        "n5k_name": "berries"
+      },
+      {
+        "n5k_id": "2",
+        "n5k_name": "strawberries"
+      },
+      {
+        "n5k_id": "445",
+        "n5k_name": "papayas"
+      },
+      {
+        "n5k_id": "58",
+        "n5k_name": "orange"
+      },
+      {
+        "n5k_id": "440",
+        "n5k_name": "grapes"
+      },
+      {
+        "n5k_id": "70",
+        "n5k_name": "figs"
+      }
+    ]
+  },
+  "37": {
+    "foodsam_id": "37",
+    "foodsam_name": "lemon",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "57",
+        "n5k_name": "lemon"
+      },
+      {
+        "n5k_id": "520",
+        "n5k_name": "lemon juice"
+      },
+      {
+        "n5k_id": "115",
+        "n5k_name": "lemonade"
+      },
+      {
+        "n5k_id": "367",
+        "n5k_name": "lime"
+      },
+      {
+        "n5k_id": "58",
+        "n5k_name": "orange"
+      },
+      {
+        "n5k_id": "68",
+        "n5k_name": "grapefruits"
+      },
+      {
+        "n5k_id": "498",
+        "n5k_name": "orange juice"
+      },
+      {
+        "n5k_id": "537",
+        "n5k_name": "orange with peel"
+      },
+      {
+        "n5k_id": "507",
+        "n5k_name": "mandarin oranges"
+      },
+      {
+        "n5k_id": "166",
+        "n5k_name": "grapefruit juice"
+      },
+      {
+        "n5k_id": "375",
+        "n5k_name": "fruit salad"
+      },
+      {
+        "n5k_id": "403",
+        "n5k_name": "fruit cocktail"
+      },
+      {
+        "n5k_id": "54",
+        "n5k_name": "apple"
+      },
+      {
+        "n5k_id": "440",
+        "n5k_name": "grapes"
+      },
+      {
+        "n5k_id": "38",
+        "n5k_name": "pineapple"
+      },
+      {
+        "n5k_id": "56",
+        "n5k_name": "kiwi"
+      },
+      {
+        "n5k_id": "213",
+        "n5k_name": "pears"
+      },
+      {
+        "n5k_id": "338",
+        "n5k_name": "vinaigrette"
+      }
+    ]
+  },
+  "38": {
+    "foodsam_id": "38",
+    "foodsam_name": "pear",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "213",
+        "n5k_name": "pears"
+      },
+      {
+        "n5k_id": "54",
+        "n5k_name": "apple"
+      },
+      {
+        "n5k_id": "271",
+        "n5k_name": "peaches"
+      },
+      {
+        "n5k_id": "344",
+        "n5k_name": "peach"
+      },
+      {
+        "n5k_id": "430",
+        "n5k_name": "apricots"
+      },
+      {
+        "n5k_id": "211",
+        "n5k_name": "plums"
+      },
+      {
+        "n5k_id": "375",
+        "n5k_name": "fruit salad"
+      },
+      {
+        "n5k_id": "403",
+        "n5k_name": "fruit cocktail"
+      },
+      {
+        "n5k_id": "58",
+        "n5k_name": "orange"
+      },
+      {
+        "n5k_id": "55",
+        "n5k_name": "banana"
+      },
+      {
+        "n5k_id": "440",
+        "n5k_name": "grapes"
+      },
+      {
+        "n5k_id": "70",
+        "n5k_name": "figs"
+      },
+      {
+        "n5k_id": "38",
+        "n5k_name": "pineapple"
+      },
+      {
+        "n5k_id": "56",
+        "n5k_name": "kiwi"
+      },
+      {
+        "n5k_id": "349",
+        "n5k_name": "mangos"
+      }
+    ]
+  },
+  "39": {
+    "foodsam_id": "39",
+    "foodsam_name": "fig",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "70",
+        "n5k_name": "figs"
+      },
+      {
+        "n5k_id": "444",
+        "n5k_name": "dates"
+      },
+      {
+        "n5k_id": "424",
+        "n5k_name": "prunes"
+      },
+      {
+        "n5k_id": "129",
+        "n5k_name": "raisins"
+      },
+      {
+        "n5k_id": "430",
+        "n5k_name": "apricots"
+      },
+      {
+        "n5k_id": "211",
+        "n5k_name": "plums"
+      },
+      {
+        "n5k_id": "375",
+        "n5k_name": "fruit salad"
+      },
+      {
+        "n5k_id": "403",
+        "n5k_name": "fruit cocktail"
+      },
+      {
+        "n5k_id": "271",
+        "n5k_name": "peaches"
+      },
+      {
+        "n5k_id": "344",
+        "n5k_name": "peach"
+      },
+      {
+        "n5k_id": "213",
+        "n5k_name": "pears"
+      },
+      {
+        "n5k_id": "54",
+        "n5k_name": "apple"
+      },
+      {
+        "n5k_id": "13",
+        "n5k_name": "berries"
+      },
+      {
+        "n5k_id": "501",
+        "n5k_name": "cherries"
+      },
+      {
+        "n5k_id": "440",
+        "n5k_name": "grapes"
+      },
+      {
+        "n5k_id": "473",
+        "n5k_name": "cranberries"
+      },
+      {
+        "n5k_id": "2",
+        "n5k_name": "strawberries"
+      }
+    ]
+  },
+  "40": {
+    "foodsam_id": "40",
+    "foodsam_name": "pineapple",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "38",
+        "n5k_name": "pineapple"
+      },
+      {
+        "n5k_id": "349",
+        "n5k_name": "mangos"
+      },
+      {
+        "n5k_id": "37",
+        "n5k_name": "cantaloupe"
+      },
+      {
+        "n5k_id": "112",
+        "n5k_name": "honeydew melons"
+      },
+      {
+        "n5k_id": "121",
+        "n5k_name": "watermelon"
+      },
+      {
+        "n5k_id": "445",
+        "n5k_name": "papayas"
+      },
+      {
+        "n5k_id": "56",
+        "n5k_name": "kiwi"
+      },
+      {
+        "n5k_id": "375",
+        "n5k_name": "fruit salad"
+      },
+      {
+        "n5k_id": "403",
+        "n5k_name": "fruit cocktail"
+      },
+      {
+        "n5k_id": "55",
+        "n5k_name": "banana"
+      },
+      {
+        "n5k_id": "54",
+        "n5k_name": "apple"
+      },
+      {
+        "n5k_id": "58",
+        "n5k_name": "orange"
+      },
+      {
+        "n5k_id": "440",
+        "n5k_name": "grapes"
+      },
+      {
+        "n5k_id": "234",
+        "n5k_name": "smoothies"
+      },
+      {
+        "n5k_id": "271",
+        "n5k_name": "peaches"
+      },
+      {
+        "n5k_id": "344",
+        "n5k_name": "peach"
+      }
+    ]
+  },
+  "41": {
+    "foodsam_id": "41",
+    "foodsam_name": "grape",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "440",
+        "n5k_name": "grapes"
+      },
+      {
+        "n5k_id": "65",
+        "n5k_name": "grape juice"
+      },
+      {
+        "n5k_id": "68",
+        "n5k_name": "grapefruits"
+      },
+      {
+        "n5k_id": "166",
+        "n5k_name": "grapefruit juice"
+      },
+      {
+        "n5k_id": "13",
+        "n5k_name": "berries"
+      },
+      {
+        "n5k_id": "2",
+        "n5k_name": "strawberries"
+      },
+      {
+        "n5k_id": "201",
+        "n5k_name": "blueberries"
+      },
+      {
+        "n5k_id": "40",
+        "n5k_name": "raspberries"
+      },
+      {
+        "n5k_id": "41",
+        "n5k_name": "blackberries"
+      },
+      {
+        "n5k_id": "501",
+        "n5k_name": "cherries"
+      },
+      {
+        "n5k_id": "473",
+        "n5k_name": "cranberries"
+      },
+      {
+        "n5k_id": "129",
+        "n5k_name": "raisins"
+      },
+      {
+        "n5k_id": "375",
+        "n5k_name": "fruit salad"
+      },
+      {
+        "n5k_id": "403",
+        "n5k_name": "fruit cocktail"
+      },
+      {
+        "n5k_id": "211",
+        "n5k_name": "plums"
+      },
+      {
+        "n5k_id": "54",
+        "n5k_name": "apple"
+      },
+      {
+        "n5k_id": "92",
+        "n5k_name": "wine"
+      },
+      {
+        "n5k_id": "213",
+        "n5k_name": "pears"
+      }
+    ]
+  },
+  "42": {
+    "foodsam_id": "42",
+    "foodsam_name": "kiwi",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "56",
+        "n5k_name": "kiwi"
+      },
+      {
+        "n5k_id": "349",
+        "n5k_name": "mangos"
+      },
+      {
+        "n5k_id": "38",
+        "n5k_name": "pineapple"
+      },
+      {
+        "n5k_id": "445",
+        "n5k_name": "papayas"
+      },
+      {
+        "n5k_id": "42",
+        "n5k_name": "avocado"
+      },
+      {
+        "n5k_id": "375",
+        "n5k_name": "fruit salad"
+      },
+      {
+        "n5k_id": "403",
+        "n5k_name": "fruit cocktail"
+      },
+      {
+        "n5k_id": "55",
+        "n5k_name": "banana"
+      },
+      {
+        "n5k_id": "13",
+        "n5k_name": "berries"
+      },
+      {
+        "n5k_id": "37",
+        "n5k_name": "cantaloupe"
+      },
+      {
+        "n5k_id": "112",
+        "n5k_name": "honeydew melons"
+      },
+      {
+        "n5k_id": "57",
+        "n5k_name": "lemon"
+      },
+      {
+        "n5k_id": "367",
+        "n5k_name": "lime"
+      },
+      {
+        "n5k_id": "58",
+        "n5k_name": "orange"
+      },
+      {
+        "n5k_id": "2",
+        "n5k_name": "strawberries"
+      },
+      {
+        "n5k_id": "54",
+        "n5k_name": "apple"
+      }
+    ]
+  },
+  "43": {
+    "foodsam_id": "43",
+    "foodsam_name": "melon",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "112",
+        "n5k_name": "honeydew melons"
+      },
+      {
+        "n5k_id": "37",
+        "n5k_name": "cantaloupe"
+      },
+      {
+        "n5k_id": "121",
+        "n5k_name": "watermelon"
+      },
+      {
+        "n5k_id": "38",
+        "n5k_name": "pineapple"
+      },
+      {
+        "n5k_id": "349",
+        "n5k_name": "mangos"
+      },
+      {
+        "n5k_id": "375",
+        "n5k_name": "fruit salad"
+      },
+      {
+        "n5k_id": "403",
+        "n5k_name": "fruit cocktail"
+      },
+      {
+        "n5k_id": "445",
+        "n5k_name": "papayas"
+      },
+      {
+        "n5k_id": "21",
+        "n5k_name": "squash"
+      },
+      {
+        "n5k_id": "529",
+        "n5k_name": "chayote squash"
+      },
+      {
+        "n5k_id": "261",
+        "n5k_name": "pumpkins"
+      },
+      {
+        "n5k_id": "56",
+        "n5k_name": "kiwi"
+      },
+      {
+        "n5k_id": "58",
+        "n5k_name": "orange"
+      },
+      {
+        "n5k_id": "55",
+        "n5k_name": "banana"
+      },
+      {
+        "n5k_id": "440",
+        "n5k_name": "grapes"
+      },
+      {
+        "n5k_id": "54",
+        "n5k_name": "apple"
+      }
+    ]
+  },
+  "44": {
+    "foodsam_id": "44",
+    "foodsam_name": "orange",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "58",
+        "n5k_name": "orange"
+      },
+      {
+        "n5k_id": "498",
+        "n5k_name": "orange juice"
+      },
+      {
+        "n5k_id": "537",
+        "n5k_name": "orange with peel"
+      },
+      {
+        "n5k_id": "507",
+        "n5k_name": "mandarin oranges"
+      },
+      {
+        "n5k_id": "57",
+        "n5k_name": "lemon"
+      },
+      {
+        "n5k_id": "367",
+        "n5k_name": "lime"
+      },
+      {
+        "n5k_id": "68",
+        "n5k_name": "grapefruits"
+      },
+      {
+        "n5k_id": "520",
+        "n5k_name": "lemon juice"
+      },
+      {
+        "n5k_id": "115",
+        "n5k_name": "lemonade"
+      },
+      {
+        "n5k_id": "166",
+        "n5k_name": "grapefruit juice"
+      },
+      {
+        "n5k_id": "375",
+        "n5k_name": "fruit salad"
+      },
+      {
+        "n5k_id": "403",
+        "n5k_name": "fruit cocktail"
+      },
+      {
+        "n5k_id": "54",
+        "n5k_name": "apple"
+      },
+      {
+        "n5k_id": "440",
+        "n5k_name": "grapes"
+      },
+      {
+        "n5k_id": "38",
+        "n5k_name": "pineapple"
+      },
+      {
+        "n5k_id": "271",
+        "n5k_name": "peaches"
+      },
+      {
+        "n5k_id": "344",
+        "n5k_name": "peach"
+      },
+      {
+        "n5k_id": "55",
+        "n5k_name": "banana"
+      }
+    ]
+  },
+  "45": {
+    "foodsam_id": "45",
+    "foodsam_name": "watermelon",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "121",
+        "n5k_name": "watermelon"
+      },
+      {
+        "n5k_id": "37",
+        "n5k_name": "cantaloupe"
+      },
+      {
+        "n5k_id": "112",
+        "n5k_name": "honeydew melons"
+      },
+      {
+        "n5k_id": "375",
+        "n5k_name": "fruit salad"
+      },
+      {
+        "n5k_id": "403",
+        "n5k_name": "fruit cocktail"
+      },
+      {
+        "n5k_id": "38",
+        "n5k_name": "pineapple"
+      },
+      {
+        "n5k_id": "349",
+        "n5k_name": "mangos"
+      },
+      {
+        "n5k_id": "2",
+        "n5k_name": "strawberries"
+      },
+      {
+        "n5k_id": "13",
+        "n5k_name": "berries"
+      },
+      {
+        "n5k_id": "440",
+        "n5k_name": "grapes"
+      },
+      {
+        "n5k_id": "58",
+        "n5k_name": "orange"
+      },
+      {
+        "n5k_id": "54",
+        "n5k_name": "apple"
+      },
+      {
+        "n5k_id": "55",
+        "n5k_name": "banana"
+      },
+      {
+        "n5k_id": "271",
+        "n5k_name": "peaches"
+      },
+      {
+        "n5k_id": "344",
+        "n5k_name": "peach"
+      },
+      {
+        "n5k_id": "213",
+        "n5k_name": "pears"
+      }
+    ]
+  },
+  "46": {
+    "foodsam_id": "46",
+    "foodsam_name": "steak",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "10",
+        "n5k_name": "steak"
+      },
+      {
+        "n5k_id": "25",
+        "n5k_name": "beef"
+      },
+      {
+        "n5k_id": "76",
+        "n5k_name": "brisket"
+      },
+      {
+        "n5k_id": "236",
+        "n5k_name": "roast beef"
+      },
+      {
+        "n5k_id": "66",
+        "n5k_name": "ground beef"
+      },
+      {
+        "n5k_id": "209",
+        "n5k_name": "pastrami"
+      },
+      {
+        "n5k_id": "259",
+        "n5k_name": "corned beef"
+      },
+      {
+        "n5k_id": "143",
+        "n5k_name": "veal"
+      },
+      {
+        "n5k_id": "145",
+        "n5k_name": "bison"
+      },
+      {
+        "n5k_id": "217",
+        "n5k_name": "lamb"
+      },
+      {
+        "n5k_id": "462",
+        "n5k_name": "pork"
+      },
+      {
+        "n5k_id": "308",
+        "n5k_name": "lamb chops"
+      },
+      {
+        "n5k_id": "204",
+        "n5k_name": "pork chops"
+      },
+      {
+        "n5k_id": "4",
+        "n5k_name": "bacon"
+      },
+      {
+        "n5k_id": "284",
+        "n5k_name": "ribs"
+      },
+      {
+        "n5k_id": "345",
+        "n5k_name": "roast pork"
+      },
+      {
+        "n5k_id": "363",
+        "n5k_name": "meatloaf"
+      },
+      {
+        "n5k_id": "505",
+        "n5k_name": "meatballs"
+      },
+      {
+        "n5k_id": "435",
+        "n5k_name": "jerky"
+      },
+      {
+        "n5k_id": "48",
+        "n5k_name": "ham"
+      },
+      {
+        "n5k_id": "39",
+        "n5k_name": "sausage"
+      },
+      {
+        "n5k_id": "297",
+        "n5k_name": "pepperoni"
+      }
+    ]
+  },
+  "47": {
+    "foodsam_id": "47",
+    "foodsam_name": "pork",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "462",
+        "n5k_name": "pork"
+      },
+      {
+        "n5k_id": "204",
+        "n5k_name": "pork chops"
+      },
+      {
+        "n5k_id": "90",
+        "n5k_name": "ground pork"
+      },
+      {
+        "n5k_id": "345",
+        "n5k_name": "roast pork"
+      },
+      {
+        "n5k_id": "48",
+        "n5k_name": "ham"
+      },
+      {
+        "n5k_id": "4",
+        "n5k_name": "bacon"
+      },
+      {
+        "n5k_id": "284",
+        "n5k_name": "ribs"
+      },
+      {
+        "n5k_id": "39",
+        "n5k_name": "sausage"
+      },
+      {
+        "n5k_id": "80",
+        "n5k_name": "turkey bacon"
+      },
+      {
+        "n5k_id": "229",
+        "n5k_name": "bologna"
+      },
+      {
+        "n5k_id": "323",
+        "n5k_name": "salami"
+      },
+      {
+        "n5k_id": "297",
+        "n5k_name": "pepperoni"
+      },
+      {
+        "n5k_id": "209",
+        "n5k_name": "pastrami"
+      },
+      {
+        "n5k_id": "10",
+        "n5k_name": "steak"
+      },
+      {
+        "n5k_id": "25",
+        "n5k_name": "beef"
+      },
+      {
+        "n5k_id": "363",
+        "n5k_name": "meatloaf"
+      },
+      {
+        "n5k_id": "217",
+        "n5k_name": "lamb"
+      },
+      {
+        "n5k_id": "505",
+        "n5k_name": "meatballs"
+      },
+      {
+        "n5k_id": "193",
+        "n5k_name": "hot dogs"
+      },
+      {
+        "n5k_id": "315",
+        "n5k_name": "corn dogs"
+      },
+      {
+        "n5k_id": "143",
+        "n5k_name": "veal"
+      }
+    ]
+  },
+  "48": {
+    "foodsam_id": "48",
+    "foodsam_name": "chicken duck",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "28",
+        "n5k_name": "chicken"
+      },
+      {
+        "n5k_id": "20",
+        "n5k_name": "duck"
+      },
+      {
+        "n5k_id": "105",
+        "n5k_name": "grilled chicken"
+      },
+      {
+        "n5k_id": "244",
+        "n5k_name": "chicken breast"
+      },
+      {
+        "n5k_id": "316",
+        "n5k_name": "roast chicken"
+      },
+      {
+        "n5k_id": "207",
+        "n5k_name": "fried chicken"
+      },
+      {
+        "n5k_id": "155",
+        "n5k_name": "chicken thighs"
+      },
+      {
+        "n5k_id": "418",
+        "n5k_name": "chicken wings"
+      },
+      {
+        "n5k_id": "389",
+        "n5k_name": "chicken drumsticks"
+      },
+      {
+        "n5k_id": "416",
+        "n5k_name": "ground chicken"
+      },
+      {
+        "n5k_id": "438",
+        "n5k_name": "chicken nuggets"
+      },
+      {
+        "n5k_id": "484",
+        "n5k_name": "chicken salad"
+      },
+      {
+        "n5k_id": "326",
+        "n5k_name": "chicken soup"
+      },
+      {
+        "n5k_id": "510",
+        "n5k_name": "chicken apple sausage"
+      },
+      {
+        "n5k_id": "18",
+        "n5k_name": "turkey"
+      },
+      {
+        "n5k_id": "147",
+        "n5k_name": "turkey breast"
+      },
+      {
+        "n5k_id": "361",
+        "n5k_name": "roast turkey"
+      },
+      {
+        "n5k_id": "421",
+        "n5k_name": "ground turkey"
+      },
+      {
+        "n5k_id": "80",
+        "n5k_name": "turkey bacon"
+      },
+      {
+        "n5k_id": "39",
+        "n5k_name": "sausage"
+      },
+      {
+        "n5k_id": "160",
+        "n5k_name": "chow mein"
+      },
+      {
+        "n5k_id": "417",
+        "n5k_name": "fajitas"
+      },
+      {
+        "n5k_id": "156",
+        "n5k_name": "paella"
+      }
+    ]
+  },
+  "49": {
+    "foodsam_id": "49",
+    "foodsam_name": "sausage",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "39",
+        "n5k_name": "sausage"
+      },
+      {
+        "n5k_id": "510",
+        "n5k_name": "chicken apple sausage"
+      },
+      {
+        "n5k_id": "554",
+        "n5k_name": "soy sausage"
+      },
+      {
+        "n5k_id": "297",
+        "n5k_name": "pepperoni"
+      },
+      {
+        "n5k_id": "323",
+        "n5k_name": "salami"
+      },
+      {
+        "n5k_id": "229",
+        "n5k_name": "bologna"
+      },
+      {
+        "n5k_id": "193",
+        "n5k_name": "hot dogs"
+      },
+      {
+        "n5k_id": "315",
+        "n5k_name": "corn dogs"
+      },
+      {
+        "n5k_id": "209",
+        "n5k_name": "pastrami"
+      },
+      {
+        "n5k_id": "48",
+        "n5k_name": "ham"
+      },
+      {
+        "n5k_id": "4",
+        "n5k_name": "bacon"
+      },
+      {
+        "n5k_id": "80",
+        "n5k_name": "turkey bacon"
+      },
+      {
+        "n5k_id": "505",
+        "n5k_name": "meatballs"
+      },
+      {
+        "n5k_id": "462",
+        "n5k_name": "pork"
+      },
+      {
+        "n5k_id": "90",
+        "n5k_name": "ground pork"
+      },
+      {
+        "n5k_id": "363",
+        "n5k_name": "meatloaf"
+      },
+      {
+        "n5k_id": "66",
+        "n5k_name": "ground beef"
+      },
+      {
+        "n5k_id": "25",
+        "n5k_name": "beef"
+      },
+      {
+        "n5k_id": "10",
+        "n5k_name": "steak"
+      },
+      {
+        "n5k_id": "204",
+        "n5k_name": "pork chops"
+      },
+      {
+        "n5k_id": "435",
+        "n5k_name": "jerky"
+      },
+      {
+        "n5k_id": "28",
+        "n5k_name": "chicken"
+      },
+      {
+        "n5k_id": "329",
+        "n5k_name": "pate nutrition"
+      }
+    ]
+  },
+  "50": {
+    "foodsam_id": "50",
+    "foodsam_name": "fried meat",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "207",
+        "n5k_name": "fried chicken"
+      },
+      {
+        "n5k_id": "388",
+        "n5k_name": "fried eggs"
+      },
+      {
+        "n5k_id": "194",
+        "n5k_name": "fried rice"
+      },
+      {
+        "n5k_id": "356",
+        "n5k_name": "french fries"
+      },
+      {
+        "n5k_id": "10",
+        "n5k_name": "steak"
+      },
+      {
+        "n5k_id": "25",
+        "n5k_name": "beef"
+      },
+      {
+        "n5k_id": "462",
+        "n5k_name": "pork"
+      },
+      {
+        "n5k_id": "204",
+        "n5k_name": "pork chops"
+      },
+      {
+        "n5k_id": "4",
+        "n5k_name": "bacon"
+      },
+      {
+        "n5k_id": "217",
+        "n5k_name": "lamb"
+      },
+      {
+        "n5k_id": "308",
+        "n5k_name": "lamb chops"
+      },
+      {
+        "n5k_id": "28",
+        "n5k_name": "chicken"
+      },
+      {
+        "n5k_id": "105",
+        "n5k_name": "grilled chicken"
+      },
+      {
+        "n5k_id": "284",
+        "n5k_name": "ribs"
+      },
+      {
+        "n5k_id": "76",
+        "n5k_name": "brisket"
+      },
+      {
+        "n5k_id": "236",
+        "n5k_name": "roast beef"
+      },
+      {
+        "n5k_id": "345",
+        "n5k_name": "roast pork"
+      },
+      {
+        "n5k_id": "316",
+        "n5k_name": "roast chicken"
+      },
+      {
+        "n5k_id": "361",
+        "n5k_name": "roast turkey"
+      },
+      {
+        "n5k_id": "18",
+        "n5k_name": "turkey"
+      }
+    ]
+  },
+  "51": {
+    "foodsam_id": "51",
+    "foodsam_name": "lamb",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "217",
+        "n5k_name": "lamb"
+      },
+      {
+        "n5k_id": "308",
+        "n5k_name": "lamb chops"
+      },
+      {
+        "n5k_id": "25",
+        "n5k_name": "beef"
+      },
+      {
+        "n5k_id": "10",
+        "n5k_name": "steak"
+      },
+      {
+        "n5k_id": "462",
+        "n5k_name": "pork"
+      },
+      {
+        "n5k_id": "143",
+        "n5k_name": "veal"
+      },
+      {
+        "n5k_id": "145",
+        "n5k_name": "bison"
+      },
+      {
+        "n5k_id": "204",
+        "n5k_name": "pork chops"
+      },
+      {
+        "n5k_id": "76",
+        "n5k_name": "brisket"
+      },
+      {
+        "n5k_id": "236",
+        "n5k_name": "roast beef"
+      },
+      {
+        "n5k_id": "345",
+        "n5k_name": "roast pork"
+      },
+      {
+        "n5k_id": "363",
+        "n5k_name": "meatloaf"
+      },
+      {
+        "n5k_id": "284",
+        "n5k_name": "ribs"
+      },
+      {
+        "n5k_id": "397",
+        "n5k_name": "gyros"
+      },
+      {
+        "n5k_id": "66",
+        "n5k_name": "ground beef"
+      },
+      {
+        "n5k_id": "90",
+        "n5k_name": "ground pork"
+      },
+      {
+        "n5k_id": "28",
+        "n5k_name": "chicken"
+      },
+      {
+        "n5k_id": "18",
+        "n5k_name": "turkey"
+      },
+      {
+        "n5k_id": "505",
+        "n5k_name": "meatballs"
+      },
+      {
+        "n5k_id": "435",
+        "n5k_name": "jerky"
+      },
+      {
+        "n5k_id": "48",
+        "n5k_name": "ham"
+      }
+    ]
+  },
+  "52": {
+    "foodsam_id": "52",
+    "foodsam_name": "sauce",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "226",
+        "n5k_name": "pasta sauce"
+      },
+      {
+        "n5k_id": "551",
+        "n5k_name": "pizza sauce"
+      },
+      {
+        "n5k_id": "110",
+        "n5k_name": "barbecue sauce"
+      },
+      {
+        "n5k_id": "508",
+        "n5k_name": "soy sauce"
+      },
+      {
+        "n5k_id": "393",
+        "n5k_name": "teriyaki sauce"
+      },
+      {
+        "n5k_id": "283",
+        "n5k_name": "salad dressing"
+      },
+      {
+        "n5k_id": "113",
+        "n5k_name": "ketchup"
+      },
+      {
+        "n5k_id": "116",
+        "n5k_name": "mayonnaise"
+      },
+      {
+        "n5k_id": "126",
+        "n5k_name": "mustard"
+      },
+      {
+        "n5k_id": "475",
+        "n5k_name": "salsa"
+      },
+      {
+        "n5k_id": "22",
+        "n5k_name": "guacamole"
+      },
+      {
+        "n5k_id": "442",
+        "n5k_name": "hummus"
+      },
+      {
+        "n5k_id": "170",
+        "n5k_name": "gravy"
+      },
+      {
+        "n5k_id": "338",
+        "n5k_name": "vinaigrette"
+      },
+      {
+        "n5k_id": "140",
+        "n5k_name": "caesar dressing"
+      },
+      {
+        "n5k_id": "176",
+        "n5k_name": "french dressing"
+      },
+      {
+        "n5k_id": "289",
+        "n5k_name": "ranch dressing"
+      },
+      {
+        "n5k_id": "383",
+        "n5k_name": "italian dressing"
+      },
+      {
+        "n5k_id": "532",
+        "n5k_name": "pesto"
+      },
+      {
+        "n5k_id": "407",
+        "n5k_name": "horseradish"
+      },
+      {
+        "n5k_id": "253",
+        "n5k_name": "tahini"
+      },
+      {
+        "n5k_id": "414",
+        "n5k_name": "chutney"
+      },
+      {
+        "n5k_id": "503",
+        "n5k_name": "applesauce"
+      },
+      {
+        "n5k_id": "292",
+        "n5k_name": "spreads"
+      },
+      {
+        "n5k_id": "189",
+        "n5k_name": "vinegar"
+      },
+      {
+        "n5k_id": "546",
+        "n5k_name": "balsamic vinegar"
+      }
+    ]
+  },
+  "53": {
+    "foodsam_id": "53",
+    "foodsam_name": "crab",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "422",
+        "n5k_name": "crab"
+      },
+      {
+        "n5k_id": "138",
+        "n5k_name": "seafood"
+      },
+      {
+        "n5k_id": "51",
+        "n5k_name": "shrimp"
+      },
+      {
+        "n5k_id": "489",
+        "n5k_name": "lobster"
+      },
+      {
+        "n5k_id": "123",
+        "n5k_name": "crawfish"
+      },
+      {
+        "n5k_id": "96",
+        "n5k_name": "mussels"
+      },
+      {
+        "n5k_id": "111",
+        "n5k_name": "clams"
+      },
+      {
+        "n5k_id": "232",
+        "n5k_name": "oysters"
+      },
+      {
+        "n5k_id": "146",
+        "n5k_name": "scallops"
+      },
+      {
+        "n5k_id": "49",
+        "n5k_name": "fish"
+      },
+      {
+        "n5k_id": "227",
+        "n5k_name": "calamari"
+      },
+      {
+        "n5k_id": "215",
+        "n5k_name": "squid"
+      },
+      {
+        "n5k_id": "125",
+        "n5k_name": "octopus"
+      },
+      {
+        "n5k_id": "149",
+        "n5k_name": "sushi"
+      },
+      {
+        "n5k_id": "332",
+        "n5k_name": "salmon"
+      },
+      {
+        "n5k_id": "402",
+        "n5k_name": "tuna"
+      },
+      {
+        "n5k_id": "196",
+        "n5k_name": "cod"
+      },
+      {
+        "n5k_id": "135",
+        "n5k_name": "tilapia"
+      },
+      {
+        "n5k_id": "240",
+        "n5k_name": "smoked salmon"
+      },
+      {
+        "n5k_id": "141",
+        "n5k_name": "tuna salad"
+      },
+      {
+        "n5k_id": "285",
+        "n5k_name": "trout"
+      },
+      {
+        "n5k_id": "378",
+        "n5k_name": "catfish"
+      }
+    ]
+  },
+  "54": {
+    "foodsam_id": "54",
+    "foodsam_name": "fish",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "49",
+        "n5k_name": "fish"
+      },
+      {
+        "n5k_id": "256",
+        "n5k_name": "fish oil"
+      },
+      {
+        "n5k_id": "332",
+        "n5k_name": "salmon"
+      },
+      {
+        "n5k_id": "402",
+        "n5k_name": "tuna"
+      },
+      {
+        "n5k_id": "196",
+        "n5k_name": "cod"
+      },
+      {
+        "n5k_id": "135",
+        "n5k_name": "tilapia"
+      },
+      {
+        "n5k_id": "240",
+        "n5k_name": "smoked salmon"
+      },
+      {
+        "n5k_id": "285",
+        "n5k_name": "trout"
+      },
+      {
+        "n5k_id": "378",
+        "n5k_name": "catfish"
+      },
+      {
+        "n5k_id": "150",
+        "n5k_name": "swordfish"
+      },
+      {
+        "n5k_id": "91",
+        "n5k_name": "herring"
+      },
+      {
+        "n5k_id": "370",
+        "n5k_name": "mahi mahi"
+      },
+      {
+        "n5k_id": "351",
+        "n5k_name": "mackerel"
+      },
+      {
+        "n5k_id": "24",
+        "n5k_name": "artic char"
+      },
+      {
+        "n5k_id": "330",
+        "n5k_name": "haddock"
+      },
+      {
+        "n5k_id": "317",
+        "n5k_name": "flounder"
+      },
+      {
+        "n5k_id": "373",
+        "n5k_name": "snapper"
+      },
+      {
+        "n5k_id": "497",
+        "n5k_name": "halibut"
+      },
+      {
+        "n5k_id": "469",
+        "n5k_name": "carp"
+      },
+      {
+        "n5k_id": "386",
+        "n5k_name": "eel"
+      },
+      {
+        "n5k_id": "138",
+        "n5k_name": "seafood"
+      },
+      {
+        "n5k_id": "439",
+        "n5k_name": "anchovies"
+      },
+      {
+        "n5k_id": "265",
+        "n5k_name": "sardines"
+      },
+      {
+        "n5k_id": "141",
+        "n5k_name": "tuna salad"
+      },
+      {
+        "n5k_id": "149",
+        "n5k_name": "sushi"
+      }
+    ]
+  },
+  "55": {
+    "foodsam_id": "55",
+    "foodsam_name": "shellfish",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "138",
+        "n5k_name": "seafood"
+      },
+      {
+        "n5k_id": "51",
+        "n5k_name": "shrimp"
+      },
+      {
+        "n5k_id": "422",
+        "n5k_name": "crab"
+      },
+      {
+        "n5k_id": "489",
+        "n5k_name": "lobster"
+      },
+      {
+        "n5k_id": "96",
+        "n5k_name": "mussels"
+      },
+      {
+        "n5k_id": "111",
+        "n5k_name": "clams"
+      },
+      {
+        "n5k_id": "232",
+        "n5k_name": "oysters"
+      },
+      {
+        "n5k_id": "146",
+        "n5k_name": "scallops"
+      },
+      {
+        "n5k_id": "123",
+        "n5k_name": "crawfish"
+      },
+      {
+        "n5k_id": "49",
+        "n5k_name": "fish"
+      },
+      {
+        "n5k_id": "227",
+        "n5k_name": "calamari"
+      },
+      {
+        "n5k_id": "215",
+        "n5k_name": "squid"
+      },
+      {
+        "n5k_id": "125",
+        "n5k_name": "octopus"
+      },
+      {
+        "n5k_id": "149",
+        "n5k_name": "sushi"
+      },
+      {
+        "n5k_id": "332",
+        "n5k_name": "salmon"
+      },
+      {
+        "n5k_id": "402",
+        "n5k_name": "tuna"
+      },
+      {
+        "n5k_id": "196",
+        "n5k_name": "cod"
+      },
+      {
+        "n5k_id": "240",
+        "n5k_name": "smoked salmon"
+      },
+      {
+        "n5k_id": "386",
+        "n5k_name": "eel"
+      },
+      {
+        "n5k_id": "135",
+        "n5k_name": "tilapia"
+      },
+      {
+        "n5k_id": "439",
+        "n5k_name": "anchovies"
+      },
+      {
+        "n5k_id": "265",
+        "n5k_name": "sardines"
+      }
+    ]
+  },
+  "56": {
+    "foodsam_id": "56",
+    "foodsam_name": "shrimp",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "51",
+        "n5k_name": "shrimp"
+      },
+      {
+        "n5k_id": "138",
+        "n5k_name": "seafood"
+      },
+      {
+        "n5k_id": "422",
+        "n5k_name": "crab"
+      },
+      {
+        "n5k_id": "489",
+        "n5k_name": "lobster"
+      },
+      {
+        "n5k_id": "123",
+        "n5k_name": "crawfish"
+      },
+      {
+        "n5k_id": "146",
+        "n5k_name": "scallops"
+      },
+      {
+        "n5k_id": "96",
+        "n5k_name": "mussels"
+      },
+      {
+        "n5k_id": "111",
+        "n5k_name": "clams"
+      },
+      {
+        "n5k_id": "232",
+        "n5k_name": "oysters"
+      },
+      {
+        "n5k_id": "49",
+        "n5k_name": "fish"
+      },
+      {
+        "n5k_id": "227",
+        "n5k_name": "calamari"
+      },
+      {
+        "n5k_id": "215",
+        "n5k_name": "squid"
+      },
+      {
+        "n5k_id": "125",
+        "n5k_name": "octopus"
+      },
+      {
+        "n5k_id": "509",
+        "n5k_name": "tempura"
+      },
+      {
+        "n5k_id": "149",
+        "n5k_name": "sushi"
+      },
+      {
+        "n5k_id": "156",
+        "n5k_name": "paella"
+      },
+      {
+        "n5k_id": "332",
+        "n5k_name": "salmon"
+      },
+      {
+        "n5k_id": "402",
+        "n5k_name": "tuna"
+      },
+      {
+        "n5k_id": "196",
+        "n5k_name": "cod"
+      },
+      {
+        "n5k_id": "108",
+        "n5k_name": "spring rolls"
+      },
+      {
+        "n5k_id": "139",
+        "n5k_name": "egg rolls"
+      }
+    ]
+  },
+  "57": {
+    "foodsam_id": "57",
+    "foodsam_name": "soup",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "326",
+        "n5k_name": "chicken soup"
+      },
+      {
+        "n5k_id": "426",
+        "n5k_name": "tomato soup"
+      },
+      {
+        "n5k_id": "350",
+        "n5k_name": "miso soup"
+      },
+      {
+        "n5k_id": "164",
+        "n5k_name": "chowders"
+      },
+      {
+        "n5k_id": "252",
+        "n5k_name": "broth"
+      },
+      {
+        "n5k_id": "411",
+        "n5k_name": "stews"
+      },
+      {
+        "n5k_id": "203",
+        "n5k_name": "chili"
+      },
+      {
+        "n5k_id": "158",
+        "n5k_name": "gumbo"
+      },
+      {
+        "n5k_id": "410",
+        "n5k_name": "goulash"
+      },
+      {
+        "n5k_id": "385",
+        "n5k_name": "curries"
+      },
+      {
+        "n5k_id": "408",
+        "n5k_name": "jambalaya"
+      },
+      {
+        "n5k_id": "62",
+        "n5k_name": "noodles"
+      },
+      {
+        "n5k_id": "180",
+        "n5k_name": "rice noodles"
+      },
+      {
+        "n5k_id": "74",
+        "n5k_name": "pasta"
+      },
+      {
+        "n5k_id": "89",
+        "n5k_name": "spaghetti"
+      },
+      {
+        "n5k_id": "482",
+        "n5k_name": "rice"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "32",
+        "n5k_name": "tomatoes"
+      },
+      {
+        "n5k_id": "28",
+        "n5k_name": "chicken"
+      }
+    ]
+  },
+  "58": {
+    "foodsam_id": "58",
+    "foodsam_name": "bread",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "19",
+        "n5k_name": "bread"
+      },
+      {
+        "n5k_id": "98",
+        "n5k_name": "multigrain bread"
+      },
+      {
+        "n5k_id": "169",
+        "n5k_name": "whole wheat bread"
+      },
+      {
+        "n5k_id": "130",
+        "n5k_name": "rye bread"
+      },
+      {
+        "n5k_id": "245",
+        "n5k_name": "wheat bread"
+      },
+      {
+        "n5k_id": "334",
+        "n5k_name": "white bread"
+      },
+      {
+        "n5k_id": "314",
+        "n5k_name": "sourdough bread"
+      },
+      {
+        "n5k_id": "400",
+        "n5k_name": "cornbread"
+      },
+      {
+        "n5k_id": "322",
+        "n5k_name": "garlic bread"
+      },
+      {
+        "n5k_id": "220",
+        "n5k_name": "pita bread"
+      },
+      {
+        "n5k_id": "399",
+        "n5k_name": "raisin bread"
+      },
+      {
+        "n5k_id": "333",
+        "n5k_name": "potato bread"
+      },
+      {
+        "n5k_id": "481",
+        "n5k_name": "flatbread"
+      },
+      {
+        "n5k_id": "376",
+        "n5k_name": "naan"
+      },
+      {
+        "n5k_id": "287",
+        "n5k_name": "toast"
+      },
+      {
+        "n5k_id": "174",
+        "n5k_name": "bread crumbs"
+      },
+      {
+        "n5k_id": "198",
+        "n5k_name": "breadsticks"
+      },
+      {
+        "n5k_id": "443",
+        "n5k_name": "crispbread"
+      },
+      {
+        "n5k_id": "60",
+        "n5k_name": "tortilla"
+      },
+      {
+        "n5k_id": "250",
+        "n5k_name": "rolls"
+      },
+      {
+        "n5k_id": "450",
+        "n5k_name": "buns"
+      },
+      {
+        "n5k_id": "264",
+        "n5k_name": "bagels"
+      },
+      {
+        "n5k_id": "298",
+        "n5k_name": "focaccia"
+      },
+      {
+        "n5k_id": "479",
+        "n5k_name": "challah"
+      },
+      {
+        "n5k_id": "134",
+        "n5k_name": "biscuits"
+      },
+      {
+        "n5k_id": "117",
+        "n5k_name": "tacos"
+      },
+      {
+        "n5k_id": "216",
+        "n5k_name": "tostadas"
+      },
+      {
+        "n5k_id": "372",
+        "n5k_name": "chilaquiles"
+      },
+      {
+        "n5k_id": "401",
+        "n5k_name": "wraps"
+      }
+    ]
+  },
+  "59": {
+    "foodsam_id": "59",
+    "foodsam_name": "corn",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "47",
+        "n5k_name": "corn"
+      },
+      {
+        "n5k_id": "205",
+        "n5k_name": "corn on the cob"
+      },
+      {
+        "n5k_id": "547",
+        "n5k_name": "corn nuts"
+      },
+      {
+        "n5k_id": "310",
+        "n5k_name": "corn chips"
+      },
+      {
+        "n5k_id": "228",
+        "n5k_name": "cornmeal"
+      },
+      {
+        "n5k_id": "400",
+        "n5k_name": "cornbread"
+      },
+      {
+        "n5k_id": "315",
+        "n5k_name": "corn dogs"
+      },
+      {
+        "n5k_id": "259",
+        "n5k_name": "corned beef"
+      },
+      {
+        "n5k_id": "544",
+        "n5k_name": "corn starch"
+      },
+      {
+        "n5k_id": "258",
+        "n5k_name": "popcorn"
+      },
+      {
+        "n5k_id": "114",
+        "n5k_name": "polenta"
+      },
+      {
+        "n5k_id": "238",
+        "n5k_name": "hominy"
+      },
+      {
+        "n5k_id": "339",
+        "n5k_name": "grits"
+      },
+      {
+        "n5k_id": "137",
+        "n5k_name": "succotash"
+      },
+      {
+        "n5k_id": "60",
+        "n5k_name": "tortilla"
+      },
+      {
+        "n5k_id": "251",
+        "n5k_name": "tortilla chips"
+      },
+      {
+        "n5k_id": "491",
+        "n5k_name": "nachos"
+      },
+      {
+        "n5k_id": "451",
+        "n5k_name": "taco shells"
+      },
+      {
+        "n5k_id": "183",
+        "n5k_name": "chips"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "472",
+        "n5k_name": "couscous"
+      },
+      {
+        "n5k_id": "513",
+        "n5k_name": "millet"
+      },
+      {
+        "n5k_id": "415",
+        "n5k_name": "cereal"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      }
+    ]
+  },
+  "60": {
+    "foodsam_id": "60",
+    "foodsam_name": "hamburg",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "190",
+        "n5k_name": "hamburgers"
+      },
+      {
+        "n5k_id": "382",
+        "n5k_name": "cheeseburgers"
+      },
+      {
+        "n5k_id": "212",
+        "n5k_name": "burgers"
+      },
+      {
+        "n5k_id": "225",
+        "n5k_name": "veggie burgers"
+      },
+      {
+        "n5k_id": "273",
+        "n5k_name": "sandwiches"
+      },
+      {
+        "n5k_id": "450",
+        "n5k_name": "buns"
+      },
+      {
+        "n5k_id": "66",
+        "n5k_name": "ground beef"
+      },
+      {
+        "n5k_id": "25",
+        "n5k_name": "beef"
+      },
+      {
+        "n5k_id": "193",
+        "n5k_name": "hot dogs"
+      },
+      {
+        "n5k_id": "363",
+        "n5k_name": "meatloaf"
+      },
+      {
+        "n5k_id": "505",
+        "n5k_name": "meatballs"
+      },
+      {
+        "n5k_id": "10",
+        "n5k_name": "steak"
+      },
+      {
+        "n5k_id": "48",
+        "n5k_name": "ham"
+      },
+      {
+        "n5k_id": "236",
+        "n5k_name": "roast beef"
+      },
+      {
+        "n5k_id": "19",
+        "n5k_name": "bread"
+      },
+      {
+        "n5k_id": "250",
+        "n5k_name": "rolls"
+      },
+      {
+        "n5k_id": "39",
+        "n5k_name": "sausage"
+      },
+      {
+        "n5k_id": "462",
+        "n5k_name": "pork"
+      },
+      {
+        "n5k_id": "416",
+        "n5k_name": "ground chicken"
+      },
+      {
+        "n5k_id": "421",
+        "n5k_name": "ground turkey"
+      },
+      {
+        "n5k_id": "28",
+        "n5k_name": "chicken"
+      }
+    ]
+  },
+  "61": {
+    "foodsam_id": "61",
+    "foodsam_name": "pizza",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "380",
+        "n5k_name": "pizza"
+      },
+      {
+        "n5k_id": "11",
+        "n5k_name": "cheese pizza"
+      },
+      {
+        "n5k_id": "392",
+        "n5k_name": "pepperoni pizza"
+      },
+      {
+        "n5k_id": "549",
+        "n5k_name": "pizza dough"
+      },
+      {
+        "n5k_id": "551",
+        "n5k_name": "pizza sauce"
+      },
+      {
+        "n5k_id": "297",
+        "n5k_name": "pepperoni"
+      },
+      {
+        "n5k_id": "352",
+        "n5k_name": "calzones"
+      },
+      {
+        "n5k_id": "74",
+        "n5k_name": "pasta"
+      },
+      {
+        "n5k_id": "168",
+        "n5k_name": "lasagna"
+      },
+      {
+        "n5k_id": "52",
+        "n5k_name": "cheese"
+      },
+      {
+        "n5k_id": "243",
+        "n5k_name": "mozzarella cheese"
+      },
+      {
+        "n5k_id": "148",
+        "n5k_name": "parmesan cheese"
+      },
+      {
+        "n5k_id": "226",
+        "n5k_name": "pasta sauce"
+      },
+      {
+        "n5k_id": "19",
+        "n5k_name": "bread"
+      },
+      {
+        "n5k_id": "298",
+        "n5k_name": "focaccia"
+      },
+      {
+        "n5k_id": "481",
+        "n5k_name": "flatbread"
+      },
+      {
+        "n5k_id": "46",
+        "n5k_name": "mushroom"
+      },
+      {
+        "n5k_id": "202",
+        "n5k_name": "enchiladas"
+      },
+      {
+        "n5k_id": "277",
+        "n5k_name": "chimichangas"
+      },
+      {
+        "n5k_id": "353",
+        "n5k_name": "burritos"
+      },
+      {
+        "n5k_id": "474",
+        "n5k_name": "quesadillas"
+      }
+    ]
+  },
+  "62": {
+    "foodsam_id": "62",
+    "foodsam_name": "hanamaki baozi",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "371",
+        "n5k_name": "dumplings"
+      },
+      {
+        "n5k_id": "450",
+        "n5k_name": "buns"
+      },
+      {
+        "n5k_id": "250",
+        "n5k_name": "rolls"
+      },
+      {
+        "n5k_id": "19",
+        "n5k_name": "bread"
+      },
+      {
+        "n5k_id": "108",
+        "n5k_name": "spring rolls"
+      },
+      {
+        "n5k_id": "139",
+        "n5k_name": "egg rolls"
+      },
+      {
+        "n5k_id": "461",
+        "n5k_name": "samosas"
+      },
+      {
+        "n5k_id": "288",
+        "n5k_name": "empanadas"
+      },
+      {
+        "n5k_id": "184",
+        "n5k_name": "ravioli"
+      },
+      {
+        "n5k_id": "242",
+        "n5k_name": "tortellini"
+      },
+      {
+        "n5k_id": "500",
+        "n5k_name": "taquitos"
+      },
+      {
+        "n5k_id": "167",
+        "n5k_name": "tamales"
+      },
+      {
+        "n5k_id": "478",
+        "n5k_name": "sweet rolls"
+      },
+      {
+        "n5k_id": "62",
+        "n5k_name": "noodles"
+      },
+      {
+        "n5k_id": "74",
+        "n5k_name": "pasta"
+      },
+      {
+        "n5k_id": "482",
+        "n5k_name": "rice"
+      },
+      {
+        "n5k_id": "127",
+        "n5k_name": "pastries"
+      },
+      {
+        "n5k_id": "318",
+        "n5k_name": "flour"
+      },
+      {
+        "n5k_id": "90",
+        "n5k_name": "ground pork"
+      }
+    ]
+  },
+  "63": {
+    "foodsam_id": "63",
+    "foodsam_name": "wonton dumplings",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "371",
+        "n5k_name": "dumplings"
+      },
+      {
+        "n5k_id": "184",
+        "n5k_name": "ravioli"
+      },
+      {
+        "n5k_id": "242",
+        "n5k_name": "tortellini"
+      },
+      {
+        "n5k_id": "108",
+        "n5k_name": "spring rolls"
+      },
+      {
+        "n5k_id": "139",
+        "n5k_name": "egg rolls"
+      },
+      {
+        "n5k_id": "461",
+        "n5k_name": "samosas"
+      },
+      {
+        "n5k_id": "288",
+        "n5k_name": "empanadas"
+      },
+      {
+        "n5k_id": "500",
+        "n5k_name": "taquitos"
+      },
+      {
+        "n5k_id": "167",
+        "n5k_name": "tamales"
+      },
+      {
+        "n5k_id": "429",
+        "n5k_name": "gnocchi"
+      },
+      {
+        "n5k_id": "74",
+        "n5k_name": "pasta"
+      },
+      {
+        "n5k_id": "62",
+        "n5k_name": "noodles"
+      },
+      {
+        "n5k_id": "450",
+        "n5k_name": "buns"
+      },
+      {
+        "n5k_id": "160",
+        "n5k_name": "chow mein"
+      },
+      {
+        "n5k_id": "340",
+        "n5k_name": "lo mein"
+      },
+      {
+        "n5k_id": "350",
+        "n5k_name": "miso soup"
+      },
+      {
+        "n5k_id": "90",
+        "n5k_name": "ground pork"
+      },
+      {
+        "n5k_id": "51",
+        "n5k_name": "shrimp"
+      }
+    ]
+  },
+  "64": {
+    "foodsam_id": "64",
+    "foodsam_name": "pasta",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "74",
+        "n5k_name": "pasta"
+      },
+      {
+        "n5k_id": "17",
+        "n5k_name": "pasta salad"
+      },
+      {
+        "n5k_id": "226",
+        "n5k_name": "pasta sauce"
+      },
+      {
+        "n5k_id": "89",
+        "n5k_name": "spaghetti"
+      },
+      {
+        "n5k_id": "71",
+        "n5k_name": "macaroni and cheese"
+      },
+      {
+        "n5k_id": "219",
+        "n5k_name": "macaroni"
+      },
+      {
+        "n5k_id": "168",
+        "n5k_name": "lasagna"
+      },
+      {
+        "n5k_id": "184",
+        "n5k_name": "ravioli"
+      },
+      {
+        "n5k_id": "242",
+        "n5k_name": "tortellini"
+      },
+      {
+        "n5k_id": "62",
+        "n5k_name": "noodles"
+      },
+      {
+        "n5k_id": "429",
+        "n5k_name": "gnocchi"
+      },
+      {
+        "n5k_id": "533",
+        "n5k_name": "orzo"
+      },
+      {
+        "n5k_id": "180",
+        "n5k_name": "rice noodles"
+      },
+      {
+        "n5k_id": "160",
+        "n5k_name": "chow mein"
+      },
+      {
+        "n5k_id": "340",
+        "n5k_name": "lo mein"
+      },
+      {
+        "n5k_id": "371",
+        "n5k_name": "dumplings"
+      },
+      {
+        "n5k_id": "472",
+        "n5k_name": "couscous"
+      },
+      {
+        "n5k_id": "360",
+        "n5k_name": "risotto"
+      },
+      {
+        "n5k_id": "156",
+        "n5k_name": "paella"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      }
+    ]
+  },
+  "65": {
+    "foodsam_id": "65",
+    "foodsam_name": "noodles",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "62",
+        "n5k_name": "noodles"
+      },
+      {
+        "n5k_id": "180",
+        "n5k_name": "rice noodles"
+      },
+      {
+        "n5k_id": "74",
+        "n5k_name": "pasta"
+      },
+      {
+        "n5k_id": "89",
+        "n5k_name": "spaghetti"
+      },
+      {
+        "n5k_id": "160",
+        "n5k_name": "chow mein"
+      },
+      {
+        "n5k_id": "340",
+        "n5k_name": "lo mein"
+      },
+      {
+        "n5k_id": "71",
+        "n5k_name": "macaroni and cheese"
+      },
+      {
+        "n5k_id": "219",
+        "n5k_name": "macaroni"
+      },
+      {
+        "n5k_id": "168",
+        "n5k_name": "lasagna"
+      },
+      {
+        "n5k_id": "371",
+        "n5k_name": "dumplings"
+      },
+      {
+        "n5k_id": "184",
+        "n5k_name": "ravioli"
+      },
+      {
+        "n5k_id": "242",
+        "n5k_name": "tortellini"
+      },
+      {
+        "n5k_id": "429",
+        "n5k_name": "gnocchi"
+      },
+      {
+        "n5k_id": "533",
+        "n5k_name": "orzo"
+      },
+      {
+        "n5k_id": "482",
+        "n5k_name": "rice"
+      },
+      {
+        "n5k_id": "326",
+        "n5k_name": "chicken soup"
+      },
+      {
+        "n5k_id": "194",
+        "n5k_name": "fried rice"
+      },
+      {
+        "n5k_id": "472",
+        "n5k_name": "couscous"
+      },
+      {
+        "n5k_id": "360",
+        "n5k_name": "risotto"
+      },
+      {
+        "n5k_id": "17",
+        "n5k_name": "pasta salad"
+      }
+    ]
+  },
+  "66": {
+    "foodsam_id": "66",
+    "foodsam_name": "rice",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "482",
+        "n5k_name": "rice"
+      },
+      {
+        "n5k_id": "26",
+        "n5k_name": "white rice"
+      },
+      {
+        "n5k_id": "23",
+        "n5k_name": "brown rice"
+      },
+      {
+        "n5k_id": "9",
+        "n5k_name": "wild rice"
+      },
+      {
+        "n5k_id": "180",
+        "n5k_name": "rice noodles"
+      },
+      {
+        "n5k_id": "194",
+        "n5k_name": "fried rice"
+      },
+      {
+        "n5k_id": "454",
+        "n5k_name": "rice cakes"
+      },
+      {
+        "n5k_id": "534",
+        "n5k_name": "country rice"
+      },
+      {
+        "n5k_id": "360",
+        "n5k_name": "risotto"
+      },
+      {
+        "n5k_id": "413",
+        "n5k_name": "pilaf"
+      },
+      {
+        "n5k_id": "156",
+        "n5k_name": "paella"
+      },
+      {
+        "n5k_id": "472",
+        "n5k_name": "couscous"
+      },
+      {
+        "n5k_id": "153",
+        "n5k_name": "bulgur"
+      },
+      {
+        "n5k_id": "377",
+        "n5k_name": "quinoa"
+      },
+      {
+        "n5k_id": "62",
+        "n5k_name": "noodles"
+      },
+      {
+        "n5k_id": "74",
+        "n5k_name": "pasta"
+      },
+      {
+        "n5k_id": "59",
+        "n5k_name": "oatmeal"
+      },
+      {
+        "n5k_id": "100",
+        "n5k_name": "oats"
+      },
+      {
+        "n5k_id": "456",
+        "n5k_name": "barley"
+      },
+      {
+        "n5k_id": "513",
+        "n5k_name": "millet"
+      },
+      {
+        "n5k_id": "149",
+        "n5k_name": "sushi"
+      },
+      {
+        "n5k_id": "514",
+        "n5k_name": "wheat berry"
+      },
+      {
+        "n5k_id": "307",
+        "n5k_name": "stuffing"
+      }
+    ]
+  },
+  "67": {
+    "foodsam_id": "67",
+    "foodsam_name": "pie",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "178",
+        "n5k_name": "pies"
+      },
+      {
+        "n5k_id": "175",
+        "n5k_name": "apple pie"
+      },
+      {
+        "n5k_id": "235",
+        "n5k_name": "pecan pie"
+      },
+      {
+        "n5k_id": "172",
+        "n5k_name": "cherry pie"
+      },
+      {
+        "n5k_id": "247",
+        "n5k_name": "blueberry pie"
+      },
+      {
+        "n5k_id": "266",
+        "n5k_name": "pot pies"
+      },
+      {
+        "n5k_id": "302",
+        "n5k_name": "pie crust"
+      },
+      {
+        "n5k_id": "365",
+        "n5k_name": "quiche"
+      },
+      {
+        "n5k_id": "346",
+        "n5k_name": "turnover"
+      },
+      {
+        "n5k_id": "127",
+        "n5k_name": "pastries"
+      },
+      {
+        "n5k_id": "104",
+        "n5k_name": "strudels"
+      },
+      {
+        "n5k_id": "486",
+        "n5k_name": "cakes"
+      },
+      {
+        "n5k_id": "191",
+        "n5k_name": "cheesecake"
+      },
+      {
+        "n5k_id": "391",
+        "n5k_name": "cobbler"
+      },
+      {
+        "n5k_id": "239",
+        "n5k_name": "custard"
+      },
+      {
+        "n5k_id": "206",
+        "n5k_name": "muffins"
+      },
+      {
+        "n5k_id": "134",
+        "n5k_name": "biscuits"
+      },
+      {
+        "n5k_id": "276",
+        "n5k_name": "chocolate cake"
+      },
+      {
+        "n5k_id": "188",
+        "n5k_name": "carrot cake"
+      },
+      {
+        "n5k_id": "363",
+        "n5k_name": "meatloaf"
+      },
+      {
+        "n5k_id": "288",
+        "n5k_name": "empanadas"
+      },
+      {
+        "n5k_id": "461",
+        "n5k_name": "samosas"
+      }
+    ]
+  },
+  "68": {
+    "foodsam_id": "68",
+    "foodsam_name": "tofu",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "50",
+        "n5k_name": "tofu"
+      },
+      {
+        "n5k_id": "177",
+        "n5k_name": "tempeh"
+      },
+      {
+        "n5k_id": "281",
+        "n5k_name": "edamame"
+      },
+      {
+        "n5k_id": "299",
+        "n5k_name": "soy milk"
+      },
+      {
+        "n5k_id": "182",
+        "n5k_name": "soy yogurt"
+      },
+      {
+        "n5k_id": "354",
+        "n5k_name": "soy nuts"
+      },
+      {
+        "n5k_id": "508",
+        "n5k_name": "soy sauce"
+      },
+      {
+        "n5k_id": "554",
+        "n5k_name": "soy sausage"
+      },
+      {
+        "n5k_id": "350",
+        "n5k_name": "miso soup"
+      },
+      {
+        "n5k_id": "63",
+        "n5k_name": "bean(seed)"
+      },
+      {
+        "n5k_id": "320",
+        "n5k_name": "black beans"
+      },
+      {
+        "n5k_id": "187",
+        "n5k_name": "chickpeas"
+      },
+      {
+        "n5k_id": "357",
+        "n5k_name": "lentils"
+      },
+      {
+        "n5k_id": "225",
+        "n5k_name": "veggie burgers"
+      },
+      {
+        "n5k_id": "46",
+        "n5k_name": "mushroom"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "97",
+        "n5k_name": "falafel"
+      },
+      {
+        "n5k_id": "512",
+        "n5k_name": "kimchi"
+      },
+      {
+        "n5k_id": "78",
+        "n5k_name": "protein powder"
+      }
+    ]
+  },
+  "69": {
+    "foodsam_id": "69",
+    "foodsam_name": "eggplant",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "335",
+        "n5k_name": "eggplant"
+      },
+      {
+        "n5k_id": "485",
+        "n5k_name": "zucchini"
+      },
+      {
+        "n5k_id": "21",
+        "n5k_name": "squash"
+      },
+      {
+        "n5k_id": "529",
+        "n5k_name": "chayote squash"
+      },
+      {
+        "n5k_id": "261",
+        "n5k_name": "pumpkins"
+      },
+      {
+        "n5k_id": "31",
+        "n5k_name": "cucumbers"
+      },
+      {
+        "n5k_id": "32",
+        "n5k_name": "tomatoes"
+      },
+      {
+        "n5k_id": "33",
+        "n5k_name": "bell peppers"
+      },
+      {
+        "n5k_id": "312",
+        "n5k_name": "pepper"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "79",
+        "n5k_name": "okra"
+      },
+      {
+        "n5k_id": "14",
+        "n5k_name": "asparagus"
+      },
+      {
+        "n5k_id": "95",
+        "n5k_name": "artichokes"
+      },
+      {
+        "n5k_id": "463",
+        "n5k_name": "beets"
+      },
+      {
+        "n5k_id": "162",
+        "n5k_name": "parsnips"
+      },
+      {
+        "n5k_id": "342",
+        "n5k_name": "turnips"
+      },
+      {
+        "n5k_id": "7",
+        "n5k_name": "cauliflower"
+      },
+      {
+        "n5k_id": "27",
+        "n5k_name": "broccoli"
+      }
+    ]
+  },
+  "70": {
+    "foodsam_id": "70",
+    "foodsam_name": "potato",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "5",
+        "n5k_name": "potatoes"
+      },
+      {
+        "n5k_id": "464",
+        "n5k_name": "baked potatoes"
+      },
+      {
+        "n5k_id": "254",
+        "n5k_name": "mashed potatoes"
+      },
+      {
+        "n5k_id": "437",
+        "n5k_name": "sweet potato"
+      },
+      {
+        "n5k_id": "433",
+        "n5k_name": "roasted potatoes"
+      },
+      {
+        "n5k_id": "432",
+        "n5k_name": "red potatoes"
+      },
+      {
+        "n5k_id": "224",
+        "n5k_name": "potato salad"
+      },
+      {
+        "n5k_id": "61",
+        "n5k_name": "potato chips"
+      },
+      {
+        "n5k_id": "404",
+        "n5k_name": "potato skins"
+      },
+      {
+        "n5k_id": "333",
+        "n5k_name": "potato bread"
+      },
+      {
+        "n5k_id": "15",
+        "n5k_name": "hash browns"
+      },
+      {
+        "n5k_id": "356",
+        "n5k_name": "french fries"
+      },
+      {
+        "n5k_id": "192",
+        "n5k_name": "yam"
+      },
+      {
+        "n5k_id": "45",
+        "n5k_name": "carrot"
+      },
+      {
+        "n5k_id": "73",
+        "n5k_name": "radishes"
+      },
+      {
+        "n5k_id": "162",
+        "n5k_name": "parsnips"
+      },
+      {
+        "n5k_id": "342",
+        "n5k_name": "turnips"
+      },
+      {
+        "n5k_id": "528",
+        "n5k_name": "celery root"
+      },
+      {
+        "n5k_id": "463",
+        "n5k_name": "beets"
+      },
+      {
+        "n5k_id": "94",
+        "n5k_name": "onions"
+      },
+      {
+        "n5k_id": "122",
+        "n5k_name": "garlic"
+      }
+    ]
+  },
+  "71": {
+    "foodsam_id": "71",
+    "foodsam_name": "garlic",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "122",
+        "n5k_name": "garlic"
+      },
+      {
+        "n5k_id": "322",
+        "n5k_name": "garlic bread"
+      },
+      {
+        "n5k_id": "94",
+        "n5k_name": "onions"
+      },
+      {
+        "n5k_id": "133",
+        "n5k_name": "shallots"
+      },
+      {
+        "n5k_id": "101",
+        "n5k_name": "leeks"
+      },
+      {
+        "n5k_id": "535",
+        "n5k_name": "green onions"
+      },
+      {
+        "n5k_id": "527",
+        "n5k_name": "chive"
+      },
+      {
+        "n5k_id": "540",
+        "n5k_name": "ginger"
+      },
+      {
+        "n5k_id": "521",
+        "n5k_name": "basil"
+      },
+      {
+        "n5k_id": "524",
+        "n5k_name": "parsley"
+      },
+      {
+        "n5k_id": "523",
+        "n5k_name": "cilantro"
+      },
+      {
+        "n5k_id": "519",
+        "n5k_name": "oregano"
+      },
+      {
+        "n5k_id": "518",
+        "n5k_name": "thyme"
+      },
+      {
+        "n5k_id": "516",
+        "n5k_name": "rosemary"
+      },
+      {
+        "n5k_id": "550",
+        "n5k_name": "fennel"
+      },
+      {
+        "n5k_id": "312",
+        "n5k_name": "pepper"
+      },
+      {
+        "n5k_id": "532",
+        "n5k_name": "pesto"
+      },
+      {
+        "n5k_id": "407",
+        "n5k_name": "horseradish"
+      }
+    ]
+  },
+  "72": {
+    "foodsam_id": "72",
+    "foodsam_name": "cauliflower",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "7",
+        "n5k_name": "cauliflower"
+      },
+      {
+        "n5k_id": "27",
+        "n5k_name": "broccoli"
+      },
+      {
+        "n5k_id": "152",
+        "n5k_name": "cabbage"
+      },
+      {
+        "n5k_id": "16",
+        "n5k_name": "brussels sprouts"
+      },
+      {
+        "n5k_id": "525",
+        "n5k_name": "bok choy"
+      },
+      {
+        "n5k_id": "72",
+        "n5k_name": "kale"
+      },
+      {
+        "n5k_id": "185",
+        "n5k_name": "collards"
+      },
+      {
+        "n5k_id": "517",
+        "n5k_name": "chard"
+      },
+      {
+        "n5k_id": "30",
+        "n5k_name": "lettuce"
+      },
+      {
+        "n5k_id": "36",
+        "n5k_name": "spinach (raw)"
+      },
+      {
+        "n5k_id": "511",
+        "n5k_name": "spinach (cooked)"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "29",
+        "n5k_name": "mixed greens"
+      },
+      {
+        "n5k_id": "515",
+        "n5k_name": "arugula"
+      },
+      {
+        "n5k_id": "530",
+        "n5k_name": "endive"
+      },
+      {
+        "n5k_id": "522",
+        "n5k_name": "tatsoi"
+      },
+      {
+        "n5k_id": "526",
+        "n5k_name": "mustard greens"
+      },
+      {
+        "n5k_id": "45",
+        "n5k_name": "carrot"
+      }
+    ]
+  },
+  "73": {
+    "foodsam_id": "73",
+    "foodsam_name": "tomato",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "32",
+        "n5k_name": "tomatoes"
+      },
+      {
+        "n5k_id": "471",
+        "n5k_name": "cherry tomatoes"
+      },
+      {
+        "n5k_id": "457",
+        "n5k_name": "sun dried tomatoes"
+      },
+      {
+        "n5k_id": "426",
+        "n5k_name": "tomato soup"
+      },
+      {
+        "n5k_id": "541",
+        "n5k_name": "tomatillo"
+      },
+      {
+        "n5k_id": "226",
+        "n5k_name": "pasta sauce"
+      },
+      {
+        "n5k_id": "551",
+        "n5k_name": "pizza sauce"
+      },
+      {
+        "n5k_id": "475",
+        "n5k_name": "salsa"
+      },
+      {
+        "n5k_id": "113",
+        "n5k_name": "ketchup"
+      },
+      {
+        "n5k_id": "33",
+        "n5k_name": "bell peppers"
+      },
+      {
+        "n5k_id": "312",
+        "n5k_name": "pepper"
+      },
+      {
+        "n5k_id": "448",
+        "n5k_name": "jalapenos"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "94",
+        "n5k_name": "onions"
+      },
+      {
+        "n5k_id": "31",
+        "n5k_name": "cucumbers"
+      },
+      {
+        "n5k_id": "30",
+        "n5k_name": "lettuce"
+      }
+    ]
+  },
+  "74": {
+    "foodsam_id": "74",
+    "foodsam_name": "kelp",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "405",
+        "n5k_name": "seaweed"
+      },
+      {
+        "n5k_id": "512",
+        "n5k_name": "kimchi"
+      },
+      {
+        "n5k_id": "36",
+        "n5k_name": "spinach (raw)"
+      },
+      {
+        "n5k_id": "511",
+        "n5k_name": "spinach (cooked)"
+      },
+      {
+        "n5k_id": "72",
+        "n5k_name": "kale"
+      },
+      {
+        "n5k_id": "185",
+        "n5k_name": "collards"
+      },
+      {
+        "n5k_id": "517",
+        "n5k_name": "chard"
+      },
+      {
+        "n5k_id": "526",
+        "n5k_name": "mustard greens"
+      },
+      {
+        "n5k_id": "525",
+        "n5k_name": "bok choy"
+      },
+      {
+        "n5k_id": "522",
+        "n5k_name": "tatsoi"
+      },
+      {
+        "n5k_id": "30",
+        "n5k_name": "lettuce"
+      },
+      {
+        "n5k_id": "29",
+        "n5k_name": "mixed greens"
+      },
+      {
+        "n5k_id": "515",
+        "n5k_name": "arugula"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "43",
+        "n5k_name": "green beans"
+      },
+      {
+        "n5k_id": "14",
+        "n5k_name": "asparagus"
+      },
+      {
+        "n5k_id": "483",
+        "n5k_name": "water chestnuts"
+      }
+    ]
+  },
+  "75": {
+    "foodsam_id": "75",
+    "foodsam_name": "seaweed",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "405",
+        "n5k_name": "seaweed"
+      },
+      {
+        "n5k_id": "512",
+        "n5k_name": "kimchi"
+      },
+      {
+        "n5k_id": "36",
+        "n5k_name": "spinach (raw)"
+      },
+      {
+        "n5k_id": "511",
+        "n5k_name": "spinach (cooked)"
+      },
+      {
+        "n5k_id": "72",
+        "n5k_name": "kale"
+      },
+      {
+        "n5k_id": "185",
+        "n5k_name": "collards"
+      },
+      {
+        "n5k_id": "517",
+        "n5k_name": "chard"
+      },
+      {
+        "n5k_id": "526",
+        "n5k_name": "mustard greens"
+      },
+      {
+        "n5k_id": "525",
+        "n5k_name": "bok choy"
+      },
+      {
+        "n5k_id": "522",
+        "n5k_name": "tatsoi"
+      },
+      {
+        "n5k_id": "30",
+        "n5k_name": "lettuce"
+      },
+      {
+        "n5k_id": "29",
+        "n5k_name": "mixed greens"
+      },
+      {
+        "n5k_id": "515",
+        "n5k_name": "arugula"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "149",
+        "n5k_name": "sushi"
+      },
+      {
+        "n5k_id": "43",
+        "n5k_name": "green beans"
+      },
+      {
+        "n5k_id": "14",
+        "n5k_name": "asparagus"
+      }
+    ]
+  },
+  "76": {
+    "foodsam_id": "76",
+    "foodsam_name": "spring onion",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "535",
+        "n5k_name": "green onions"
+      },
+      {
+        "n5k_id": "94",
+        "n5k_name": "onions"
+      },
+      {
+        "n5k_id": "101",
+        "n5k_name": "leeks"
+      },
+      {
+        "n5k_id": "133",
+        "n5k_name": "shallots"
+      },
+      {
+        "n5k_id": "527",
+        "n5k_name": "chive"
+      },
+      {
+        "n5k_id": "269",
+        "n5k_name": "onion rings"
+      },
+      {
+        "n5k_id": "122",
+        "n5k_name": "garlic"
+      },
+      {
+        "n5k_id": "524",
+        "n5k_name": "parsley"
+      },
+      {
+        "n5k_id": "523",
+        "n5k_name": "cilantro"
+      },
+      {
+        "n5k_id": "34",
+        "n5k_name": "celery"
+      },
+      {
+        "n5k_id": "521",
+        "n5k_name": "basil"
+      },
+      {
+        "n5k_id": "550",
+        "n5k_name": "fennel"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "14",
+        "n5k_name": "asparagus"
+      },
+      {
+        "n5k_id": "44",
+        "n5k_name": "bean sprouts"
+      },
+      {
+        "n5k_id": "516",
+        "n5k_name": "rosemary"
+      }
+    ]
+  },
+  "77": {
+    "foodsam_id": "77",
+    "foodsam_name": "rape",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "72",
+        "n5k_name": "kale"
+      },
+      {
+        "n5k_id": "526",
+        "n5k_name": "mustard greens"
+      },
+      {
+        "n5k_id": "185",
+        "n5k_name": "collards"
+      },
+      {
+        "n5k_id": "517",
+        "n5k_name": "chard"
+      },
+      {
+        "n5k_id": "36",
+        "n5k_name": "spinach (raw)"
+      },
+      {
+        "n5k_id": "511",
+        "n5k_name": "spinach (cooked)"
+      },
+      {
+        "n5k_id": "525",
+        "n5k_name": "bok choy"
+      },
+      {
+        "n5k_id": "522",
+        "n5k_name": "tatsoi"
+      },
+      {
+        "n5k_id": "515",
+        "n5k_name": "arugula"
+      },
+      {
+        "n5k_id": "29",
+        "n5k_name": "mixed greens"
+      },
+      {
+        "n5k_id": "30",
+        "n5k_name": "lettuce"
+      },
+      {
+        "n5k_id": "152",
+        "n5k_name": "cabbage"
+      },
+      {
+        "n5k_id": "27",
+        "n5k_name": "broccoli"
+      },
+      {
+        "n5k_id": "7",
+        "n5k_name": "cauliflower"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "43",
+        "n5k_name": "green beans"
+      },
+      {
+        "n5k_id": "524",
+        "n5k_name": "parsley"
+      }
+    ]
+  },
+  "78": {
+    "foodsam_id": "78",
+    "foodsam_name": "ginger",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "540",
+        "n5k_name": "ginger"
+      },
+      {
+        "n5k_id": "122",
+        "n5k_name": "garlic"
+      },
+      {
+        "n5k_id": "407",
+        "n5k_name": "horseradish"
+      },
+      {
+        "n5k_id": "133",
+        "n5k_name": "shallots"
+      },
+      {
+        "n5k_id": "94",
+        "n5k_name": "onions"
+      },
+      {
+        "n5k_id": "101",
+        "n5k_name": "leeks"
+      },
+      {
+        "n5k_id": "535",
+        "n5k_name": "green onions"
+      },
+      {
+        "n5k_id": "527",
+        "n5k_name": "chive"
+      },
+      {
+        "n5k_id": "550",
+        "n5k_name": "fennel"
+      },
+      {
+        "n5k_id": "516",
+        "n5k_name": "rosemary"
+      },
+      {
+        "n5k_id": "518",
+        "n5k_name": "thyme"
+      },
+      {
+        "n5k_id": "521",
+        "n5k_name": "basil"
+      },
+      {
+        "n5k_id": "519",
+        "n5k_name": "oregano"
+      },
+      {
+        "n5k_id": "523",
+        "n5k_name": "cilantro"
+      },
+      {
+        "n5k_id": "524",
+        "n5k_name": "parsley"
+      },
+      {
+        "n5k_id": "312",
+        "n5k_name": "pepper"
+      },
+      {
+        "n5k_id": "385",
+        "n5k_name": "curries"
+      },
+      {
+        "n5k_id": "393",
+        "n5k_name": "teriyaki sauce"
+      }
+    ]
+  },
+  "79": {
+    "foodsam_id": "79",
+    "foodsam_name": "okra",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "79",
+        "n5k_name": "okra"
+      },
+      {
+        "n5k_id": "43",
+        "n5k_name": "green beans"
+      },
+      {
+        "n5k_id": "14",
+        "n5k_name": "asparagus"
+      },
+      {
+        "n5k_id": "102",
+        "n5k_name": "snow peas"
+      },
+      {
+        "n5k_id": "186",
+        "n5k_name": "green peas"
+      },
+      {
+        "n5k_id": "374",
+        "n5k_name": "peas"
+      },
+      {
+        "n5k_id": "485",
+        "n5k_name": "zucchini"
+      },
+      {
+        "n5k_id": "31",
+        "n5k_name": "cucumbers"
+      },
+      {
+        "n5k_id": "335",
+        "n5k_name": "eggplant"
+      },
+      {
+        "n5k_id": "33",
+        "n5k_name": "bell peppers"
+      },
+      {
+        "n5k_id": "312",
+        "n5k_name": "pepper"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "21",
+        "n5k_name": "squash"
+      },
+      {
+        "n5k_id": "529",
+        "n5k_name": "chayote squash"
+      },
+      {
+        "n5k_id": "483",
+        "n5k_name": "water chestnuts"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      }
+    ]
+  },
+  "80": {
+    "foodsam_id": "80",
+    "foodsam_name": "lettuce",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "30",
+        "n5k_name": "lettuce"
+      },
+      {
+        "n5k_id": "152",
+        "n5k_name": "cabbage"
+      },
+      {
+        "n5k_id": "36",
+        "n5k_name": "spinach (raw)"
+      },
+      {
+        "n5k_id": "511",
+        "n5k_name": "spinach (cooked)"
+      },
+      {
+        "n5k_id": "29",
+        "n5k_name": "mixed greens"
+      },
+      {
+        "n5k_id": "72",
+        "n5k_name": "kale"
+      },
+      {
+        "n5k_id": "515",
+        "n5k_name": "arugula"
+      },
+      {
+        "n5k_id": "525",
+        "n5k_name": "bok choy"
+      },
+      {
+        "n5k_id": "530",
+        "n5k_name": "endive"
+      },
+      {
+        "n5k_id": "185",
+        "n5k_name": "collards"
+      },
+      {
+        "n5k_id": "517",
+        "n5k_name": "chard"
+      },
+      {
+        "n5k_id": "522",
+        "n5k_name": "tatsoi"
+      },
+      {
+        "n5k_id": "526",
+        "n5k_name": "mustard greens"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "6",
+        "n5k_name": "caesar salad"
+      },
+      {
+        "n5k_id": "409",
+        "n5k_name": "greek salad"
+      },
+      {
+        "n5k_id": "492",
+        "n5k_name": "taco salad"
+      },
+      {
+        "n5k_id": "34",
+        "n5k_name": "celery"
+      },
+      {
+        "n5k_id": "524",
+        "n5k_name": "parsley"
+      },
+      {
+        "n5k_id": "87",
+        "n5k_name": "coleslaw"
+      }
+    ]
+  },
+  "81": {
+    "foodsam_id": "81",
+    "foodsam_name": "pumpkin",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "261",
+        "n5k_name": "pumpkins"
+      },
+      {
+        "n5k_id": "531",
+        "n5k_name": "pumpkin seeds"
+      },
+      {
+        "n5k_id": "21",
+        "n5k_name": "squash"
+      },
+      {
+        "n5k_id": "529",
+        "n5k_name": "chayote squash"
+      },
+      {
+        "n5k_id": "437",
+        "n5k_name": "sweet potato"
+      },
+      {
+        "n5k_id": "192",
+        "n5k_name": "yam"
+      },
+      {
+        "n5k_id": "5",
+        "n5k_name": "potatoes"
+      },
+      {
+        "n5k_id": "45",
+        "n5k_name": "carrot"
+      },
+      {
+        "n5k_id": "463",
+        "n5k_name": "beets"
+      },
+      {
+        "n5k_id": "342",
+        "n5k_name": "turnips"
+      },
+      {
+        "n5k_id": "162",
+        "n5k_name": "parsnips"
+      },
+      {
+        "n5k_id": "73",
+        "n5k_name": "radishes"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "121",
+        "n5k_name": "watermelon"
+      },
+      {
+        "n5k_id": "37",
+        "n5k_name": "cantaloupe"
+      },
+      {
+        "n5k_id": "112",
+        "n5k_name": "honeydew melons"
+      },
+      {
+        "n5k_id": "485",
+        "n5k_name": "zucchini"
+      },
+      {
+        "n5k_id": "335",
+        "n5k_name": "eggplant"
+      }
+    ]
+  },
+  "82": {
+    "foodsam_id": "82",
+    "foodsam_name": "cucumber",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "31",
+        "n5k_name": "cucumbers"
+      },
+      {
+        "n5k_id": "485",
+        "n5k_name": "zucchini"
+      },
+      {
+        "n5k_id": "81",
+        "n5k_name": "pickles"
+      },
+      {
+        "n5k_id": "34",
+        "n5k_name": "celery"
+      },
+      {
+        "n5k_id": "21",
+        "n5k_name": "squash"
+      },
+      {
+        "n5k_id": "529",
+        "n5k_name": "chayote squash"
+      },
+      {
+        "n5k_id": "30",
+        "n5k_name": "lettuce"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "409",
+        "n5k_name": "greek salad"
+      },
+      {
+        "n5k_id": "14",
+        "n5k_name": "asparagus"
+      },
+      {
+        "n5k_id": "43",
+        "n5k_name": "green beans"
+      },
+      {
+        "n5k_id": "32",
+        "n5k_name": "tomatoes"
+      },
+      {
+        "n5k_id": "33",
+        "n5k_name": "bell peppers"
+      },
+      {
+        "n5k_id": "312",
+        "n5k_name": "pepper"
+      },
+      {
+        "n5k_id": "73",
+        "n5k_name": "radishes"
+      }
+    ]
+  },
+  "83": {
+    "foodsam_id": "83",
+    "foodsam_name": "white radish",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "73",
+        "n5k_name": "radishes"
+      },
+      {
+        "n5k_id": "342",
+        "n5k_name": "turnips"
+      },
+      {
+        "n5k_id": "162",
+        "n5k_name": "parsnips"
+      },
+      {
+        "n5k_id": "45",
+        "n5k_name": "carrot"
+      },
+      {
+        "n5k_id": "528",
+        "n5k_name": "celery root"
+      },
+      {
+        "n5k_id": "463",
+        "n5k_name": "beets"
+      },
+      {
+        "n5k_id": "5",
+        "n5k_name": "potatoes"
+      },
+      {
+        "n5k_id": "94",
+        "n5k_name": "onions"
+      },
+      {
+        "n5k_id": "34",
+        "n5k_name": "celery"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "512",
+        "n5k_name": "kimchi"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "407",
+        "n5k_name": "horseradish"
+      },
+      {
+        "n5k_id": "538",
+        "n5k_name": "jicama"
+      },
+      {
+        "n5k_id": "31",
+        "n5k_name": "cucumbers"
+      },
+      {
+        "n5k_id": "366",
+        "n5k_name": "sauerkraut"
+      },
+      {
+        "n5k_id": "152",
+        "n5k_name": "cabbage"
+      }
+    ]
+  },
+  "84": {
+    "foodsam_id": "84",
+    "foodsam_name": "carrot",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "45",
+        "n5k_name": "carrot"
+      },
+      {
+        "n5k_id": "347",
+        "n5k_name": "baby carrots"
+      },
+      {
+        "n5k_id": "188",
+        "n5k_name": "carrot cake"
+      },
+      {
+        "n5k_id": "162",
+        "n5k_name": "parsnips"
+      },
+      {
+        "n5k_id": "34",
+        "n5k_name": "celery"
+      },
+      {
+        "n5k_id": "5",
+        "n5k_name": "potatoes"
+      },
+      {
+        "n5k_id": "437",
+        "n5k_name": "sweet potato"
+      },
+      {
+        "n5k_id": "73",
+        "n5k_name": "radishes"
+      },
+      {
+        "n5k_id": "342",
+        "n5k_name": "turnips"
+      },
+      {
+        "n5k_id": "463",
+        "n5k_name": "beets"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "87",
+        "n5k_name": "coleslaw"
+      },
+      {
+        "n5k_id": "94",
+        "n5k_name": "onions"
+      },
+      {
+        "n5k_id": "27",
+        "n5k_name": "broccoli"
+      },
+      {
+        "n5k_id": "7",
+        "n5k_name": "cauliflower"
+      },
+      {
+        "n5k_id": "32",
+        "n5k_name": "tomatoes"
+      }
+    ]
+  },
+  "85": {
+    "foodsam_id": "85",
+    "foodsam_name": "asparagus",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "14",
+        "n5k_name": "asparagus"
+      },
+      {
+        "n5k_id": "43",
+        "n5k_name": "green beans"
+      },
+      {
+        "n5k_id": "102",
+        "n5k_name": "snow peas"
+      },
+      {
+        "n5k_id": "186",
+        "n5k_name": "green peas"
+      },
+      {
+        "n5k_id": "374",
+        "n5k_name": "peas"
+      },
+      {
+        "n5k_id": "27",
+        "n5k_name": "broccoli"
+      },
+      {
+        "n5k_id": "34",
+        "n5k_name": "celery"
+      },
+      {
+        "n5k_id": "483",
+        "n5k_name": "water chestnuts"
+      },
+      {
+        "n5k_id": "79",
+        "n5k_name": "okra"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "93",
+        "n5k_name": "alfalfa"
+      },
+      {
+        "n5k_id": "485",
+        "n5k_name": "zucchini"
+      },
+      {
+        "n5k_id": "31",
+        "n5k_name": "cucumbers"
+      },
+      {
+        "n5k_id": "7",
+        "n5k_name": "cauliflower"
+      }
+    ]
+  },
+  "86": {
+    "foodsam_id": "86",
+    "foodsam_name": "bamboo shoots",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "483",
+        "n5k_name": "water chestnuts"
+      },
+      {
+        "n5k_id": "14",
+        "n5k_name": "asparagus"
+      },
+      {
+        "n5k_id": "34",
+        "n5k_name": "celery"
+      },
+      {
+        "n5k_id": "528",
+        "n5k_name": "celery root"
+      },
+      {
+        "n5k_id": "101",
+        "n5k_name": "leeks"
+      },
+      {
+        "n5k_id": "550",
+        "n5k_name": "fennel"
+      },
+      {
+        "n5k_id": "538",
+        "n5k_name": "jicama"
+      },
+      {
+        "n5k_id": "539",
+        "n5k_name": "nopales"
+      },
+      {
+        "n5k_id": "44",
+        "n5k_name": "bean sprouts"
+      },
+      {
+        "n5k_id": "102",
+        "n5k_name": "snow peas"
+      },
+      {
+        "n5k_id": "43",
+        "n5k_name": "green beans"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "162",
+        "n5k_name": "parsnips"
+      },
+      {
+        "n5k_id": "73",
+        "n5k_name": "radishes"
+      },
+      {
+        "n5k_id": "95",
+        "n5k_name": "artichokes"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "79",
+        "n5k_name": "okra"
+      }
+    ]
+  },
+  "87": {
+    "foodsam_id": "87",
+    "foodsam_name": "broccoli",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "27",
+        "n5k_name": "broccoli"
+      },
+      {
+        "n5k_id": "7",
+        "n5k_name": "cauliflower"
+      },
+      {
+        "n5k_id": "16",
+        "n5k_name": "brussels sprouts"
+      },
+      {
+        "n5k_id": "152",
+        "n5k_name": "cabbage"
+      },
+      {
+        "n5k_id": "72",
+        "n5k_name": "kale"
+      },
+      {
+        "n5k_id": "525",
+        "n5k_name": "bok choy"
+      },
+      {
+        "n5k_id": "185",
+        "n5k_name": "collards"
+      },
+      {
+        "n5k_id": "517",
+        "n5k_name": "chard"
+      },
+      {
+        "n5k_id": "14",
+        "n5k_name": "asparagus"
+      },
+      {
+        "n5k_id": "43",
+        "n5k_name": "green beans"
+      },
+      {
+        "n5k_id": "36",
+        "n5k_name": "spinach (raw)"
+      },
+      {
+        "n5k_id": "511",
+        "n5k_name": "spinach (cooked)"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "29",
+        "n5k_name": "mixed greens"
+      },
+      {
+        "n5k_id": "30",
+        "n5k_name": "lettuce"
+      },
+      {
+        "n5k_id": "515",
+        "n5k_name": "arugula"
+      },
+      {
+        "n5k_id": "45",
+        "n5k_name": "carrot"
+      }
+    ]
+  },
+  "88": {
+    "foodsam_id": "88",
+    "foodsam_name": "celery stick",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "34",
+        "n5k_name": "celery"
+      },
+      {
+        "n5k_id": "528",
+        "n5k_name": "celery root"
+      },
+      {
+        "n5k_id": "14",
+        "n5k_name": "asparagus"
+      },
+      {
+        "n5k_id": "550",
+        "n5k_name": "fennel"
+      },
+      {
+        "n5k_id": "101",
+        "n5k_name": "leeks"
+      },
+      {
+        "n5k_id": "31",
+        "n5k_name": "cucumbers"
+      },
+      {
+        "n5k_id": "45",
+        "n5k_name": "carrot"
+      },
+      {
+        "n5k_id": "30",
+        "n5k_name": "lettuce"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "483",
+        "n5k_name": "water chestnuts"
+      },
+      {
+        "n5k_id": "73",
+        "n5k_name": "radishes"
+      },
+      {
+        "n5k_id": "33",
+        "n5k_name": "bell peppers"
+      },
+      {
+        "n5k_id": "312",
+        "n5k_name": "pepper"
+      },
+      {
+        "n5k_id": "524",
+        "n5k_name": "parsley"
+      },
+      {
+        "n5k_id": "43",
+        "n5k_name": "green beans"
+      }
+    ]
+  },
+  "89": {
+    "foodsam_id": "89",
+    "foodsam_name": "cilantro mint",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "523",
+        "n5k_name": "cilantro"
+      },
+      {
+        "n5k_id": "524",
+        "n5k_name": "parsley"
+      },
+      {
+        "n5k_id": "521",
+        "n5k_name": "basil"
+      },
+      {
+        "n5k_id": "519",
+        "n5k_name": "oregano"
+      },
+      {
+        "n5k_id": "518",
+        "n5k_name": "thyme"
+      },
+      {
+        "n5k_id": "516",
+        "n5k_name": "rosemary"
+      },
+      {
+        "n5k_id": "527",
+        "n5k_name": "chive"
+      },
+      {
+        "n5k_id": "535",
+        "n5k_name": "green onions"
+      },
+      {
+        "n5k_id": "515",
+        "n5k_name": "arugula"
+      },
+      {
+        "n5k_id": "29",
+        "n5k_name": "mixed greens"
+      },
+      {
+        "n5k_id": "36",
+        "n5k_name": "spinach (raw)"
+      },
+      {
+        "n5k_id": "511",
+        "n5k_name": "spinach (cooked)"
+      },
+      {
+        "n5k_id": "119",
+        "n5k_name": "tabouli"
+      },
+      {
+        "n5k_id": "532",
+        "n5k_name": "pesto"
+      },
+      {
+        "n5k_id": "30",
+        "n5k_name": "lettuce"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "72",
+        "n5k_name": "kale"
+      },
+      {
+        "n5k_id": "550",
+        "n5k_name": "fennel"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "93",
+        "n5k_name": "alfalfa"
+      },
+      {
+        "n5k_id": "122",
+        "n5k_name": "garlic"
+      }
+    ]
+  },
+  "90": {
+    "foodsam_id": "90",
+    "foodsam_name": "snow peas",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "102",
+        "n5k_name": "snow peas"
+      },
+      {
+        "n5k_id": "186",
+        "n5k_name": "green peas"
+      },
+      {
+        "n5k_id": "374",
+        "n5k_name": "peas"
+      },
+      {
+        "n5k_id": "43",
+        "n5k_name": "green beans"
+      },
+      {
+        "n5k_id": "14",
+        "n5k_name": "asparagus"
+      },
+      {
+        "n5k_id": "44",
+        "n5k_name": "bean sprouts"
+      },
+      {
+        "n5k_id": "281",
+        "n5k_name": "edamame"
+      },
+      {
+        "n5k_id": "79",
+        "n5k_name": "okra"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "27",
+        "n5k_name": "broccoli"
+      },
+      {
+        "n5k_id": "16",
+        "n5k_name": "brussels sprouts"
+      },
+      {
+        "n5k_id": "63",
+        "n5k_name": "bean(seed)"
+      },
+      {
+        "n5k_id": "187",
+        "n5k_name": "chickpeas"
+      },
+      {
+        "n5k_id": "379",
+        "n5k_name": "lima beans"
+      },
+      {
+        "n5k_id": "485",
+        "n5k_name": "zucchini"
+      }
+    ]
+  },
+  "91": {
+    "foodsam_id": "91",
+    "foodsam_name": "cabbage",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "152",
+        "n5k_name": "cabbage"
+      },
+      {
+        "n5k_id": "30",
+        "n5k_name": "lettuce"
+      },
+      {
+        "n5k_id": "525",
+        "n5k_name": "bok choy"
+      },
+      {
+        "n5k_id": "72",
+        "n5k_name": "kale"
+      },
+      {
+        "n5k_id": "36",
+        "n5k_name": "spinach (raw)"
+      },
+      {
+        "n5k_id": "511",
+        "n5k_name": "spinach (cooked)"
+      },
+      {
+        "n5k_id": "185",
+        "n5k_name": "collards"
+      },
+      {
+        "n5k_id": "517",
+        "n5k_name": "chard"
+      },
+      {
+        "n5k_id": "522",
+        "n5k_name": "tatsoi"
+      },
+      {
+        "n5k_id": "526",
+        "n5k_name": "mustard greens"
+      },
+      {
+        "n5k_id": "29",
+        "n5k_name": "mixed greens"
+      },
+      {
+        "n5k_id": "7",
+        "n5k_name": "cauliflower"
+      },
+      {
+        "n5k_id": "27",
+        "n5k_name": "broccoli"
+      },
+      {
+        "n5k_id": "16",
+        "n5k_name": "brussels sprouts"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "87",
+        "n5k_name": "coleslaw"
+      },
+      {
+        "n5k_id": "366",
+        "n5k_name": "sauerkraut"
+      },
+      {
+        "n5k_id": "512",
+        "n5k_name": "kimchi"
+      },
+      {
+        "n5k_id": "515",
+        "n5k_name": "arugula"
+      },
+      {
+        "n5k_id": "530",
+        "n5k_name": "endive"
+      }
+    ]
+  },
+  "92": {
+    "foodsam_id": "92",
+    "foodsam_name": "bean sprouts",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "44",
+        "n5k_name": "bean sprouts"
+      },
+      {
+        "n5k_id": "93",
+        "n5k_name": "alfalfa"
+      },
+      {
+        "n5k_id": "63",
+        "n5k_name": "bean(seed)"
+      },
+      {
+        "n5k_id": "102",
+        "n5k_name": "snow peas"
+      },
+      {
+        "n5k_id": "43",
+        "n5k_name": "green beans"
+      },
+      {
+        "n5k_id": "281",
+        "n5k_name": "edamame"
+      },
+      {
+        "n5k_id": "186",
+        "n5k_name": "green peas"
+      },
+      {
+        "n5k_id": "374",
+        "n5k_name": "peas"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "29",
+        "n5k_name": "mixed greens"
+      },
+      {
+        "n5k_id": "30",
+        "n5k_name": "lettuce"
+      },
+      {
+        "n5k_id": "36",
+        "n5k_name": "spinach (raw)"
+      },
+      {
+        "n5k_id": "511",
+        "n5k_name": "spinach (cooked)"
+      },
+      {
+        "n5k_id": "320",
+        "n5k_name": "black beans"
+      },
+      {
+        "n5k_id": "187",
+        "n5k_name": "chickpeas"
+      },
+      {
+        "n5k_id": "357",
+        "n5k_name": "lentils"
+      },
+      {
+        "n5k_id": "214",
+        "n5k_name": "seeds"
+      }
+    ]
+  },
+  "93": {
+    "foodsam_id": "93",
+    "foodsam_name": "onion",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "94",
+        "n5k_name": "onions"
+      },
+      {
+        "n5k_id": "535",
+        "n5k_name": "green onions"
+      },
+      {
+        "n5k_id": "269",
+        "n5k_name": "onion rings"
+      },
+      {
+        "n5k_id": "133",
+        "n5k_name": "shallots"
+      },
+      {
+        "n5k_id": "101",
+        "n5k_name": "leeks"
+      },
+      {
+        "n5k_id": "122",
+        "n5k_name": "garlic"
+      },
+      {
+        "n5k_id": "527",
+        "n5k_name": "chive"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "33",
+        "n5k_name": "bell peppers"
+      },
+      {
+        "n5k_id": "312",
+        "n5k_name": "pepper"
+      },
+      {
+        "n5k_id": "32",
+        "n5k_name": "tomatoes"
+      },
+      {
+        "n5k_id": "45",
+        "n5k_name": "carrot"
+      },
+      {
+        "n5k_id": "34",
+        "n5k_name": "celery"
+      },
+      {
+        "n5k_id": "252",
+        "n5k_name": "broth"
+      }
+    ]
+  },
+  "94": {
+    "foodsam_id": "94",
+    "foodsam_name": "pepper",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "312",
+        "n5k_name": "pepper"
+      },
+      {
+        "n5k_id": "33",
+        "n5k_name": "bell peppers"
+      },
+      {
+        "n5k_id": "448",
+        "n5k_name": "jalapenos"
+      },
+      {
+        "n5k_id": "297",
+        "n5k_name": "pepperoni"
+      },
+      {
+        "n5k_id": "203",
+        "n5k_name": "chili"
+      },
+      {
+        "n5k_id": "392",
+        "n5k_name": "pepperoni pizza"
+      },
+      {
+        "n5k_id": "32",
+        "n5k_name": "tomatoes"
+      },
+      {
+        "n5k_id": "94",
+        "n5k_name": "onions"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "475",
+        "n5k_name": "salsa"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "291",
+        "n5k_name": "salt"
+      },
+      {
+        "n5k_id": "385",
+        "n5k_name": "curries"
+      },
+      {
+        "n5k_id": "417",
+        "n5k_name": "fajitas"
+      },
+      {
+        "n5k_id": "122",
+        "n5k_name": "garlic"
+      },
+      {
+        "n5k_id": "31",
+        "n5k_name": "cucumbers"
+      },
+      {
+        "n5k_id": "45",
+        "n5k_name": "carrot"
+      }
+    ]
+  },
+  "95": {
+    "foodsam_id": "95",
+    "foodsam_name": "green beans",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "43",
+        "n5k_name": "green beans"
+      },
+      {
+        "n5k_id": "102",
+        "n5k_name": "snow peas"
+      },
+      {
+        "n5k_id": "186",
+        "n5k_name": "green peas"
+      },
+      {
+        "n5k_id": "374",
+        "n5k_name": "peas"
+      },
+      {
+        "n5k_id": "14",
+        "n5k_name": "asparagus"
+      },
+      {
+        "n5k_id": "281",
+        "n5k_name": "edamame"
+      },
+      {
+        "n5k_id": "79",
+        "n5k_name": "okra"
+      },
+      {
+        "n5k_id": "63",
+        "n5k_name": "bean(seed)"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "44",
+        "n5k_name": "bean sprouts"
+      },
+      {
+        "n5k_id": "27",
+        "n5k_name": "broccoli"
+      },
+      {
+        "n5k_id": "320",
+        "n5k_name": "black beans"
+      },
+      {
+        "n5k_id": "379",
+        "n5k_name": "lima beans"
+      },
+      {
+        "n5k_id": "187",
+        "n5k_name": "chickpeas"
+      },
+      {
+        "n5k_id": "357",
+        "n5k_name": "lentils"
+      }
+    ]
+  },
+  "96": {
+    "foodsam_id": "96",
+    "foodsam_name": "French beans",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "43",
+        "n5k_name": "green beans"
+      },
+      {
+        "n5k_id": "102",
+        "n5k_name": "snow peas"
+      },
+      {
+        "n5k_id": "186",
+        "n5k_name": "green peas"
+      },
+      {
+        "n5k_id": "374",
+        "n5k_name": "peas"
+      },
+      {
+        "n5k_id": "14",
+        "n5k_name": "asparagus"
+      },
+      {
+        "n5k_id": "281",
+        "n5k_name": "edamame"
+      },
+      {
+        "n5k_id": "79",
+        "n5k_name": "okra"
+      },
+      {
+        "n5k_id": "63",
+        "n5k_name": "bean(seed)"
+      },
+      {
+        "n5k_id": "356",
+        "n5k_name": "french fries"
+      },
+      {
+        "n5k_id": "109",
+        "n5k_name": "french toast"
+      },
+      {
+        "n5k_id": "176",
+        "n5k_name": "french dressing"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "320",
+        "n5k_name": "black beans"
+      },
+      {
+        "n5k_id": "44",
+        "n5k_name": "bean sprouts"
+      },
+      {
+        "n5k_id": "27",
+        "n5k_name": "broccoli"
+      }
+    ]
+  },
+  "97": {
+    "foodsam_id": "97",
+    "foodsam_name": "king oyster mushroom",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "46",
+        "n5k_name": "mushroom"
+      },
+      {
+        "n5k_id": "232",
+        "n5k_name": "oysters"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "50",
+        "n5k_name": "tofu"
+      },
+      {
+        "n5k_id": "385",
+        "n5k_name": "curries"
+      },
+      {
+        "n5k_id": "350",
+        "n5k_name": "miso soup"
+      },
+      {
+        "n5k_id": "177",
+        "n5k_name": "tempeh"
+      },
+      {
+        "n5k_id": "281",
+        "n5k_name": "edamame"
+      },
+      {
+        "n5k_id": "335",
+        "n5k_name": "eggplant"
+      },
+      {
+        "n5k_id": "7",
+        "n5k_name": "cauliflower"
+      },
+      {
+        "n5k_id": "27",
+        "n5k_name": "broccoli"
+      }
+    ]
+  },
+  "98": {
+    "foodsam_id": "98",
+    "foodsam_name": "shiitake",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "46",
+        "n5k_name": "mushroom"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "50",
+        "n5k_name": "tofu"
+      },
+      {
+        "n5k_id": "385",
+        "n5k_name": "curries"
+      },
+      {
+        "n5k_id": "350",
+        "n5k_name": "miso soup"
+      },
+      {
+        "n5k_id": "177",
+        "n5k_name": "tempeh"
+      },
+      {
+        "n5k_id": "281",
+        "n5k_name": "edamame"
+      },
+      {
+        "n5k_id": "335",
+        "n5k_name": "eggplant"
+      },
+      {
+        "n5k_id": "7",
+        "n5k_name": "cauliflower"
+      },
+      {
+        "n5k_id": "27",
+        "n5k_name": "broccoli"
+      },
+      {
+        "n5k_id": "94",
+        "n5k_name": "onions"
+      }
+    ]
+  },
+  "99": {
+    "foodsam_id": "99",
+    "foodsam_name": "enoki mushroom",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "46",
+        "n5k_name": "mushroom"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "50",
+        "n5k_name": "tofu"
+      },
+      {
+        "n5k_id": "385",
+        "n5k_name": "curries"
+      },
+      {
+        "n5k_id": "350",
+        "n5k_name": "miso soup"
+      },
+      {
+        "n5k_id": "177",
+        "n5k_name": "tempeh"
+      },
+      {
+        "n5k_id": "281",
+        "n5k_name": "edamame"
+      },
+      {
+        "n5k_id": "7",
+        "n5k_name": "cauliflower"
+      },
+      {
+        "n5k_id": "27",
+        "n5k_name": "broccoli"
+      },
+      {
+        "n5k_id": "335",
+        "n5k_name": "eggplant"
+      },
+      {
+        "n5k_id": "94",
+        "n5k_name": "onions"
+      }
+    ]
+  },
+  "100": {
+    "foodsam_id": "100",
+    "foodsam_name": "oyster mushroom",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "46",
+        "n5k_name": "mushroom"
+      },
+      {
+        "n5k_id": "232",
+        "n5k_name": "oysters"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "50",
+        "n5k_name": "tofu"
+      },
+      {
+        "n5k_id": "385",
+        "n5k_name": "curries"
+      },
+      {
+        "n5k_id": "350",
+        "n5k_name": "miso soup"
+      },
+      {
+        "n5k_id": "177",
+        "n5k_name": "tempeh"
+      },
+      {
+        "n5k_id": "281",
+        "n5k_name": "edamame"
+      },
+      {
+        "n5k_id": "7",
+        "n5k_name": "cauliflower"
+      },
+      {
+        "n5k_id": "27",
+        "n5k_name": "broccoli"
+      },
+      {
+        "n5k_id": "335",
+        "n5k_name": "eggplant"
+      }
+    ]
+  },
+  "101": {
+    "foodsam_id": "101",
+    "foodsam_name": "white button mushroom",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "46",
+        "n5k_name": "mushroom"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "50",
+        "n5k_name": "tofu"
+      },
+      {
+        "n5k_id": "385",
+        "n5k_name": "curries"
+      },
+      {
+        "n5k_id": "350",
+        "n5k_name": "miso soup"
+      },
+      {
+        "n5k_id": "177",
+        "n5k_name": "tempeh"
+      },
+      {
+        "n5k_id": "281",
+        "n5k_name": "edamame"
+      },
+      {
+        "n5k_id": "7",
+        "n5k_name": "cauliflower"
+      },
+      {
+        "n5k_id": "27",
+        "n5k_name": "broccoli"
+      },
+      {
+        "n5k_id": "335",
+        "n5k_name": "eggplant"
+      },
+      {
+        "n5k_id": "94",
+        "n5k_name": "onions"
+      }
+    ]
+  },
+  "102": {
+    "foodsam_id": "102",
+    "foodsam_name": "salad",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "3",
+        "n5k_name": "garden salad"
+      },
+      {
+        "n5k_id": "197",
+        "n5k_name": "salads"
+      },
+      {
+        "n5k_id": "6",
+        "n5k_name": "caesar salad"
+      },
+      {
+        "n5k_id": "409",
+        "n5k_name": "greek salad"
+      },
+      {
+        "n5k_id": "17",
+        "n5k_name": "pasta salad"
+      },
+      {
+        "n5k_id": "492",
+        "n5k_name": "taco salad"
+      },
+      {
+        "n5k_id": "141",
+        "n5k_name": "tuna salad"
+      },
+      {
+        "n5k_id": "224",
+        "n5k_name": "potato salad"
+      },
+      {
+        "n5k_id": "484",
+        "n5k_name": "chicken salad"
+      },
+      {
+        "n5k_id": "348",
+        "n5k_name": "egg salad"
+      },
+      {
+        "n5k_id": "375",
+        "n5k_name": "fruit salad"
+      },
+      {
+        "n5k_id": "283",
+        "n5k_name": "salad dressing"
+      },
+      {
+        "n5k_id": "87",
+        "n5k_name": "coleslaw"
+      },
+      {
+        "n5k_id": "29",
+        "n5k_name": "mixed greens"
+      },
+      {
+        "n5k_id": "30",
+        "n5k_name": "lettuce"
+      },
+      {
+        "n5k_id": "36",
+        "n5k_name": "spinach (raw)"
+      },
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "32",
+        "n5k_name": "tomatoes"
+      },
+      {
+        "n5k_id": "31",
+        "n5k_name": "cucumbers"
+      },
+      {
+        "n5k_id": "45",
+        "n5k_name": "carrot"
+      },
+      {
+        "n5k_id": "119",
+        "n5k_name": "tabouli"
+      }
+    ]
+  },
+  "103": {
+    "foodsam_id": "103",
+    "foodsam_name": "other ingredients",
+    "mapped_n5k_categories": [
+      {
+        "n5k_id": "358",
+        "n5k_name": "mixed vegetables"
+      },
+      {
+        "n5k_id": "307",
+        "n5k_name": "stuffing"
+      },
+      {
+        "n5k_id": "214",
+        "n5k_name": "seeds"
+      },
+      {
+        "n5k_id": "53",
+        "n5k_name": "nuts"
+      },
+      {
+        "n5k_id": "107",
+        "n5k_name": "mixed nuts"
+      },
+      {
+        "n5k_id": "13",
+        "n5k_name": "berries"
+      },
+      {
+        "n5k_id": "292",
+        "n5k_name": "spreads"
+      },
+      {
+        "n5k_id": "447",
+        "n5k_name": "nutrition bars"
+      },
+      {
+        "n5k_id": "274",
+        "n5k_name": "trail mix"
+      },
+      {
+        "n5k_id": "415",
+        "n5k_name": "cereal"
+      },
+      {
+        "n5k_id": "318",
+        "n5k_name": "flour"
+      },
+      {
+        "n5k_id": "555",
+        "n5k_name": "oil"
+      },
+      {
+        "n5k_id": "328",
+        "n5k_name": "sugar"
+      },
+      {
+        "n5k_id": "291",
+        "n5k_name": "salt"
+      },
+      {
+        "n5k_id": "312",
+        "n5k_name": "pepper"
+      },
+      {
+        "n5k_id": "189",
+        "n5k_name": "vinegar"
+      },
+      {
+        "n5k_id": "321",
+        "n5k_name": "water"
+      },
+      {
+        "n5k_id": "78",
+        "n5k_name": "protein powder"
+      },
+      {
+        "n5k_id": "174",
+        "n5k_name": "bread crumbs"
+      },
+      {
+        "n5k_id": "306",
+        "n5k_name": "croutons"
+      },
+      {
+        "n5k_id": "67",
+        "n5k_name": "syrup"
+      },
+      {
+        "n5k_id": "267",
+        "n5k_name": "coconuts"
+      },
+      {
+        "n5k_id": "427",
+        "n5k_name": "muesli"
+      },
+      {
+        "n5k_id": "543",
+        "n5k_name": "chia seeds"
+      },
+      {
+        "n5k_id": "552",
+        "n5k_name": "pomegranate"
+      }
+    ]
+  }
+}
