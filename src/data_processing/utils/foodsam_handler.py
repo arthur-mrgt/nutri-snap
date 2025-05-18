@@ -44,6 +44,12 @@ except ImportError as e:
 _SAM_MODEL_CACHE = None
 _SEMANTIC_MODEL_CACHE = None
 
+# Intermediate modality folder names (within INTERMEDIATE_FOODSAM_OUTPUT_DIR/<split_name>/)
+INTERMEDIATE_MASKS_NPY = "masks_npy" # For masks.npy
+INTERMEDIATE_SEMANTIC_PRED_RAW = "semantic_pred_raw" # For raw semantic_pred.png (FoodSeg103 class IDs)
+INTERMEDIATE_SAM_LABELS = "sam_mask_labels" # For sam_mask_label.txt (FoodSeg103 based)
+INTERMEDIATE_ENHANCED_MASK = "enhanced_semantic_mask" # For enhanced_mask.png (FoodSeg103 based, colored or class IDs)
+
 def _get_sam_model():
     global _SAM_MODEL_CACHE
     if _SAM_MODEL_CACHE is None:
@@ -69,36 +75,40 @@ def _get_semantic_model():
         _SEMANTIC_MODEL_CACHE = model
     return _SEMANTIC_MODEL_CACHE
 
-def generate_direct_foodsam_outputs(dish_id, rgb_image_path, temp_dish_output_dir):
+def generate_direct_foodsam_outputs(dish_id, split_name, rgb_image_path):
     """
     Generates core FoodSAM outputs (raw SAM masks, semantic prediction, labels, enhanced mask)
-    directly using FoodSAM tools to avoid unnecessary intermediate files.
+    and saves them to a structured intermediate directory.
 
     Args:
         dish_id (str): The ID of the dish.
+        split_name (str): The split name ('train' or 'test').
         rgb_image_path (str): Path to the input RGB image.
-        temp_dish_output_dir (str): Directory to save these direct outputs.
 
     Returns:
-        dict: Paths to key generated files if successful, else None.
-              Keys: "enhanced_mask_path", "masks_npy_path", "sam_mask_label_path"
+        dict: Paths to key generated intermediate files if successful, else None.
+              Keys: "enhanced_mask_path", "masks_npy_path", "sam_mask_label_path", "raw_semantic_pred_path"
     """
-    create_dir_if_not_exists(temp_dish_output_dir)
-    logging.info(f"Starting direct FoodSAM processing for {dish_id}...")
+    logging.info(f"Starting FoodSAM processing for {dish_id} (split: {split_name}) -> intermediate structured output.")
 
-    # --- Output file paths ---
-    masks_npy_path = os.path.join(temp_dish_output_dir, "masks.npy")
-    # Temp for sam_metadata from SAM, not the final sam_mask_label.txt
-    # sam_initial_metadata_path = os.path.join(temp_dish_output_dir, "_sam_initial_metadata.csv") 
-    pred_mask_png_path = os.path.join(temp_dish_output_dir, "pred_mask.png")
-    # The calculate_single_image_masks_label saves to a subdir by default, we want it directly.
-    sam_mask_label_dir = os.path.join(temp_dish_output_dir, "sam_mask_label_data") # a sub-folder for calculate_single_image_masks_label
-    create_dir_if_not_exists(sam_mask_label_dir)
-    sam_mask_label_filename = "sam_mask_label.txt"
-    sam_mask_label_path_final_location = os.path.join(temp_dish_output_dir, sam_mask_label_filename) # What we want ultimately
-    
-    enhanced_mask_path = os.path.join(temp_dish_output_dir, "enhanced_mask.png")
-    # Path to color list, relative to FOODSAM_DIR
+    # --- Base output directories for this dish's intermediate files ---
+    base_intermediate_split_dir = os.path.join(config.INTERMEDIATE_FOODSAM_OUTPUT_DIR, split_name)
+
+    # Create dish-specific directories for each intermediate modality
+    masks_npy_dish_dir = os.path.join(base_intermediate_split_dir, INTERMEDIATE_MASKS_NPY, dish_id)
+    pred_mask_dish_dir = os.path.join(base_intermediate_split_dir, INTERMEDIATE_SEMANTIC_PRED_RAW, dish_id)
+    sam_labels_dish_dir = os.path.join(base_intermediate_split_dir, INTERMEDIATE_SAM_LABELS, dish_id)
+    enhanced_mask_dish_dir = os.path.join(base_intermediate_split_dir, INTERMEDIATE_ENHANCED_MASK, dish_id)
+
+    for dir_path in [masks_npy_dish_dir, pred_mask_dish_dir, sam_labels_dish_dir, enhanced_mask_dish_dir]:
+        create_dir_if_not_exists(dir_path)
+
+    # --- Output file paths (now structured) ---
+    masks_npy_path = os.path.join(masks_npy_dish_dir, f"{dish_id}.npy")
+    pred_mask_png_path = os.path.join(pred_mask_dish_dir, f"{dish_id}.png") # Raw semantic prediction
+    sam_mask_label_path = os.path.join(sam_labels_dish_dir, f"{dish_id}.txt")
+    enhanced_mask_path = os.path.join(enhanced_mask_dish_dir, f"{dish_id}.png")
+
     color_list_full_path = os.path.join(config.FOODSAM_DIR, config.FOODSAM_COLOR_LIST_PATH_FILENAME)
     category_txt_full_path = os.path.join(config.FOODSAM_DIR, config.FOODSAM_CATEGORY_TXT_FILENAME)
 
@@ -121,12 +131,9 @@ def generate_direct_foodsam_outputs(dish_id, rgb_image_path, temp_dish_output_di
         
         if not sam_masks_data:
             logging.warning(f"[{dish_id}] SAM did not generate any masks for {rgb_image_path}")
-            # Create empty files to allow pipeline to continue if this is acceptable
             np.save(masks_npy_path, np.array([]).astype(bool).reshape(0, image_rgb.shape[0], image_rgb.shape[1]))
-            # No SAM masks, so sam_mask_label.txt will be empty or indicate no labels
-            with open(sam_mask_label_path_final_location, 'w') as f_sml:
+            with open(sam_mask_label_path, 'w') as f_sml:
                 f_sml.write("id,category_id,category_name,category_count_ratio,mask_count_ratio\n")
-            # pred_mask and enhanced_mask might still be generated if semantic model runs
         else:
             # Sort by predicted_iou (or area as in panoptic's write_masks_to_folder)
             # top_k for SAM masks is applied in enhance_masks tool. Here we save all from generator.
@@ -162,15 +169,13 @@ def generate_direct_foodsam_outputs(dish_id, rgb_image_path, temp_dish_output_di
         if not os.path.exists(pred_mask_png_path):
             logging.error(f"[{dish_id}] {pred_mask_png_path} was not created after mmcv.imwrite call.")
             return None
-        # logging.info(f"[{dish_id}] Saved semantic prediction to {pred_mask_png_path}") # This log is now covered above
 
         # --- D. Generate SAM Mask Labels (sam_mask_label.txt) ---
         # This uses masks.npy and pred_mask.png
         logging.info(f"[{dish_id}] Assigning categories to SAM masks...")
         if not os.path.exists(masks_npy_path) or np.load(masks_npy_path).shape[0] == 0:
             logging.warning(f"[{dish_id}] masks.npy is empty or missing. Skipping SAM mask label generation.")
-            # Create an empty sam_mask_label.txt if masks.npy was empty
-            with open(sam_mask_label_path_final_location, 'w') as f_sml:
+            with open(sam_mask_label_path, 'w') as f_sml:
                 f_sml.write("id,category_id,category_name,category_count_ratio,mask_count_ratio\n")
         else:
             # calculate_single_image_masks_label expects masks_path_name, pred_mask_file, category_list, sam_mask_label_file_name, sam_mask_label_file_dir
@@ -184,19 +189,14 @@ def generate_direct_foodsam_outputs(dish_id, rgb_image_path, temp_dish_output_di
             calculate_single_image_masks_label(mask_file=masks_npy_path, 
                                              pred_mask_file=pred_mask_png_path,
                                              category_list=category_list_for_tool, 
-                                             sam_mask_label_file_name=sam_mask_label_filename, 
-                                             sam_mask_label_file_dir=sam_mask_label_dir) # this will save into temp_dish_output_dir/sam_mask_label_data/sam_mask_label.txt
+                                             sam_mask_label_file_name=f"{dish_id}.txt",
+                                             sam_mask_label_file_dir=sam_labels_dish_dir)
             
-            # Move the generated file to the desired flat location
-            generated_sml_path = os.path.join(sam_mask_label_dir, sam_mask_label_filename)
-            if os.path.exists(generated_sml_path):
-                shutil.move(generated_sml_path, sam_mask_label_path_final_location)
-                shutil.rmtree(sam_mask_label_dir) # Clean up the temp subdir
-                logging.info(f"[{dish_id}] Saved SAM mask labels to {sam_mask_label_path_final_location}")
+            if os.path.exists(sam_mask_label_path):
+                logging.info(f"[{dish_id}] Saved SAM mask labels to {sam_mask_label_path}")
             else:
-                logging.error(f"[{dish_id}] Failed to generate {generated_sml_path}. It might be empty if no SAM masks.")
-                 # Create an empty one if it failed and masks.npy wasn't empty initially
-                with open(sam_mask_label_path_final_location, 'w') as f_sml:
+                logging.error(f"[{dish_id}] Failed to generate {sam_mask_label_path}.")
+                with open(sam_mask_label_path, 'w') as f_sml:
                     f_sml.write("id,category_id,category_name,category_count_ratio,mask_count_ratio\n")
         
         # --- E. Generate Enhanced Semantic Mask (enhanced_mask.png) ---
@@ -206,16 +206,13 @@ def generate_direct_foodsam_outputs(dish_id, rgb_image_path, temp_dish_output_di
         # We need to call its core logic for a single image, or adapt it.
         # For now, let's replicate the core logic for a single image.
         
-        # Copy input.jpg as enhance_masks_tool_func expects it for visualization_save, though we want to bypass that.
-        shutil.copyfile(rgb_image_path, os.path.join(temp_dish_output_dir, "input.jpg"))
-
-        _pred_mask_img = cv2.imread(pred_mask_png_path)[:,:,2] # Usually red channel from FoodSAM format
+        _pred_mask_img = cv2.imread(pred_mask_png_path)[:,:,2]
         _sam_masks_arr = np.load(masks_npy_path)
         _enhanced_mask_img = _pred_mask_img.copy()
 
-        if os.path.exists(sam_mask_label_path_final_location):
-            with open(sam_mask_label_path_final_location, 'r') as f_sml_enhance:
-                category_info_lines = f_sml_enhance.readlines()[1:] # Skip header
+        if os.path.exists(sam_mask_label_path):
+            with open(sam_mask_label_path, 'r') as f_sml_enhance:
+                category_info_lines = f_sml_enhance.readlines()[1:]
             
             # Sort and filter by top_k (as in enhance_masks_tool_func)
             # Note: score for sorting is 'mask_count_ratio' (area of mask / total image area)
@@ -256,14 +253,11 @@ def generate_direct_foodsam_outputs(dish_id, rgb_image_path, temp_dish_output_di
         cv2.imwrite(enhanced_mask_path, _enhanced_mask_img)
         logging.info(f"[{dish_id}] Saved enhanced semantic mask to {enhanced_mask_path}")
 
-        # Clean up the copied input.jpg
-        if os.path.exists(os.path.join(temp_dish_output_dir, "input.jpg")):
-            os.remove(os.path.join(temp_dish_output_dir, "input.jpg"))
-
         return {
             "enhanced_mask_path": enhanced_mask_path,
             "masks_npy_path": masks_npy_path,
-            "sam_mask_label_path": sam_mask_label_path_final_location
+            "sam_mask_label_path": sam_mask_label_path,
+            "raw_semantic_pred_path": pred_mask_png_path
         }
 
     except Exception as e:
@@ -369,60 +363,3 @@ def generate_bounding_boxes_json(masks_npy_path, sam_mask_label_path, output_bbo
     except Exception as e:
         logging.error(f"Error generating bounding_box.json from {masks_npy_path} and {sam_mask_label_path}: {e}", exc_info=True)
         return False
-
-def retrieve_direct_foodsam_outputs(dish_id, foodsam_temp_dir, target_dir):
-    """
-    Copies the directly generated FoodSAM outputs from the temporary directory
-    to the final processed dish directory.
-    """
-    source_files_map = {
-        "enhanced_mask.png": "semseg.png", # Source filename in temp_dir : Target filename in final_dir
-        "masks.npy": "_temp_masks.npy",    # Will be used for sam_instance.npy and then deleted by main
-        "sam_mask_label.txt": "_temp_sam_metadata.csv" # Will be used for bounding_box.json then deleted
-    }
-
-    retrieved_file_paths = {}
-
-    for src_name, target_name_in_final_dir_or_temp in source_files_map.items():
-        src_path = os.path.join(foodsam_temp_dir, src_name)
-        target_path = os.path.join(target_dir, target_name_in_final_dir_or_temp)
-        
-        if not os.path.exists(src_path):
-            # masks.npy or sam_mask_label.txt could be empty if no SAM masks were found, which is handled inside their generation.
-            # enhanced_mask.png should always exist if semantic segmentation ran.
-            if src_name == "enhanced_mask.png": 
-                 logging.error(f"Required FoodSAM output file missing: {src_path} for dish {dish_id}")
-                 return None
-            else:
-                 logging.warning(f"Optional FoodSAM output file missing: {src_path} for dish {dish_id}. Proceeding.")
-                 # Create empty files if they are critical for downstream and missing
-                 if src_name == "masks.npy" and not os.path.exists(target_path):
-                     np.save(target_path, np.array([]).astype(bool).reshape(0,1,1)) # save empty valid npy
-                 elif src_name == "sam_mask_label.txt" and not os.path.exists(target_path):
-                     with open(target_path, 'w') as f_sml:
-                         f_sml.write("id,category_id,category_name,category_count_ratio,mask_count_ratio\n") 
-        else:
-            copy_file(src_path, target_path)
-        
-        # Store paths for return, using keys expected by main.py
-        if target_name_in_final_dir_or_temp == "semseg.png":
-            retrieved_file_paths["semseg_final_path"] = target_path
-        elif target_name_in_final_dir_or_temp == "_temp_masks.npy":
-            retrieved_file_paths["raw_masks_intermediate_path"] = target_path
-        elif target_name_in_final_dir_or_temp == "_temp_sam_metadata.csv": # Note: main.py expects this key
-            retrieved_file_paths["sam_metadata_intermediate_path"] = target_path
-    
-    # Ensure all critical keys are present even if files were missing and dummy created
-    if "semseg_final_path" not in retrieved_file_paths and os.path.exists(os.path.join(target_dir, "semseg.png")):
-        retrieved_file_paths["semseg_final_path"] = os.path.join(target_dir, "semseg.png")
-    if "raw_masks_intermediate_path" not in retrieved_file_paths and os.path.exists(os.path.join(target_dir, "_temp_masks.npy")):
-        retrieved_file_paths["raw_masks_intermediate_path"] = os.path.join(target_dir, "_temp_masks.npy")
-    if "sam_metadata_intermediate_path" not in retrieved_file_paths and os.path.exists(os.path.join(target_dir, "_temp_sam_metadata.csv")):
-        retrieved_file_paths["sam_metadata_intermediate_path"] = os.path.join(target_dir, "_temp_sam_metadata.csv")
-
-    if "semseg_final_path" not in retrieved_file_paths: # Critical check
-        logging.error(f"Failed to retrieve semseg.png for {dish_id}")
-        return None
-        
-    logging.info(f"Retrieved direct FoodSAM outputs for {dish_id} to {target_dir} (and its _temp_ files)")
-    return retrieved_file_paths
