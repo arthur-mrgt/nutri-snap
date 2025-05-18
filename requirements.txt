@@ -1,2 +1,7 @@
-(base) PS C:\Users\arthu\Desktop\EPFL\BA6\AI Project\nutri-snap> cd external_libs
-(base) PS C:\Users\arthu\Desktop\EPFL\BA6\AI Project\nutri-snap\external_libs> git clone https://github.com/jamesjg/FoodSAM
+cd external_libs
+git clone https://github.com/jamesjg/FoodSAM
+git clone https://github.com/apple/ml-4m
+cd ..
+
+# A lancer dans powershell en admin :
+gsutil -m rsync -r -x "imagery/side_angles/.*" gs://nutrition5k_dataset/nutrition5k_dataset/ "./data/raw/"
