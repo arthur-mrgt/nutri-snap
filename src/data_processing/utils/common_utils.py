@@ -46,6 +46,56 @@ def load_json(json_path):
         logging.error(f"Error loading JSON from {json_path}: {e}")
         return None
 
+def load_category_info(file_path, delimiter='\t'):
+    """Loads category information from a text file (e.g., ID<delimiter>Name).
+
+    Args:
+        file_path (str): Path to the category file.
+        delimiter (str): Delimiter used in the file.
+
+    Returns:
+        tuple: (dict: id_to_name, dict: name_to_id)
+               Returns two empty dicts if file not found or parsing error.
+    """
+    id_to_name = {}
+    name_to_id = {}
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                parts = line.split(delimiter, 1)
+                if len(parts) == 2:
+                    cat_id_str, cat_name = parts[0].strip(), parts[1].strip()
+                    try:
+                        # Attempt to convert ID to int, if not, keep as string
+                        try:
+                            cat_id = int(cat_id_str)
+                        except ValueError:
+                            cat_id = cat_id_str # Keep as string if not an int (e.g. 'plate only')
+                        
+                        if cat_id in id_to_name and id_to_name[cat_id] != cat_name:
+                            logging.warning(f"Duplicate ID {cat_id} in {file_path}: '{id_to_name[cat_id]}' vs '{cat_name}'. Using first occurrence.")
+                        elif cat_id not in id_to_name:
+                             id_to_name[cat_id] = cat_name
+                        
+                        if cat_name in name_to_id and name_to_id[cat_name] != cat_id:
+                            logging.warning(f"Duplicate name '{cat_name}' in {file_path} for IDs: {name_to_id[cat_name]} vs {cat_id}. Using first occurrence.")
+                        elif cat_name not in name_to_id:
+                            name_to_id[cat_name] = cat_id
+                            
+                    except ValueError:
+                        logging.warning(f"Could not parse category ID from '{cat_id_str}' in {file_path}. Skipping line: {line}")
+                else:
+                    logging.warning(f"Could not parse line in {file_path}: {line}. Expected format: ID<delimiter>Name.")
+        logging.info(f"Loaded {len(id_to_name)} categories from {file_path}")
+    except FileNotFoundError:
+        logging.error(f"Category file not found: {file_path}")
+    except Exception as e:
+        logging.error(f"Error loading category info from {file_path}: {e}")
+    return id_to_name, name_to_id
+
 def read_text_file_lines(file_path):
     """Reads lines from a text file, stripping whitespace."""
     try:

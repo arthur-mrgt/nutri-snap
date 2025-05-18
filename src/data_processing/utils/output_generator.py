@@ -1,71 +1,72 @@
 """
 Generates the final metadata.json file for each processed dish.
+Also handles saving of ground truth N5K metadata to an intermediate location.
 """
 import os
 import logging
 from . import config
-from .common_utils import save_json
+from .common_utils import save_json, create_dir_if_not_exists
 from .n5k_utils import parse_dish_metadata_csv
 
-def generate_final_metadata_json(dish_id, output_dir):
+
+def save_n5k_ground_truth_metadata(dish_id, split_name):
     """
-    Generates the metadata.json file for a given dish ID using parsed Nutrition5k data.
+    Saves the original Nutrition5k metadata for a dish to an intermediate 
+    directory for later verification or comparison.
+    The saved file will be named <dish_id>.json.
 
     Args:
         dish_id (str): The ID of the dish.
-        output_dir (str): The directory where metadata.json will be saved 
-                          (e.g., data/processed/split/dish_id/).
+        split_name (str): The split name ('train' or 'test').
 
     Returns:
-        bool: True if metadata.json was successfully generated, False otherwise.
+        dict: The parsed original N5K metadata, or None if parsing failed.
     """
-    n5k_dish_info = parse_dish_metadata_csv(dish_id)
+    original_n5k_dish_info = parse_dish_metadata_csv(dish_id)
 
-    if not n5k_dish_info:
-        logging.error(f"Could not retrieve Nutrition5k metadata for dish {dish_id}. Skipping metadata.json generation.")
-        return False
+    if not original_n5k_dish_info:
+        logging.error(f"Could not retrieve original Nutrition5k metadata for dish {dish_id}. Skipping ground truth save.")
+        return None
 
-    # Construct the metadata dictionary in the desired format
-    # User format:
-    # {
-    #   "dish_total_calories_kcal": ..., "dish_total_fat_g": ..., 
-    #   "dish_total_carbs_g": ..., "dish_total_protein_g": ...,
-    #   "ingredients": [
-    #     {"ingredient_name": ..., "weight_g": ..., "calories_kcal": ..., 
-    #      "fat_g": ..., "carbs_g": ..., "protein_g": ...}, ...
-    #   ]
-    # }
-    # Our n5k_dish_info format from n5k_utils.parse_dish_metadata_csv is already very close.
+    # Construct the path for the intermediate ground truth metadata
+    # INTERMEDIATE_FOODSAM_OUTPUT_DIR / <split_name> / INTERMEDIATE_N5K_GROUND_TRUTH_METADATA_DIR_NAME / <dish_id> / <dish_id>.json
+    gt_metadata_dish_dir = os.path.join(config.INTERMEDIATE_FOODSAM_OUTPUT_DIR, 
+                                        split_name, 
+                                        config.INTERMEDIATE_N5K_GROUND_TRUTH_METADATA_DIR_NAME, 
+                                        dish_id)
+    create_dir_if_not_exists(gt_metadata_dish_dir)
+    output_gt_json_path = os.path.join(gt_metadata_dish_dir, f"{dish_id}.json")
 
-    output_metadata = {
-        "dish_total_calories_kcal": n5k_dish_info.get("dish_total_calories_kcal"),
-        "dish_total_fat_g": n5k_dish_info.get("dish_total_fat_g"),
-        "dish_total_carbs_g": n5k_dish_info.get("dish_total_carbs_g"),
-        "dish_total_protein_g": n5k_dish_info.get("dish_total_protein_g"),
-        "ingredients": n5k_dish_info.get("ingredients", [])
-    }
-
-    # Optional: Add dish_total_mass_g if desired, though not in user's final spec
-    # output_metadata["dish_total_mass_g"] = n5k_dish_info.get("dish_total_mass_g")
-
-    output_json_path = os.path.join(output_dir, "metadata.json")
+    # The format from parse_dish_metadata_csv is already good for saving as JSON.
+    # It includes dish totals and the ingredients list with all their N5K attributes.
     try:
-        save_json(output_metadata, output_json_path)
-        logging.info(f"Successfully generated metadata.json for {dish_id} at {output_json_path}")
-        return True
+        save_json(original_n5k_dish_info, output_gt_json_path)
+        logging.info(f"Successfully saved original N5K metadata (ground truth) for {dish_id} to {output_gt_json_path}")
+        return original_n5k_dish_info
     except Exception as e:
-        logging.error(f"Failed to save metadata.json for {dish_id}: {e}")
-        return False
+        logging.error(f"Failed to save original N5K metadata for {dish_id}: {e}")
+        return None
+
+
+# The old `generate_final_metadata_json` is now superseded by the alignment logic 
+# in alignment_utils.py for the *final* metadata.json. 
+# This file now primarily focuses on handling the *original* N5K metadata.
 
 # Example usage (for testing this module independently):
 if __name__ == '__main__':
     # This requires n5k_utils.parse_dish_metadata_csv to work, which needs N5K data.
+    # And config.py to be set up.
     # test_dish_id = "dish_1563207364" # Example dish ID
-    # temp_output_dir = os.path.join(config.PROJECT_ROOT, "data", "scripts", "utils", "test_output", test_dish_id)
-    # common_utils.create_dir_if_not_exists(temp_output_dir)
-    # success = generate_final_metadata_json(test_dish_id, temp_output_dir)
-    # if success:
-    #     print(f"Test metadata.json generated in {temp_output_dir}")
+    # test_split = "train"
+    
+    # # Setup dummy intermediate directory structure if it doesn't exist
+    # dummy_intermediate_root = os.path.join(config.PROJECT_ROOT, "data", "tmp_intermediate_outputs_test")
+    # config.INTERMEDIATE_FOODSAM_OUTPUT_DIR = dummy_intermediate_root # Override for test
+    # create_dir_if_not_exists(os.path.join(config.INTERMEDIATE_FOODSAM_OUTPUT_DIR, test_split, config.INTERMEDIATE_N5K_GROUND_TRUTH_METADATA_DIR_NAME, test_dish_id))
+
+    # parsed_gt_meta = save_n5k_ground_truth_metadata(test_dish_id, test_split)
+    # if parsed_gt_meta:
+    #     print(f"Test original N5K metadata saved and parsed for {test_dish_id}")
     # else:
-    #     print(f"Failed to generate test metadata.json for {test_dish_id}")
+    #     print(f"Failed to save/parse test original N5K metadata for {test_dish_id}")
     pass

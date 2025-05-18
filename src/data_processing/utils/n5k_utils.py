@@ -56,6 +56,7 @@ def parse_dish_metadata_csv(dish_id):
                   "dish_total_mass_g": float, # Added for completeness
                   "ingredients": [
                       {
+                          "ingredient_id": str,
                           "ingredient_name": str,
                           "weight_g": float,
                           "calories_kcal": float,
@@ -97,23 +98,32 @@ def parse_dish_metadata_csv(dish_id):
                     }
                     
                     num_fixed_cols = 6
+                    # Each ingredient has 7 fields: id, name, grams, calories, fat, carb, protein
                     if (len(row) - num_fixed_cols) % 7 != 0:
-                        logging.error(f"Malformed ingredient data for dish {dish_id} in {file_path}. Row length: {len(row)}")
-                        return None # Or handle error more gracefully
+                        logging.error(f"Malformed ingredient data for dish {dish_id} in {file_path}. Row length: {len(row)}. Expected (len - {num_fixed_cols}) % 7 == 0.")
+                        # Try to parse what we can if it's just trailing empty cells
+                        # return None # Or handle error more gracefully
 
                     num_ingredients = (len(row) - num_fixed_cols) // 7
                     for i in range(num_ingredients):
                         base_idx = num_fixed_cols + (i * 7)
-                        ingredient_info = {
-                            # row[base_idx] is ingredient_id, not used in target format
-                            "ingredient_name": row[base_idx + 1],
-                            "weight_g": float(row[base_idx + 2]),
-                            "calories_kcal": float(row[base_idx + 3]),
-                            "fat_g": float(row[base_idx + 4]),
-                            "carbs_g": float(row[base_idx + 5]),
-                            "protein_g": float(row[base_idx + 6])
-                        }
-                        dish_data["ingredients"].append(ingredient_info)
+                        try:
+                            ingredient_info = {
+                                "ingredient_id": row[base_idx].strip(),
+                                "ingredient_name": row[base_idx + 1].strip(),
+                                "weight_g": float(row[base_idx + 2]),
+                                "calories_kcal": float(row[base_idx + 3]),
+                                "fat_g": float(row[base_idx + 4]),
+                                "carbs_g": float(row[base_idx + 5]),
+                                "protein_g": float(row[base_idx + 6])
+                            }
+                            dish_data["ingredients"].append(ingredient_info)
+                        except IndexError:
+                            logging.error(f"IndexError while parsing ingredients for dish {dish_id} in {file_path}. Expected more fields. Row: {row}, base_idx: {base_idx}")
+                            break # Stop processing ingredients for this row
+                        except ValueError as ve:
+                            logging.error(f"ValueError while parsing ingredient {i} for dish {dish_id} in {file_path}: {ve}. Row segment: {row[base_idx:base_idx+7]}")
+                            continue # Skip this ingredient
                     return dish_data # Found and parsed
         except Exception as e:
             logging.error(f"Error parsing metadata file {file_path} for dish {dish_id}: {e}")
