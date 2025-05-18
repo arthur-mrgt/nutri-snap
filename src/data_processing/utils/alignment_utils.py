@@ -118,6 +118,7 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, de
     # Helper to quickly look up original N5K ingredients by their N5K name or ID
     # Assumes original_n5k_metadata['ingredients'] now has 'ingredient_id' and 'ingredient_name'
     original_n5k_ingredients_by_id = {ing['ingredient_id']: ing for ing in original_n5k_metadata['ingredients']}
+    logging.debug(f"[{dish_id}] Original N5K ingredients in dish (by ID): {list(original_n5k_ingredients_by_id.keys())}")
     
     # Stores the final N5K ID and name that an original SAM mask index maps to.
     # e.g., {0: {'id': 'n5k_id_apple', 'name': 'apple'}, 1: None, ...}
@@ -139,9 +140,10 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, de
 
         candidate_n5k_names_for_foodsam_cat = foodsam_name_to_n5k_names_map.get(foodsam_cat_name, [])
         if not candidate_n5k_names_for_foodsam_cat:
-            logging.debug(f"[{dish_id}] No N5K mapping found for FoodSAM category: {foodsam_cat_name}")
+            logging.debug(f"[{dish_id}] FoodSAM category '{foodsam_cat_name}' (mask_idx {original_mask_idx}): No N5K mapping found in foodsam_to_n5k_map.")
             continue
         
+        logging.debug(f"[{dish_id}] FoodSAM category '{foodsam_cat_name}' (mask_idx {original_mask_idx}): Maps to N5K candidate names: {candidate_n5k_names_for_foodsam_cat}")
         # Find which of these N5K candidates are actually in the current dish's original N5K metadata
         matching_original_n5k_ingredients_in_dish = []
         for n5k_cand_name in candidate_n5k_names_for_foodsam_cat:
@@ -150,7 +152,7 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, de
                 matching_original_n5k_ingredients_in_dish.append(original_n5k_ingredients_by_id[n5k_cand_id])
         
         if not matching_original_n5k_ingredients_in_dish:
-            logging.debug(f"[{dish_id}] FoodSAM {foodsam_cat_name} mapped to N5K names {candidate_n5k_names_for_foodsam_cat}, but none are in original dish metadata.")
+            logging.debug(f"[{dish_id}] FoodSAM '{foodsam_cat_name}' (mask_idx {original_mask_idx}): Candidate N5K names {candidate_n5k_names_for_foodsam_cat} are not present in this dish's original N5K metadata.")
             continue
 
         # Apply user's logic for N_single, N_multi
@@ -163,6 +165,7 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, de
             final_id_for_instance = n_single_orig_ing['ingredient_id']
             final_name_for_instance = n_single_orig_ing['ingredient_name']
             source_ids_to_add_for_this_instance.add(n_single_orig_ing['ingredient_id'])
+            logging.debug(f"[{dish_id}] FoodSAM '{foodsam_cat_name}' (mask_idx {original_mask_idx}): N_single match to N5K ID '{final_id_for_instance}' ('{final_name_for_instance}') from dish.")
         else: # N_multi case
             # Identify N_principal (e.g., highest weight in original dish)
             # Weights are floats, handle potential ties if any specific rule needed. For now, first one with max weight.
@@ -171,6 +174,7 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, de
             final_name_for_instance = n_principal_orig_ing['ingredient_name']
             for orig_ing in matching_original_n5k_ingredients_in_dish: # All in N_multi contribute
                 source_ids_to_add_for_this_instance.add(orig_ing['ingredient_id'])
+            logging.debug(f"[{dish_id}] FoodSAM '{foodsam_cat_name}' (mask_idx {original_mask_idx}): N_multi match. Principal N5K ID '{final_id_for_instance}' ('{final_name_for_instance}'). Sources: {source_ids_to_add_for_this_instance}")
         
         if final_id_for_instance:
             instance_to_final_n5k_assignment[original_mask_idx] = {'id': final_id_for_instance, 'name': final_name_for_instance}
@@ -186,6 +190,7 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, de
 
     # --- Construct the final ingredient list for JSON by summing up from original N5K data ---
     final_ingredients_for_json_list = []
+    logging.debug(f"[{dish_id}] Final N5K ingredient definitions (pre-summing): {final_n5k_ingredient_definitions}")
     for final_id, definition_data in final_n5k_ingredient_definitions.items():
         current_final_ing_json = {
             'id': final_id, 
@@ -284,7 +289,7 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, de
             "jaccard_ingredient": round(jaccard_ingredient, 4)
         }
     }
-    logging.info(f"[{dish_id}] Generated aligned N5K metadata with scores. Final confidence: {final_confidence:.4f}")
+    logging.info(f"[{dish_id}] Generated aligned N5K metadata with scores. Ingredients count: {len(final_ingredients_for_json_list)}. Final confidence: {final_confidence:.4f}")
     return aligned_metadata_content, instance_to_final_n5k_assignment
 
 
@@ -338,16 +343,27 @@ def generate_n5k_semseg_from_sam(raw_sam_masks_npy_path, instance_to_final_n5k_a
             if n5k_assignment and n5k_assignment.get('id') is not None:
                 n5k_id = n5k_assignment['id']
                 # Ensure n5k_id is an integer if it comes from string parsing somewhere
-                try:
-                    n5k_id_int = int(n5k_id)
-                    n5k_semantic_img[instance_mask_data] = n5k_id_int
-                    if n5k_id_to_name_map and i % 50 == 0: # Log occasionally
-                         logging.debug(f"Mask {i} mapped to N5K ID {n5k_id_int} ({n5k_id_to_name_map.get(n5k_id_int, 'Unknown N5K ID')})")
-                except ValueError:
-                    logging.warning(f"Could not convert N5K ID '{n5k_id}' to int for mask index {i}.")
+                # try:
+                #     n5k_id_int = int(n5k_id)
+                #     n5k_semantic_img[instance_mask_data] = n5k_id_int
+                #     if n5k_id_to_name_map and i % 50 == 0: # Log occasionally
+                #          logging.debug(f"Mask {i} mapped to N5K ID {n5k_id_int} ({n5k_id_to_name_map.get(n5k_id_int, 'Unknown N5K ID')})")
+                # except ValueError:
+                #     logging.warning(f"Could not convert N5K ID '{n5k_id}' to int for mask index {i}.")
+                if isinstance(n5k_id, int):
+                    n5k_semantic_img[instance_mask_data] = n5k_id
+                    if n5k_id_to_name_map and i % 20 == 0 and n5k_id != 0 : # Log non-background assignments occasionally
+                         logging.debug(f"Mask {i} (partially) painted with N5K ID {n5k_id} ({n5k_id_to_name_map.get(n5k_id, 'Unknown N5K ID')})")
+                else:
+                    logging.debug(f"Mask {i} mapped to N5K ID '{n5k_id}' (type: {type(n5k_id)}), which is not an integer. Skipping for semseg coloring (remains background).")
+
             # Else: SAM mask not mapped to an N5K ingredient, pixels remain background (0)
         
-        logging.info(f"Generated N5K semantic segmentation image from {os.path.basename(raw_sam_masks_npy_path)}")
+        # Check if the image is all zeros (black)
+        if np.all(n5k_semantic_img == 0):
+            logging.warning(f"Generated N5K semantic segmentation for {os.path.basename(raw_sam_masks_npy_path)} is completely black (all background).")
+        else:
+            logging.info(f"Generated N5K semantic segmentation image from {os.path.basename(raw_sam_masks_npy_path)}")
         return n5k_semantic_img
 
     except FileNotFoundError:
