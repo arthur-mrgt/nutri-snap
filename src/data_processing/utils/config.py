@@ -34,7 +34,7 @@ MODEL_TYPE_SAM = 'vit_h' # SAM model type
 # --- Output Dataset Paths ---
 PROCESSED_DATA_DIR = os.path.join(PROJECT_ROOT, "data", "processed")
 # TEMP_FOODSAM_OUTPUT_DIR = os.path.join(PROJECT_ROOT, "data", "tmp_foodsam_outputs")
-INTERMEDIATE_FOODSAM_OUTPUT_DIR = os.path.join(PROJECT_ROOT, "data", "intermediate_foodsam_outputs")
+INTERMEDIATE_FOODSAM_OUTPUT_DIR = os.path.join(PROCESSED_DATA_DIR, "intermediate_foodsam_outputs")
 
 # --- Other Configurations ---
 # Minimum area for a contour to be considered a separate instance (in pixels)
