@@ -128,7 +128,31 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, sa
             sam_labels_df = pd.read_csv(sam_mask_labels)
         else:
             # If it's already a list of data, convert to DataFrame
-            sam_labels_df = pd.DataFrame(sam_mask_labels)
+            # Ensure the data has the correct structure
+            if isinstance(sam_mask_labels, list) and len(sam_mask_labels) > 0:
+                # Check if the first item is a string (header row)
+                if isinstance(sam_mask_labels[0], str):
+                    # Skip the header row
+                    sam_mask_labels = sam_mask_labels[1:]
+                
+                # Convert each row to a dictionary with the correct keys
+                formatted_data = []
+                for row in sam_mask_labels:
+                    if isinstance(row, str):
+                        # Split the CSV row
+                        values = row.strip().split(',')
+                        if len(values) >= 5:  # Ensure we have all required columns
+                            formatted_data.append({
+                                'id': int(values[0]),
+                                'category_id': int(values[1]),
+                                'category_name': values[2],
+                                'category_count_ratio': float(values[3]),
+                                'mask_count_ratio': float(values[4])
+                            })
+                
+                sam_labels_df = pd.DataFrame(formatted_data)
+            else:
+                raise ValueError("Invalid sam_mask_labels format")
         
         # Get unique category_ids, excluding background (0)
         unique_foodsam_categories = sam_labels_df[sam_labels_df['category_id'] != 0]['category_id'].unique()
