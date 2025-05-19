@@ -180,9 +180,11 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, de
         actual_n5k_ingredients_in_dish_matching_foodsam_detection = []
         for n5k_candidate_info in list_of_candidate_n5k_info_from_mapping:
             candidate_n5k_id_from_mapping = str(n5k_candidate_info.get('n5k_id')) # Ensure it's a string for dict lookup
+            # Convert the mapping ID to the ground truth format (e.g., "448" -> "ingr_0000000448")
+            candidate_n5k_id_formatted = f"ingr_{int(candidate_n5k_id_from_mapping):08d}"
             
-            if candidate_n5k_id_from_mapping in original_n5k_ingredients_by_id:
-                actual_n5k_ingredients_in_dish_matching_foodsam_detection.append(original_n5k_ingredients_by_id[candidate_n5k_id_from_mapping])
+            if candidate_n5k_id_formatted in original_n5k_ingredients_by_id:
+                actual_n5k_ingredients_in_dish_matching_foodsam_detection.append(original_n5k_ingredients_by_id[candidate_n5k_id_formatted])
         
         if not actual_n5k_ingredients_in_dish_matching_foodsam_detection:
             candidate_names_str = ', '.join([f"'{c.get('n5k_name', 'Unknown')}' (ID: {c.get('n5k_id', 'N/A')})" for c in list_of_candidate_n5k_info_from_mapping])
