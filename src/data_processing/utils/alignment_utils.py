@@ -250,55 +250,67 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, de
     logging.debug(f"[{dish_id}] Final N5K ingredient definitions (pre-summing nutritional values): {final_n5k_ingredient_definitions}")
     
     merged_ingredients_list_for_json = []
+    # Initialize accumulators for the dish totals *before* iterating through ingredients
+    total_summed_weight_for_dish = 0.0
+    total_summed_calories_for_dish = 0.0
+    total_summed_fat_for_dish = 0.0
+    total_summed_carbs_for_dish = 0.0
+    total_summed_protein_for_dish = 0.0
+
     for final_n5k_id_str, definition_shell in final_n5k_ingredient_definitions.items():
-        summed_calories = 0.0
-        summed_weight = 0.0
-        summed_fat = 0.0
-        summed_carbs = 0.0
-        summed_protein = 0.0
+        # These are for summing up contributions to *one* merged ingredient definition
+        current_ing_summed_calories = 0.0
+        current_ing_summed_weight = 0.0
+        current_ing_summed_fat = 0.0
+        current_ing_summed_carbs = 0.0
+        current_ing_summed_protein = 0.0
         contributing_original_n5k_ids = definition_shell['contributing_original_n5k_ids']
         
         for orig_ing_id in contributing_original_n5k_ids:
             original_ing_details = original_n5k_ingredients_by_id.get(orig_ing_id)
             if original_ing_details:
-                summed_calories += original_ing_details['calories_kcal']
-                summed_weight += original_ing_details['weight_g']
-                summed_fat += original_ing_details['fat_g']
-                summed_carbs += original_ing_details['carbs_g']
-                summed_protein += original_ing_details['protein_g']
+                current_ing_summed_calories += original_ing_details['calories_kcal']
+                current_ing_summed_weight += original_ing_details['weight_g']
+                current_ing_summed_fat += original_ing_details['fat_g']
+                current_ing_summed_carbs += original_ing_details['carbs_g']
+                current_ing_summed_protein += original_ing_details['protein_g']
             else:
                 logging.warning(f"[{dish_id}] Original N5K ingredient ID {orig_ing_id} not found while summing for final ingredient {final_n5k_id_str}. This shouldn't happen.")
         
-        # Round to reasonable precision, e.g., 2 decimal places for grams, 1 for kcal
-        summed_calories = round(summed_calories, 1)
-        summed_weight = round(summed_weight, 2)
-        summed_fat = round(summed_fat, 2)
-        summed_carbs = round(summed_carbs, 2)
-        summed_protein = round(summed_protein, 2)
+        # Round to reasonable precision for the current merged ingredient
+        current_ing_summed_calories = round(current_ing_summed_calories, 1)
+        current_ing_summed_weight = round(current_ing_summed_weight, 2)
+        current_ing_summed_fat = round(current_ing_summed_fat, 2)
+        current_ing_summed_carbs = round(current_ing_summed_carbs, 2)
+        current_ing_summed_protein = round(current_ing_summed_protein, 2)
 
         merged_ingredients_list_for_json.append({
-            'id': final_n5k_id_str,
+            'id': final_n5k_id_str, # This is the N5K ID
             'name': definition_shell['ingredient_name'],
-            'weight_g': summed_weight,
-            'calories_kcal': summed_calories,
-            'fat_g': summed_fat,
-            'carbs_g': summed_carbs,
-            'protein_g': summed_protein
+            'weight_g': current_ing_summed_weight,
+            'calories_kcal': current_ing_summed_calories,
+            'fat_g': current_ing_summed_fat,
+            'carbs_g': current_ing_summed_carbs,
+            'protein_g': current_ing_summed_protein
         })
+        
+        # Accumulate to dish totals
+        total_summed_weight_for_dish += current_ing_summed_weight
+        total_summed_calories_for_dish += current_ing_summed_calories
+        total_summed_fat_for_dish += current_ing_summed_fat
+        total_summed_carbs_for_dish += current_ing_summed_carbs
+        total_summed_protein_for_dish += current_ing_summed_protein
 
     # --- Calculate total nutritional values for the aligned/merged dish ---
+    # These are now the correctly summed totals for the entire dish from merged ingredients
     merged_totals = {
-        'weight_g': summed_weight,
-        'calories_kcal': summed_calories,
-        'fat_g': summed_fat,
-        'carbs_g': summed_carbs,
-        'protein_g': summed_protein
+        'weight_g': round(total_summed_weight_for_dish, 2),
+        'calories_kcal': round(total_summed_calories_for_dish, 1),
+        'fat_g': round(total_summed_fat_for_dish, 2),
+        'carbs_g': round(total_summed_carbs_for_dish, 2),
+        'protein_g': round(total_summed_protein_for_dish, 2)
     }
     
-    for key in ['weight_g', 'fat_g', 'carbs_g', 'protein_g']:
-        merged_totals[key] = round(merged_totals[key], 2)
-    merged_totals['calories_kcal'] = round(merged_totals['calories_kcal'], 1)
-
     # --- Phase 4: Calculate Scores ---
     # Nutrients: M, K, L, G, P (Mass, Kcal, Lipides(Fat), Glucides(Carbs), Proteines)
     # Original totals:
