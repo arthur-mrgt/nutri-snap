@@ -115,116 +115,185 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, de
         logging.warning(f"[{dish_id}] Original N5K metadata is empty or has no ingredients. Cannot align.")
         return None, None
 
-    # Helper to quickly look up original N5K ingredients by their N5K name or ID
+    # Helper to quickly look up original N5K ingredients by their N5K ID (string)
     # Assumes original_n5k_metadata['ingredients'] now has 'ingredient_id' and 'ingredient_name'
-    original_n5k_ingredients_by_id = {ing['ingredient_id']: ing for ing in original_n5k_metadata['ingredients']}
+    original_n5k_ingredients_by_id = {str(ing['ingredient_id']): ing for ing in original_n5k_metadata['ingredients']}
     logging.debug(f"[{dish_id}] Original N5K ingredients in dish (by ID): {list(original_n5k_ingredients_by_id.keys())}")
     
-    # Stores the final N5K ID and name that an original SAM mask index maps to.
-    # e.g., {0: {'id': 'n5k_id_apple', 'name': 'apple'}, 1: None, ...}
-    instance_to_final_n5k_assignment = {} 
+    # Dictionary to store the final N5K ID and name assigned to each FoodSAM instance mask
+    # Key: original_mask_index from FoodSAM instance
+    # Value: {'id': final_n5k_id, 'name': final_n5k_name}
+    instance_to_final_n5k_assignment = {}
 
-    # Defines the final N5K ingredients based on mappings.
-    # Key: final_n5k_id (e.g., N_principal's ID or N_single's ID).
-    # Value: {'name': final_n5k_name, 'id': final_n5k_id, 
-    #         'source_original_n5k_ingredient_ids': set of original N5K ingredient IDs from the dish}
+    # Stores aggregated nutritional info for newly defined N5K ingredients based on SAM instances
+    # Key: final_n5k_id (from N_principal or N_single)
+    # Value: { 'definition': (see metadata_merged format), 'contributing_original_n5k_ids': set() }
     final_n5k_ingredient_definitions = {}
 
-    for foodsam_instance in detected_foodsam_instances:
-        original_mask_idx = foodsam_instance['original_mask_index']
-        foodsam_cat_name = foodsam_instance['foodsam_category_name']
-        instance_to_final_n5k_assignment[original_mask_idx] = None # Default to no mapping
+    # --- Iterate through each FoodSAM detected instance ---
+    for instance in detected_foodsam_instances: # foodsam_instances is the list from extract_foodsam_instances_with_masks
+        foodsam_cat_id = instance['foodsam_category_id'] # This is the FoodSAM integer ID
+        foodsam_cat_name = instance['foodsam_category_name']
+        original_mask_idx = instance['original_mask_index']
+        # mask_array = instance['mask'] # The boolean mask array itself
 
-        if foodsam_cat_name.lower() == "background" or foodsam_cat_name == "unknown_foodsam_id":
+        instance_to_final_n5k_assignment[original_mask_idx] = None # Default
+
+        if foodsam_cat_name == 'background' or foodsam_cat_id == 0: # Skip background
+            logging.debug(f"[{dish_id}] Skipping FoodSAM background instance (FoodSAM ID {foodsam_cat_id}, original_mask_idx {original_mask_idx}).")
             continue
 
-        candidate_n5k_names_for_foodsam_cat = foodsam_name_to_n5k_names_map.get(foodsam_cat_name, [])
-        if not candidate_n5k_names_for_foodsam_cat:
-            logging.debug(f"[{dish_id}] FoodSAM category '{foodsam_cat_name}' (mask_idx {original_mask_idx}): No N5K mapping found in foodsam_to_n5k_map.")
-            continue
+        logging.debug(f"[{dish_id}] Processing FoodSAM instance: ID={foodsam_cat_id}, Name='{foodsam_cat_name}', Original Mask Index={original_mask_idx}")
+
+        # 1. Find the mapping entry for the current FoodSAM ID from foodsam_to_n5k_map
+        # foodsam_to_n5k_map (passed as foodsam_name_to_n5k_names_map) is keyed by stringified FoodSAM ID.
+        # Each value has 'foodsam_name' and 'mapped_n5k_categories' [{n5k_id, n5k_name}, ...]
         
-        logging.debug(f"[{dish_id}] FoodSAM category '{foodsam_cat_name}' (mask_idx {original_mask_idx}): Maps to N5K candidate names: {candidate_n5k_names_for_foodsam_cat}")
-        # Find which of these N5K candidates are actually in the current dish's original N5K metadata
-        matching_original_n5k_ingredients_in_dish = []
-        for n5k_cand_name in candidate_n5k_names_for_foodsam_cat:
-            n5k_cand_id = n5k_name_to_id_map.get(n5k_cand_name)
-            if n5k_cand_id and n5k_cand_id in original_n5k_ingredients_by_id:
-                matching_original_n5k_ingredients_in_dish.append(original_n5k_ingredients_by_id[n5k_cand_id])
+        entry_data_for_foodsam_id = foodsam_name_to_n5k_names_map.get(str(foodsam_cat_id))
         
-        if not matching_original_n5k_ingredients_in_dish:
-            logging.debug(f"[{dish_id}] FoodSAM '{foodsam_cat_name}' (mask_idx {original_mask_idx}): Candidate N5K names {candidate_n5k_names_for_foodsam_cat} are not present in this dish's original N5K metadata.")
+        list_of_candidate_n5k_info_from_mapping = []
+        if entry_data_for_foodsam_id:
+            if entry_data_for_foodsam_id.get('foodsam_name') == foodsam_cat_name:
+                list_of_candidate_n5k_info_from_mapping = entry_data_for_foodsam_id.get('mapped_n5k_categories', [])
+                logging.debug(f"[{dish_id}] Found mapping for FoodSAM ID {foodsam_cat_id} ('{foodsam_cat_name}'). Potential N5K mapped categories from JSON: {len(list_of_candidate_n5k_info_from_mapping)}")
+            else:
+                logging.warning(f"[{dish_id}] FoodSAM ID {foodsam_cat_id} found in mapping, but name mismatch: map has '{entry_data_for_foodsam_id.get('foodsam_name')}', instance has '{foodsam_cat_name}'. Treating as no direct mapping by ID.")
+        else:
+            # Fallback: if not found by ID, try to find by name (e.g. if mapping file structure is inconsistent)
+            logging.debug(f"[{dish_id}] No direct mapping entry for FoodSAM ID {str(foodsam_cat_id)}. Trying fallback by name '{foodsam_cat_name}'.")
+            found_by_name_fallback = False
+            for _map_key, entry_val in foodsam_name_to_n5k_names_map.items(): # Iterate through all entries
+                if entry_val.get('foodsam_name') == foodsam_cat_name:
+                    list_of_candidate_n5k_info_from_mapping = entry_val.get('mapped_n5k_categories', [])
+                    logging.debug(f"[{dish_id}] Fallback: Found mapping by FoodSAM name '{foodsam_cat_name}' (original map key was {_map_key}). Potential N5K mapped categories: {len(list_of_candidate_n5k_info_from_mapping)}")
+                    found_by_name_fallback = True
+                    break
+            if not found_by_name_fallback:
+                logging.warning(f"[{dish_id}] FoodSAM category '{foodsam_cat_name}' (ID: {foodsam_cat_id}, original_mask_idx {original_mask_idx}): No N5K mapping found in foodsam_to_n5k_map even after fallback. Skipping this instance.")
+                continue # Skip to next FoodSAM instance
+
+        if not list_of_candidate_n5k_info_from_mapping:
+            logging.debug(f"[{dish_id}] FoodSAM category '{foodsam_cat_name}' (ID: {foodsam_cat_id}, original_mask_idx {original_mask_idx}): Mapping file lists no N5K categories for it. Skipping instance.")
             continue
 
-        # Apply user's logic for N_single, N_multi
-        final_id_for_instance = None
-        final_name_for_instance = None
-        source_ids_to_add_for_this_instance = set()
-
-        if len(matching_original_n5k_ingredients_in_dish) == 1: # N_single case
-            n_single_orig_ing = matching_original_n5k_ingredients_in_dish[0]
-            final_id_for_instance = n_single_orig_ing['ingredient_id']
-            final_name_for_instance = n_single_orig_ing['ingredient_name']
-            source_ids_to_add_for_this_instance.add(n_single_orig_ing['ingredient_id'])
-            logging.debug(f"[{dish_id}] FoodSAM '{foodsam_cat_name}' (mask_idx {original_mask_idx}): N_single match to N5K ID '{final_id_for_instance}' ('{final_name_for_instance}') from dish.")
-        else: # N_multi case
-            # Identify N_principal (e.g., highest weight in original dish)
-            # Weights are floats, handle potential ties if any specific rule needed. For now, first one with max weight.
-            n_principal_orig_ing = max(matching_original_n5k_ingredients_in_dish, key=lambda x: x['weight_g'])
-            final_id_for_instance = n_principal_orig_ing['ingredient_id']
-            final_name_for_instance = n_principal_orig_ing['ingredient_name']
-            for orig_ing in matching_original_n5k_ingredients_in_dish: # All in N_multi contribute
-                source_ids_to_add_for_this_instance.add(orig_ing['ingredient_id'])
-            logging.debug(f"[{dish_id}] FoodSAM '{foodsam_cat_name}' (mask_idx {original_mask_idx}): N_multi match. Principal N5K ID '{final_id_for_instance}' ('{final_name_for_instance}'). Sources: {source_ids_to_add_for_this_instance}")
-        
-        if final_id_for_instance:
-            instance_to_final_n5k_assignment[original_mask_idx] = {'id': final_id_for_instance, 'name': final_name_for_instance}
+        # 2. Filter these mapped N5K categories to those actually present in the *current dish's* original N5K metadata
+        actual_n5k_ingredients_in_dish_matching_foodsam_detection = []
+        for n5k_candidate_info in list_of_candidate_n5k_info_from_mapping:
+            candidate_n5k_id_from_mapping = str(n5k_candidate_info.get('n5k_id')) # Ensure it's a string for dict lookup
             
-            # Update final_n5k_ingredient_definitions
-            if final_id_for_instance not in final_n5k_ingredient_definitions:
-                final_n5k_ingredient_definitions[final_id_for_instance] = {
-                    'id': final_id_for_instance, 
-                    'name': final_name_for_instance, 
-                    'source_original_n5k_ingredient_ids': set()
-                }
-            final_n5k_ingredient_definitions[final_id_for_instance]['source_original_n5k_ingredient_ids'].update(source_ids_to_add_for_this_instance)
-
-    # --- Construct the final ingredient list for JSON by summing up from original N5K data ---
-    final_ingredients_for_json_list = []
-    logging.debug(f"[{dish_id}] Final N5K ingredient definitions (pre-summing): {final_n5k_ingredient_definitions}")
-    for final_id, definition_data in final_n5k_ingredient_definitions.items():
-        current_final_ing_json = {
-            'id': final_id, 
-            'name': definition_data['name'],
-            'weight_g': 0.0, 'calories_kcal': 0.0, 'fat_g': 0.0, 'carbs_g': 0.0, 'protein_g': 0.0
-        }
-        unique_original_ids_contributing = definition_data['source_original_n5k_ingredient_ids']
+            if candidate_n5k_id_from_mapping in original_n5k_ingredients_by_id:
+                actual_n5k_ingredients_in_dish_matching_foodsam_detection.append(original_n5k_ingredients_by_id[candidate_n5k_id_from_mapping])
         
-        for orig_ing_id in unique_original_ids_contributing:
+        if not actual_n5k_ingredients_in_dish_matching_foodsam_detection:
+            candidate_names_str = ', '.join([f"'{c.get('n5k_name', 'Unknown')}' (ID: {c.get('n5k_id', 'N/A')})" for c in list_of_candidate_n5k_info_from_mapping])
+            logging.debug(f"[{dish_id}] FoodSAM '{foodsam_cat_name}' (ID: {foodsam_cat_id}, original_mask_idx {original_mask_idx}): The N5K categories from mapping ({candidate_names_str}) are not present in this dish's actual N5K ingredients. Skipping instance.")
+            continue
+        
+        logging.debug(f"[{dish_id}] FoodSAM '{foodsam_cat_name}' (ID: {foodsam_cat_id}, original_mask_idx {original_mask_idx}): Filtered to {len(actual_n5k_ingredients_in_dish_matching_foodsam_detection)} actual N5K ingredients present in the dish: {[ing['ingredient_name'] for ing in actual_n5k_ingredients_in_dish_matching_foodsam_detection]}")
+
+        # 3. Now, apply N_single / N_multi logic using actual_n5k_ingredients_in_dish_matching_foodsam_detection
+        
+        final_id_for_instance_str = None
+        final_name_for_instance = None
+        # N5K IDs from original dish that contribute to this merged ingredient
+        source_n5k_ids_for_this_instance = set() 
+
+        if len(actual_n5k_ingredients_in_dish_matching_foodsam_detection) == 1: # N_single case
+            n_single_orig_ing = actual_n5k_ingredients_in_dish_matching_foodsam_detection[0]
+            final_id_for_instance_str = str(n_single_orig_ing['ingredient_id'])
+            final_name_for_instance = n_single_orig_ing['ingredient_name']
+            source_n5k_ids_for_this_instance.add(final_id_for_instance_str)
+            logging.debug(f"[{dish_id}] FoodSAM '{foodsam_cat_name}' (original_mask_idx {original_mask_idx}): N_single match to N5K ID '{final_id_for_instance_str}' ('{final_name_for_instance}') from dish.")
+        else: # N_multi case
+            # Identify N_principal (e.g., highest weight in original dish from the filtered list)
+            # Ensure weight_g is treated as float for comparison
+            try:
+                n_principal_orig_ing = max(actual_n5k_ingredients_in_dish_matching_foodsam_detection, key=lambda x: float(x['weight_g']))
+            except ValueError as e:
+                logging.error(f"[{dish_id}] Error converting weight_g to float for N_multi principal selection. Dish ingredients: {actual_n5k_ingredients_in_dish_matching_foodsam_detection}. Error: {e}. Skipping this FoodSAM instance.")
+                continue
+
+            final_id_for_instance_str = str(n_principal_orig_ing['ingredient_id'])
+            final_name_for_instance = n_principal_orig_ing['ingredient_name']
+            for orig_ing in actual_n5k_ingredients_in_dish_matching_foodsam_detection: # All in N_multi contribute to source
+                source_n5k_ids_for_this_instance.add(str(orig_ing['ingredient_id']))
+            logging.debug(f"[{dish_id}] FoodSAM '{foodsam_cat_name}' (original_mask_idx {original_mask_idx}): N_multi match. Principal N5K ID '{final_id_for_instance_str}' ('{final_name_for_instance}'). Contributing source N5K IDs from dish: {source_n5k_ids_for_this_instance}")
+        
+        if final_id_for_instance_str:
+            instance_to_final_n5k_assignment[original_mask_idx] = {'id': final_id_for_instance_str, 'name': final_name_for_instance}
+            
+            # Aggregate nutritional info for this final_id_for_instance_str
+            if final_id_for_instance_str not in final_n5k_ingredient_definitions:
+                # Find the original N5K ingredient that corresponds to final_id_for_instance_str to use as a base for name
+                # (It must be one of the original_n5k_ingredients_by_id)
+                base_n5k_ingredient_for_definition = original_n5k_ingredients_by_id.get(final_id_for_instance_str)
+                if not base_n5k_ingredient_for_definition:
+                    logging.error(f"[{dish_id}] CRITICAL: final_id_for_instance_str {final_id_for_instance_str} not found in original_n5k_ingredients_by_id. This should not happen. Skipping aggregation for this.")
+                    continue
+
+                final_n5k_ingredient_definitions[final_id_for_instance_str] = {
+                    'ingredient_name': base_n5k_ingredient_for_definition['ingredient_name'], # Use N_Principal's name or N_Single's name
+                    'weight_g': 0.0,
+                    'calories_kcal': 0.0,
+                    'fat_g': 0.0,
+                    'carbs_g': 0.0,
+                    'protein_g': 0.0,
+                    'contributing_original_n5k_ids': set(), # Keep track of which original N5K items contributed to this
+                    'n5k_id_for_semseg': n5k_name_to_id_map.get(base_n5k_ingredient_for_definition['ingredient_name']) # Store the ID used for semseg painting
+                }
+            
+            # Add all contributing original N5K IDs from this instance's match
+            final_n5k_ingredient_definitions[final_id_for_instance_str]['contributing_original_n5k_ids'].update(source_n5k_ids_for_this_instance)
+            # Nutritional values will be summed up after all instances are processed, based on 'contributing_original_n5k_ids'
+
+    # --- Post-process: Sum nutritional values for merged ingredients ---
+    logging.debug(f"[{dish_id}] Final N5K ingredient definitions (pre-summing nutritional values): {final_n5k_ingredient_definitions}")
+    
+    merged_ingredients_list_for_json = []
+    for final_n5k_id_str, definition_shell in final_n5k_ingredient_definitions.items():
+        summed_calories = 0.0
+        summed_weight = 0.0
+        summed_fat = 0.0
+        summed_carbs = 0.0
+        summed_protein = 0.0
+        contributing_original_n5k_ids = definition_shell['contributing_original_n5k_ids']
+        
+        for orig_ing_id in contributing_original_n5k_ids:
             original_ing_details = original_n5k_ingredients_by_id.get(orig_ing_id)
             if original_ing_details:
-                current_final_ing_json['weight_g'] += original_ing_details['weight_g']
-                current_final_ing_json['calories_kcal'] += original_ing_details['calories_kcal']
-                current_final_ing_json['fat_g'] += original_ing_details['fat_g']
-                current_final_ing_json['carbs_g'] += original_ing_details['carbs_g']
-                current_final_ing_json['protein_g'] += original_ing_details['protein_g']
+                summed_calories += original_ing_details['calories_kcal']
+                summed_weight += original_ing_details['weight_g']
+                summed_fat += original_ing_details['fat_g']
+                summed_carbs += original_ing_details['carbs_g']
+                summed_protein += original_ing_details['protein_g']
             else:
-                logging.warning(f"[{dish_id}] Original N5K ingredient ID {orig_ing_id} not found while summing for final ingredient {final_id}. This shouldn't happen.")
+                logging.warning(f"[{dish_id}] Original N5K ingredient ID {orig_ing_id} not found while summing for final ingredient {final_n5k_id_str}. This shouldn't happen.")
         
         # Round to reasonable precision, e.g., 2 decimal places for grams, 1 for kcal
-        for key in ['weight_g', 'fat_g', 'carbs_g', 'protein_g']:
-            current_final_ing_json[key] = round(current_final_ing_json[key], 2)
-        current_final_ing_json['calories_kcal'] = round(current_final_ing_json['calories_kcal'], 1)
+        summed_calories = round(summed_calories, 1)
+        summed_weight = round(summed_weight, 2)
+        summed_fat = round(summed_fat, 2)
+        summed_carbs = round(summed_carbs, 2)
+        summed_protein = round(summed_protein, 2)
 
-        final_ingredients_for_json_list.append(current_final_ing_json)
+        merged_ingredients_list_for_json.append({
+            'id': final_n5k_id_str,
+            'name': definition_shell['ingredient_name'],
+            'weight_g': summed_weight,
+            'calories_kcal': summed_calories,
+            'fat_g': summed_fat,
+            'carbs_g': summed_carbs,
+            'protein_g': summed_protein
+        })
 
     # --- Calculate total nutritional values for the aligned/merged dish ---
-    merged_totals = {'weight_g': 0.0, 'calories_kcal': 0.0, 'fat_g': 0.0, 'carbs_g': 0.0, 'protein_g': 0.0}
-    for ing in final_ingredients_for_json_list:
-        merged_totals['weight_g'] += ing['weight_g']
-        merged_totals['calories_kcal'] += ing['calories_kcal']
-        merged_totals['fat_g'] += ing['fat_g']
-        merged_totals['carbs_g'] += ing['carbs_g']
-        merged_totals['protein_g'] += ing['protein_g']
+    merged_totals = {
+        'weight_g': summed_weight,
+        'calories_kcal': summed_calories,
+        'fat_g': summed_fat,
+        'carbs_g': summed_carbs,
+        'protein_g': summed_protein
+    }
     
     for key in ['weight_g', 'fat_g', 'carbs_g', 'protein_g']:
         merged_totals[key] = round(merged_totals[key], 2)
@@ -265,7 +334,7 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, de
     score_nutr = math.exp(-SCORE_K_MSRE * msre_nutritional)
 
     # Ingredient Score (Jaccard Index)
-    set_ingr_merged = {ing['id'] for ing in final_ingredients_for_json_list}
+    set_ingr_merged = {ing['id'] for ing in merged_ingredients_list_for_json}
     set_ingr_orig = {ing['ingredient_id'] for ing in original_n5k_metadata['ingredients']}
     
     intersection_len = len(set_ingr_merged.intersection(set_ingr_orig))
@@ -279,7 +348,7 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, de
     # --- Assemble final metadata.json content ---
     aligned_metadata_content = {
         "dish_id": dish_id,
-        "ingredients": final_ingredients_for_json_list,
+        "ingredients": merged_ingredients_list_for_json,
         "total_nutritional_values": merged_totals,
         "confidence_scores": {
             "final_confidence": round(final_confidence, 4),
@@ -289,7 +358,7 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, de
             "jaccard_ingredient": round(jaccard_ingredient, 4)
         }
     }
-    logging.info(f"[{dish_id}] Generated aligned N5K metadata with scores. Ingredients count: {len(final_ingredients_for_json_list)}. Final confidence: {final_confidence:.4f}")
+    logging.info(f"[{dish_id}] Generated aligned N5K metadata with scores. Ingredients count: {len(merged_ingredients_list_for_json)}. Final confidence: {final_confidence:.4f}")
     return aligned_metadata_content, instance_to_final_n5k_assignment
 
 
