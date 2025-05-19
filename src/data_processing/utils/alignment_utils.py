@@ -90,7 +90,7 @@ def extract_foodsam_instances_with_masks(raw_sam_masks_npy_path, raw_foodsam103_
     return detected_instances
 
 
-def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, sam_mask_labels_path, 
+def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, sam_mask_labels, 
                                            foodsam_name_to_n5k_names_map, 
                                            n5k_name_to_id_map, n5k_id_to_name_map):
     """
@@ -104,7 +104,7 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, sa
     Args:
         dish_id (str): The ID of the dish.
         original_n5k_metadata (dict): Parsed metadata from Nutrition5k for the dish.
-        sam_mask_labels_path (str): Path to the sam_mask_labels.csv file.
+        sam_mask_labels: Either a path to sam_mask_labels.csv or a list of dictionaries containing the data.
         foodsam_name_to_n5k_names_map (dict): Mapping FoodSAM-103 category ID to list of N5K categories.
         n5k_name_to_id_map (dict): Mapping N5K category name to N5K ID.
         n5k_id_to_name_map (dict): Mapping N5K ID to N5K name.
@@ -123,12 +123,18 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, sa
     # --- Step 1: Get unique FoodSAM categories from sam_mask_labels ---
     try:
         import pandas as pd
-        sam_labels_df = pd.read_csv(sam_mask_labels_path)
+        if isinstance(sam_mask_labels, str):
+            # If it's a file path, read the CSV
+            sam_labels_df = pd.read_csv(sam_mask_labels)
+        else:
+            # If it's already a list of data, convert to DataFrame
+            sam_labels_df = pd.DataFrame(sam_mask_labels)
+        
         # Get unique category_ids, excluding background (0)
         unique_foodsam_categories = sam_labels_df[sam_labels_df['category_id'] != 0]['category_id'].unique()
         logging.debug(f"[{dish_id}] Unique FoodSAM categories detected (excluding background): {unique_foodsam_categories}")
     except Exception as e:
-        logging.error(f"[{dish_id}] Error reading sam_mask_labels: {e}")
+        logging.error(f"[{dish_id}] Error processing sam_mask_labels: {e}")
         return None, None
 
     # --- Step 2: Map FoodSAM categories to N5K ingredients ---
