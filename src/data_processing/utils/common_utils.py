@@ -7,7 +7,7 @@ import json
 import logging
 
 # Setup basic logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s')
 
 def create_dir_if_not_exists(dir_path):
     """Creates a directory if it doesn't already exist."""
