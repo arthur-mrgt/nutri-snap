@@ -6,6 +6,7 @@ cd ..
 
 pip install Owlready2
 pip install inflect
+pip install pandas
 
 # A lancer dans powershell en admin :
 gsutil -m rsync -r -x "imagery/side_angles/.*" gs://nutrition5k_dataset/nutrition5k_dataset/ "./data/raw/"

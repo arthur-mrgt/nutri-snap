@@ -120,45 +120,66 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, sa
     original_n5k_ingredients_by_id = {str(ing['ingredient_id']): ing for ing in original_n5k_metadata['ingredients']}
     logging.debug(f"[{dish_id}] Original N5K ingredients in dish (by ID): {list(original_n5k_ingredients_by_id.keys())}")
 
-    # --- Step 1: Get unique FoodSAM categories from sam_mask_labels ---
+    # --- Step 1: Process detected FoodSAM instances (sam_mask_labels) ---
     try:
         import pandas as pd
+        # sam_mask_labels is detected_foodsam_instances (list of dicts from extract_foodsam_instances_with_masks)
+        # Expected keys in dicts: 'original_mask_index', 'foodsam_category_id', 'foodsam_category_name', 'instance_mask'
+
         if isinstance(sam_mask_labels, str):
-            # If it's a file path, read the CSV
+            logging.info(f"[{dish_id}] Processing sam_mask_labels as a CSV file path: {sam_mask_labels}")
             sam_labels_df = pd.read_csv(sam_mask_labels)
-        else:
-            # If it's already a list of data, convert to DataFrame
-            # Ensure the data has the correct structure
-            if isinstance(sam_mask_labels, list) and len(sam_mask_labels) > 0:
-                # Check if the first item is a string (header row)
-                if isinstance(sam_mask_labels[0], str):
-                    # Skip the header row
-                    sam_mask_labels = sam_mask_labels[1:]
-                
-                # Convert each row to a dictionary with the correct keys
-                formatted_data = []
-                for row in sam_mask_labels:
-                    if isinstance(row, str):
-                        # Split the CSV row
-                        values = row.strip().split(',')
-                        if len(values) >= 5:  # Ensure we have all required columns
-                            formatted_data.append({
-                                'id': int(values[0]),
-                                'category_id': int(values[1]),
-                                'category_name': values[2],
-                                'category_count_ratio': float(values[3]),
-                                'mask_count_ratio': float(values[4])
-                            })
-                
-                sam_labels_df = pd.DataFrame(formatted_data)
+            # Ensure 'category_id' and 'original_mask_index' (if CSV path is used and requires it) exist.
+            # This path is not the source of the current error.
+            # For robustness, check for 'category_id':
+            if 'category_id' not in sam_labels_df.columns:
+                 logging.error(f"[{dish_id}] CSV {sam_mask_labels} does not contain 'category_id' column.")
+                 # Return or create an empty DF with expected columns if that's handled gracefully.
+                 # For now, let's assume CSVs are correctly formatted or this path isn't used.
+                 # Consider `return None, None` for critical missing columns.
+
+        elif isinstance(sam_mask_labels, list): # This is the path taken for the reported error
+            if not sam_mask_labels: # Empty list of detections
+                logging.warning(f"[{dish_id}] sam_mask_labels (detected_foodsam_instances) is empty.")
+                # Create an empty DataFrame with expected columns for downstream consistency.
+                sam_labels_df = pd.DataFrame(columns=['category_id', 'original_mask_index'])
             else:
-                raise ValueError("Invalid sam_mask_labels format")
+                # Check structure of the first element for required keys
+                first_item = sam_mask_labels[0]
+                if not isinstance(first_item, dict) or \
+                   'foodsam_category_id' not in first_item or \
+                   'original_mask_index' not in first_item:
+                    logging.error(f"[{dish_id}] sam_mask_labels list elements have unexpected structure. "
+                                  f"First item: {first_item}. Required keys: 'foodsam_category_id', 'original_mask_index'.")
+                    return None, None # Critical: input data structure is wrong
+                
+                sam_labels_df = pd.DataFrame(sam_mask_labels)
+                # Rename 'foodsam_category_id' to 'category_id' for consistency with subsequent code.
+                # 'original_mask_index' column is already present with the correct name from extract_foodsam_instances_with_masks.
+                if 'foodsam_category_id' in sam_labels_df.columns:
+                    sam_labels_df.rename(columns={'foodsam_category_id': 'category_id'}, inplace=True)
+                else:
+                    # This should not happen if extract_foodsam_instances_with_masks provides the 'foodsam_category_id' key.
+                    logging.error(f"[{dish_id}] 'foodsam_category_id' not found in DataFrame columns from sam_mask_labels list. Columns: {sam_labels_df.columns}")
+                    return None, None # Critical: input data is missing an expected column
+        else: # Not a string path, not a list
+            logging.error(f"[{dish_id}] Invalid sam_mask_labels format: type {type(sam_mask_labels)}. Expected str or list.")
+            return None, None
+
+        # Now, sam_labels_df should be correctly populated with 'category_id' and 'original_mask_index' columns,
+        # or be an empty DataFrame (with these columns) if sam_mask_labels was an empty list.
         
         # Get unique category_ids, excluding background (0)
-        unique_foodsam_categories = sam_labels_df[sam_labels_df['category_id'] != 0]['category_id'].unique()
-        logging.debug(f"[{dish_id}] Unique FoodSAM categories detected (excluding background): {unique_foodsam_categories}")
+        if 'category_id' in sam_labels_df.columns and not sam_labels_df.empty: # Check if column exists and df not empty
+            unique_foodsam_categories = sam_labels_df[sam_labels_df['category_id'] != 0]['category_id'].unique()
+        else: # Column missing or DataFrame is empty (e.g., from empty sam_mask_labels)
+            unique_foodsam_categories = np.array([]) 
+        
+        logging.debug(f"[{dish_id}] Unique FoodSAM category IDs for processing: {unique_foodsam_categories}")
+
     except Exception as e:
-        logging.error(f"[{dish_id}] Error processing sam_mask_labels: {e}")
+        # Catch any other unexpected error during DataFrame setup.
+        logging.error(f"[{dish_id}] Error during initial processing of sam_mask_labels into DataFrame: {e}", exc_info=True)
         return None, None
 
     # --- Step 2: Map FoodSAM categories to N5K ingredients ---
@@ -221,13 +242,19 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, sa
             total_summed_protein_for_dish += matched_n5k_ingredient['protein_g']
 
             # Store mapping for semseg/bbox generation
-            # Get all mask indices for this FoodSAM category
-            mask_indices = sam_labels_df[sam_labels_df['category_id'] == foodsam_cat_id].index.tolist()
-            for mask_idx in mask_indices:
-                instance_to_final_n5k_assignment[mask_idx] = {
-                    'id': matched_n5k_ingredient['ingredient_id'],
-                    'name': matched_n5k_ingredient['ingredient_name']
-                }
+            # Get all instances (identified by 'original_mask_index') for this FoodSAM category
+            if 'original_mask_index' not in sam_labels_df.columns:
+                logging.error(f"[{dish_id}] Critical: 'original_mask_index' column is missing from sam_labels_df. Cannot map instances for semseg/bbox.")
+                # This implies a problem in the DataFrame setup logic earlier.
+                # Continue without this part or return error, depending on desired strictness.
+            else:
+                relevant_instances_df = sam_labels_df[sam_labels_df['category_id'] == foodsam_cat_id]
+                for original_idx in relevant_instances_df['original_mask_index']:
+                    # Ensure original_idx is an integer, suitable as a dictionary key.
+                    instance_to_final_n5k_assignment[int(original_idx)] = {
+                        'id': matched_n5k_ingredient['ingredient_id'], # Should be N5K integer ID
+                        'name': matched_n5k_ingredient['ingredient_name']
+                    }
 
     # --- Step 3: Calculate confidence scores ---
     # Calculate merged totals
