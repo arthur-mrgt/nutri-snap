@@ -71,7 +71,7 @@ def process_single_dish(dish_id, split_name, processed_data_root_dir, loaded_res
 
     # --- Retrieve loaded resources ---
     foodsam103_id_to_name = loaded_resources['foodsam103_id_to_name']
-    foodsam_name_to_n5k_names = loaded_resources['foodsam_to_n5k_map']
+    foodsam_name_to_n5k_names = loaded_resources['foodsam_id_to_n5k_map']
     n5k_id_to_name = loaded_resources['n5k_id_to_name']
     n5k_name_to_id = loaded_resources['n5k_name_to_id']
 
@@ -210,11 +210,11 @@ def main():
             load_category_info(config.FOODSAM103_CATEGORY_TXT)
         LOADED_RESOURCES['n5k_id_to_name'], LOADED_RESOURCES['n5k_name_to_id'] = \
             load_category_info(config.N5K_CATEGORY_TXT)
-        LOADED_RESOURCES['foodsam_to_n5k_map'] = load_json(config.FOODSAM_TO_N5K_MAPPING_JSON)
+        LOADED_RESOURCES['foodsam_id_to_n5k_map'] = load_json(config.FOODSAM_TO_N5K_MAPPING_JSON)
 
         if not LOADED_RESOURCES['foodsam103_id_to_name'] or \
            not LOADED_RESOURCES['n5k_id_to_name'] or \
-           LOADED_RESOURCES['foodsam_to_n5k_map'] is None: # load_json returns None on error
+           LOADED_RESOURCES['foodsam_id_to_n5k_map'] is None: # load_json returns None on error
             raise ValueError("One or more essential mapping/category files failed to load.")
         logging.info("Successfully pre-loaded all category and mapping files.")
     except Exception as e:
