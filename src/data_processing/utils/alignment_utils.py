@@ -180,7 +180,8 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, de
             n5k_id_from_candidate_map_str = str(n5k_id_value_from_map) 
             
             try:
-                n5k_id_formatted_for_dish_lookup = f"ingr_{int(n5k_id_from_candidate_map_str):08d}"
+                # Ensure the lookup key matches the original N5K format (10 digits)
+                n5k_id_formatted_for_dish_lookup = f"ingr_{int(n5k_id_from_candidate_map_str):010d}"
             except ValueError:
                 logging.warning(f"[{dish_id}] --- Could not convert n5k_id '{n5k_id_from_candidate_map_str}' to int for formatting. Candidate: {n5k_candidate_from_mapping}. Skipping this candidate.")
                 continue
