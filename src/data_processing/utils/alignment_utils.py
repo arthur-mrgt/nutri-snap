@@ -185,13 +185,24 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, de
                 logging.warning(f"[{dish_id}] --- Could not convert n5k_id '{n5k_id_from_candidate_map_str}' to int for formatting. Candidate: {n5k_candidate_from_mapping}. Skipping this candidate.")
                 continue 
 
-            # logging.debug(f"[{dish_id}] --- Attempting to match formatted N5K ID: '{n5k_id_formatted_for_dish_lookup}'")
-            # For detailed comparison, show available keys if match fails on a specific item
-            # original_dish_ingredient_keys = list(original_n5k_ingredients_in_dish_by_id.keys())
-            # logging.debug(f"[{dish_id}] --- Available original N5K ingredient IDs in dish: {original_dish_ingredient_keys}")
-            
+            # Enhanced debugging for the problematic comparison:
+            if foodsam_cat_name == 'shiitake': # Focus debug on a known problematic case
+                target_debug_key = 'ingr_0000000050' # N5K Tofu, which should be in dish_1563305083
+                if n5k_id_formatted_for_dish_lookup == target_debug_key:
+                    logging.debug(f"[{dish_id}] --- DETAILED CHECK FOR '{target_debug_key}' (Shiitake -> Tofu):")
+                    logging.debug(f"[{dish_id}] --- Formatted lookup key: '{n5k_id_formatted_for_dish_lookup}', Length: {len(n5k_id_formatted_for_dish_lookup)}, ASCII: {[ord(c) for c in n5k_id_formatted_for_dish_lookup]}")
+                    found_key_in_dict = False
+                    for key_from_dict in original_n5k_ingredients_in_dish_by_id.keys():
+                        if key_from_dict == target_debug_key: # Check if the target key from original dish data is what we expect
+                            logging.debug(f"[{dish_id}] --- Matching key in original_n5k_ingredients_in_dish_by_id: '{key_from_dict}', Length: {len(key_from_dict)}, ASCII: {[ord(c) for c in key_from_dict]}")
+                            logging.debug(f"[{dish_id}] --- Direct comparison (formatted_lookup == dict_key): {n5k_id_formatted_for_dish_lookup == key_from_dict}")
+                            found_key_in_dict = True
+                            break
+                    if not found_key_in_dict:
+                        logging.debug(f"[{dish_id}] --- Target key '{target_debug_key}' was NOT found as a direct key in original_n5k_ingredients_in_dish_by_id for detailed ASCII comparison.")
+
             is_present = n5k_id_formatted_for_dish_lookup in original_n5k_ingredients_in_dish_by_id
-            # logging.debug(f"[{dish_id}] --- Is '{n5k_id_formatted_for_dish_lookup}' present in original dish ingredients? {is_present}")
+            logging.debug(f"[{dish_id}] --- Is '{n5k_id_formatted_for_dish_lookup}' (from FoodSAM '{foodsam_cat_name}') present in original dish ingredients? {is_present}")
 
             if is_present:
                 dish_specific_n5k_matches.append(original_n5k_ingredients_in_dish_by_id[n5k_id_formatted_for_dish_lookup])
