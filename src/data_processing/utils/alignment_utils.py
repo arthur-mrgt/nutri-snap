@@ -170,12 +170,30 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, de
 
         dish_specific_n5k_matches = []
         for n5k_candidate_from_mapping in potential_n5k_mappings:
-            n5k_id_from_candidate_map = str(n5k_candidate_from_mapping.get('n5k_id')) # This is the pure N5K ID, e.g., "54"
-            
-            # Format for lookup in original_n5k_ingredients_in_dish_by_id
-            n5k_id_formatted_for_dish_lookup = f"ingr_{int(n5k_id_from_candidate_map):08d}"
+            n5k_id_value_from_map = n5k_candidate_from_mapping.get('n5k_id') # Get the raw value
+            logging.debug(f"[{dish_id}] --- Processing candidate N5K mapping for FoodSAM {foodsam_cat_name}({foodsam_cat_id_str}): {n5k_candidate_from_mapping}. Raw n5k_id from map: '{n5k_id_value_from_map}' (type: {type(n5k_id_value_from_map)})")
 
-            if n5k_id_formatted_for_dish_lookup in original_n5k_ingredients_in_dish_by_id:
+            if n5k_id_value_from_map is None:
+                logging.warning(f"[{dish_id}] --- Found a mapping candidate for FoodSAM ID {foodsam_cat_id_str} with missing 'n5k_id': {n5k_candidate_from_mapping}. Skipping this candidate.")
+                continue 
+
+            n5k_id_from_candidate_map_str = str(n5k_id_value_from_map) 
+            
+            try:
+                n5k_id_formatted_for_dish_lookup = f"ingr_{int(n5k_id_from_candidate_map_str):08d}"
+            except ValueError:
+                logging.warning(f"[{dish_id}] --- Could not convert n5k_id '{n5k_id_from_candidate_map_str}' to int for formatting. Candidate: {n5k_candidate_from_mapping}. Skipping this candidate.")
+                continue 
+
+            logging.debug(f"[{dish_id}] --- Attempting to match formatted N5K ID: '{n5k_id_formatted_for_dish_lookup}'")
+            # For detailed comparison, show available keys if match fails on a specific item
+            # original_dish_ingredient_keys = list(original_n5k_ingredients_in_dish_by_id.keys())
+            # logging.debug(f"[{dish_id}] --- Available original N5K ingredient IDs in dish: {original_dish_ingredient_keys}")
+            
+            is_present = n5k_id_formatted_for_dish_lookup in original_n5k_ingredients_in_dish_by_id
+            logging.debug(f"[{dish_id}] --- Is '{n5k_id_formatted_for_dish_lookup}' present in original dish ingredients? {is_present}")
+
+            if is_present:
                 dish_specific_n5k_matches.append(original_n5k_ingredients_in_dish_by_id[n5k_id_formatted_for_dish_lookup])
         
         logging.debug(f"[{dish_id}] FoodSAM inst (mask {original_mask_idx}, cat: {foodsam_cat_name} ID:{foodsam_cat_id_str}) found {len(dish_specific_n5k_matches)} specific N5K ingredients in current dish: {[m['ingredient_name'] for m in dish_specific_n5k_matches]}")
