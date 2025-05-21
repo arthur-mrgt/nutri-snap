@@ -96,6 +96,55 @@ def load_category_info(file_path, delimiter='\t'):
         logging.error(f"Error loading category info from {file_path}: {e}")
     return id_to_name, name_to_id
 
+def parse_foodsam_mask_labels(file_path):
+    """
+    Parses the sam_mask_labels.txt file from FoodSAM.
+    Expected format: "Category ID: Category Name (Confidence Score)"
+    e.g., "16: cheese butter (0.69)"
+
+    Args:
+        file_path (str): Path to the sam_mask_labels.txt file.
+
+    Returns:
+        list: A list of dictionaries, where each dictionary is:
+              {'foodsam_category_id': str, 'foodsam_category_name': str}
+              Returns an empty list if file not found or parsing error.
+    """
+    observations = []
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                
+                # Example: "16: cheese butter (0.69)"
+                # We want to extract "16" and "cheese butter"
+                parts = line.split(':', 1)
+                if len(parts) == 2:
+                    cat_id_str = parts[0].strip()
+                    
+                    # Extract name, removing confidence score part
+                    name_with_score = parts[1].strip()
+                    name_parts = name_with_score.split('(')
+                    cat_name_str = name_parts[0].strip()
+                    
+                    if cat_id_str and cat_name_str:
+                        observations.append({
+                            'foodsam_category_id': cat_id_str, # Keep as string, consistent with foodsam_id_to_n5k_map keys
+                            'foodsam_category_name': cat_name_str
+                        })
+                    else:
+                        logging.warning(f"Could not parse category ID or name from line in {file_path}: {line}")
+                else:
+                    logging.warning(f"Could not parse line in {file_path}: {line}. Expected format: 'ID: Name (Score)'.")
+        logging.info(f"Parsed {len(observations)} FoodSAM observations from {file_path}")
+    except FileNotFoundError:
+        logging.error(f"FoodSAM mask labels file not found: {file_path}")
+    except Exception as e:
+        logging.error(f"Error parsing FoodSAM mask labels from {file_path}: {e}", exc_info=True)
+    return observations
+
 def read_text_file_lines(file_path):
     """Reads lines from a text file, stripping whitespace."""
     try:

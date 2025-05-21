@@ -32,15 +32,15 @@ if __name__ == "__main__" and __package__ is None:
 
 from utils import config
 from utils.common_utils import (create_dir_if_not_exists, copy_file, 
-                                save_json, load_json, load_category_info)
+                                save_json, load_json, load_category_info,
+                                parse_foodsam_mask_labels)
 from utils.n5k_utils import get_dish_ids_and_splits # parse_dish_metadata_csv is used by output_generator
 from utils.foodsam_handler import generate_direct_foodsam_outputs
 from utils.output_generator import save_n5k_ground_truth_metadata
 from utils.alignment_utils import (
-    extract_foodsam_instances_with_masks,
     generate_aligned_n5k_metadata_with_scores,
-    generate_n5k_semseg_from_sam,
-    generate_n5k_bboxes_from_sam
+    generate_n5k_semseg_from_foodsam_pred,
+    generate_n5k_bboxes_from_sam_and_semseg
 )
 
 # Define modality names as constants for clarity and consistency (final output modalities)
@@ -71,9 +71,10 @@ def process_single_dish(dish_id, split_name, processed_data_root_dir, loaded_res
 
     # --- Retrieve loaded resources ---
     foodsam103_id_to_name = loaded_resources['foodsam103_id_to_name']
-    foodsam_name_to_n5k_names = loaded_resources['foodsam_id_to_n5k_map']
+    foodsam_id_to_n5k_map = loaded_resources['foodsam_id_to_n5k_map']
     n5k_id_to_name = loaded_resources['n5k_id_to_name']
-    n5k_name_to_id = loaded_resources['n5k_name_to_id']
+    n5k_string_id_to_int_id_map = loaded_resources['n5k_string_id_to_int_id_map']
+    n5k_int_id_to_name_map = loaded_resources['n5k_int_id_to_name_map']
 
     # --- 1. Paths for Nutrition5k source files & Create Final Output Dirs ---
     n5k_dish_image_dir = os.path.join(config.N5K_IMAGERY_DIR, dish_id)
@@ -115,11 +116,13 @@ def process_single_dish(dish_id, split_name, processed_data_root_dir, loaded_res
     intermediate_foodsam_paths = generate_direct_foodsam_outputs(dish_id, split_name, src_rgb_path)
     if not intermediate_foodsam_paths or \
        not intermediate_foodsam_paths.get("masks_npy_path") or \
-       not intermediate_foodsam_paths.get("raw_semantic_pred_path"):
+       not intermediate_foodsam_paths.get("raw_semantic_pred_path") or \
+       not intermediate_foodsam_paths.get("sam_mask_label_path"):
         logging.error(f"FoodSAM intermediate modality generation failed for dish {dish_id}. Skipping.")
         return False
     raw_sam_masks_path = intermediate_foodsam_paths["masks_npy_path"]
     raw_foodsam103_semseg_path = intermediate_foodsam_paths["raw_semantic_pred_path"]
+    foodsam_mask_labels_path = intermediate_foodsam_paths["sam_mask_label_path"]
 
     # --- 3. Save original N5K metadata as ground truth in intermediate dir ---
     original_n5k_metadata = save_n5k_ground_truth_metadata(dish_id, split_name)
@@ -127,29 +130,40 @@ def process_single_dish(dish_id, split_name, processed_data_root_dir, loaded_res
         logging.error(f"Failed to save or parse original N5K metadata for dish {dish_id}. Skipping.")
         return False
 
-    # --- 4. Extract FoodSAM instances (raw mask + FoodSAM-103 category) ---
-    detected_foodsam_instances = extract_foodsam_instances_with_masks(
-        raw_sam_masks_path, raw_foodsam103_semseg_path, foodsam103_id_to_name
-    )
-    if not detected_foodsam_instances: # Can be empty if no relevant instances found, but not a failure
-        logging.warning(f"[{dish_id}] No FoodSAM instances extracted or extraction failed. Proceeding with potentially empty alignment.")
-        # Depending on strictness, could return False here
+    # --- 4. Parse FoodSAM's detected category observations (from sam_mask_labels.txt) ---
+    # This replaces extract_foodsam_instances_with_masks for the purpose of metadata generation.
+    raw_foodsam_observations = parse_foodsam_mask_labels(foodsam_mask_labels_path)
+    if not raw_foodsam_observations:
+        logging.warning(f"[{dish_id}] No FoodSAM category observations parsed from {foodsam_mask_labels_path}. Proceeding with empty observations.")
+        # Metadata generation will likely result in 0 ingredients, which is handled.
 
-    # --- 5. Generate N5K-aligned metadata.json (with scores) ---
-    aligned_metadata_content, instance_to_n5k_assignment = \
+    # Assign a unique observation_index to each, as the same FoodSAM category can be listed multiple times.
+    foodsam_category_observations_with_indices = [
+        {**obs, 'observation_index': i} for i, obs in enumerate(raw_foodsam_observations)
+    ]
+
+    # --- 5. Generate N5K-aligned metadata.json (with scores) and FoodSAM->N5K map ---
+    aligned_metadata_content, foodsam_cat_id_to_final_n5k_int_id_map = \
         generate_aligned_n5k_metadata_with_scores(
-            dish_id, original_n5k_metadata, detected_foodsam_instances,
-            foodsam_name_to_n5k_names, n5k_name_to_id, n5k_id_to_name
+            dish_id=dish_id,
+            original_n5k_metadata=original_n5k_metadata, 
+            foodsam_category_observations=foodsam_category_observations_with_indices,
+            foodsam_id_to_n5k_map=foodsam_id_to_n5k_map,
+            n5k_string_id_to_int_id_map=n5k_string_id_to_int_id_map,
+            n5k_id_to_name_map=n5k_id_to_name
         )
-    if not aligned_metadata_content or instance_to_n5k_assignment is None: # instance_to_n5k_assignment can be {} but not None
-        logging.error(f"Failed to generate N5K-aligned metadata for dish {dish_id}. Skipping.")
+
+    if not aligned_metadata_content or foodsam_cat_id_to_final_n5k_int_id_map is None: # Map can be {} but not None
+        logging.error(f"Failed to generate N5K-aligned metadata or FoodSAM-N5K map for dish {dish_id}. Skipping.")
         return False
     final_metadata_path = os.path.join(final_modality_dirs[MODALITY_METADATA_N5K], f"{dish_id}.json")
     save_json(aligned_metadata_content, final_metadata_path)
 
-    # --- 6. Generate N5K-aligned semseg.png ---
-    n5k_semseg_image = generate_n5k_semseg_from_sam(
-        raw_sam_masks_path, instance_to_n5k_assignment, (image_h, image_w), n5k_id_to_name
+    # --- 6. Generate N5K-aligned semseg.png (by recoloring FoodSAM's raw semantic prediction) ---
+    n5k_semseg_image = generate_n5k_semseg_from_foodsam_pred(
+        raw_foodsam103_semseg_path=raw_foodsam103_semseg_path,
+        foodsam_cat_id_to_final_n5k_int_id_map=foodsam_cat_id_to_final_n5k_int_id_map,
+        n5k_int_id_to_name_map=n5k_int_id_to_name_map
     )
     if n5k_semseg_image is not None:
         final_semseg_path = os.path.join(final_modality_dirs[MODALITY_SEMSEG_N5K], f"{dish_id}.png")
@@ -161,12 +175,25 @@ def process_single_dish(dish_id, split_name, processed_data_root_dir, loaded_res
             # Not returning false, as other modalities might be okay.
     else:
         logging.warning(f"Failed to generate N5K semseg image for {dish_id}.")
+        # Create a blank image as a placeholder if generation fails, to maintain dataset structure
+        # This helps avoid issues with downstream tools expecting a file.
+        final_semseg_path = os.path.join(final_modality_dirs[MODALITY_SEMSEG_N5K], f"{dish_id}.png")
+        try:
+            blank_semseg = np.zeros((image_h, image_w), dtype=np.uint8)
+            cv2.imwrite(final_semseg_path, blank_semseg)
+            logging.info(f"Saved BLANK N5K semseg placeholder to {final_semseg_path}")
+        except Exception as e_imwrite_blank:
+            logging.error(f"Failed to save BLANK N5K semseg placeholder {final_semseg_path}: {e_imwrite_blank}")
 
-    # --- 7. Generate N5K-aligned bounding_box.json ---
-    n5k_bbox_content = generate_n5k_bboxes_from_sam(
-        dish_id, raw_sam_masks_path, instance_to_n5k_assignment, n5k_id_to_name
+    # --- 7. Generate N5K-aligned bounding_box.json (using SAM masks for geometry, new N5K semseg for labels) ---
+    # The n5k_semseg_image here is the one generated in step 6.
+    n5k_bbox_content = generate_n5k_bboxes_from_sam_and_semseg(
+        dish_id=dish_id, 
+        raw_sam_masks_npy_path=raw_sam_masks_path, 
+        n5k_semseg_image=n5k_semseg_image,
+        n5k_int_id_to_name_map=n5k_int_id_to_name_map
     )
-    if n5k_bbox_content:
+    if n5k_bbox_content and n5k_bbox_content.get("instances") is not None:
         final_bbox_path = os.path.join(final_modality_dirs[MODALITY_BBOX_N5K], f"{dish_id}.json")
         save_json(n5k_bbox_content, final_bbox_path)
     else:
@@ -212,9 +239,41 @@ def main():
             load_category_info(config.N5K_CATEGORY_TXT)
         LOADED_RESOURCES['foodsam_id_to_n5k_map'] = load_json(config.FOODSAM_TO_N5K_MAPPING_JSON)
 
+        # Create N5K string ID to int ID map, and int ID to name map
+        n5k_string_id_to_int_id = {}
+        n5k_int_id_to_name = {}
+        if LOADED_RESOURCES['n5k_id_to_name']:
+            for str_id, name in LOADED_RESOURCES['n5k_id_to_name'].items():
+                try:
+                    # N5K string IDs are like "ingr_0000000001", "dish_0000000001"
+                    # Or sometimes just integer strings from mapping files "1", "25"
+                    if isinstance(str_id, str) and str_id.startswith("ingr_"):
+                        int_id = int(str_id.split('_')[-1])
+                        n5k_string_id_to_int_id[str_id] = int_id
+                        n5k_int_id_to_name[int_id] = name
+                    elif isinstance(str_id, (int, str)): # Handle cases where str_id might be '25' from mapping
+                        int_id = int(str_id)
+                        # We need a canonical string ID to map back if needed, or ensure n5k_id_to_name also has int keys
+                        # For n5k_id_to_name (loaded from N5K_CATEGORY_TXT), keys are already the string IDs like "ingr_..."
+                        # So, n5k_int_id_to_name is the primary map for int ID -> name.
+                        n5k_int_id_to_name[int_id] = name
+                        # Create a string_id_to_int_id mapping if the original key was just an int string
+                        if isinstance(str_id, str) and str_id.isdigit():
+                            n5k_string_id_to_int_id[f"ingr_{int(str_id):010d}"] = int_id # Store a formatted one too
+                            n5k_string_id_to_int_id[str_id] = int_id # And the plain one
+                        elif isinstance(str_id, int):
+                            n5k_string_id_to_int_id[f"ingr_{str_id:010d}"] = int_id
+
+                except ValueError:
+                    logging.warning(f"Could not parse int ID from N5K string ID '{str_id}' while building maps.")
+        LOADED_RESOURCES['n5k_string_id_to_int_id_map'] = n5k_string_id_to_int_id
+        LOADED_RESOURCES['n5k_int_id_to_name_map'] = n5k_int_id_to_name
+
         if not LOADED_RESOURCES['foodsam103_id_to_name'] or \
            not LOADED_RESOURCES['n5k_id_to_name'] or \
-           LOADED_RESOURCES['foodsam_id_to_n5k_map'] is None: # load_json returns None on error
+           LOADED_RESOURCES['foodsam_id_to_n5k_map'] is None or \
+           not LOADED_RESOURCES['n5k_string_id_to_int_id_map'] or \
+           not LOADED_RESOURCES['n5k_int_id_to_name_map']:
             raise ValueError("One or more essential mapping/category files failed to load.")
         logging.info("Successfully pre-loaded all category and mapping files.")
     except Exception as e:
