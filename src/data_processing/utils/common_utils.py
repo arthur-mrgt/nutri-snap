@@ -99,8 +99,8 @@ def load_category_info(file_path, delimiter='\t'):
 def parse_foodsam_mask_labels(file_path):
     """
     Parses the sam_mask_labels.txt file from FoodSAM.
-    Expected format: "Category ID: Category Name (Confidence Score)"
-    e.g., "16: cheese butter (0.69)"
+    Expected CSV format: id,category_id,category_name,category_count_ratio,mask_count_ratio
+    e.g., 2,58,bread,0.67,0.0145
 
     Args:
         file_path (str): Path to the sam_mask_labels.txt file.
@@ -113,32 +113,47 @@ def parse_foodsam_mask_labels(file_path):
     observations = []
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
+            is_header = True
             for line in f:
                 line = line.strip()
                 if not line:
                     continue
-                
-                # Example: "16: cheese butter (0.69)"
-                # We want to extract "16" and "cheese butter"
-                parts = line.split(':', 1)
-                if len(parts) == 2:
-                    cat_id_str = parts[0].strip()
-                    
-                    # Extract name, removing confidence score part
-                    name_with_score = parts[1].strip()
-                    name_parts = name_with_score.split('(')
-                    cat_name_str = name_parts[0].strip()
+
+                if is_header:
+                    # Check if the header is the expected one, then skip
+                    if line.lower() == "id,category_id,category_name,category_count_ratio,mask_count_ratio":
+                        is_header = False
+                        continue
+                    else:
+                        # If the first line is not the expected header, attempt to parse it as data
+                        # or log a warning if it doesn't fit the old or new format.
+                        # For now, we'll assume if it's not the CSV header, it might be old format or error.
+                        # Given the user's example, we expect the CSV header.
+                        logging.warning(f"Unexpected header or first line in {file_path}: {line}. Expected CSV header 'id,category_id,category_name,category_count_ratio,mask_count_ratio'.")
+                        # If we want to be more robust and try the old format, that logic would go here.
+                        # For this fix, we'll assume CSV or error out on first non-matching line if it's not the header.
+                        is_header = False # Treat it as data if not recognized header, might fail below.
+
+
+                parts = line.split(',')
+                if len(parts) >= 3: # Ensure at least category_id and category_name are present
+                    cat_id_str = parts[1].strip()
+                    cat_name_str = parts[2].strip()
                     
                     if cat_id_str and cat_name_str:
+                        if cat_name_str.lower() == "background": # Ignore background entries
+                            logging.debug(f"Skipping background entry in {file_path}: {line}")
+                            continue
+                        
                         observations.append({
-                            'foodsam_category_id': cat_id_str, # Keep as string, consistent with foodsam_id_to_n5k_map keys
+                            'foodsam_category_id': cat_id_str, # Keep as string
                             'foodsam_category_name': cat_name_str
                         })
                     else:
-                        logging.warning(f"Could not parse category ID or name from line in {file_path}: {line}")
+                        logging.warning(f"Could not parse category ID or name from CSV line in {file_path}: {line}")
                 else:
-                    logging.warning(f"Could not parse line in {file_path}: {line}. Expected format: 'ID: Name (Score)'.")
-        logging.info(f"Parsed {len(observations)} FoodSAM observations from {file_path}")
+                    logging.warning(f"Could not parse CSV line in {file_path}: {line}. Expected at least 3 columns.")
+        logging.info(f"Parsed {len(observations)} FoodSAM observations (excluding background) from {file_path}")
     except FileNotFoundError:
         logging.error(f"FoodSAM mask labels file not found: {file_path}")
     except Exception as e:
