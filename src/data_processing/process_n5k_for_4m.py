@@ -226,7 +226,33 @@ def main():
     
     # Configure logging
     log_file_path = os.path.join(config.PROCESSED_DATA_DIR, "processing_log.txt")
-    create_dir_if_not_exists(os.path.dirname(log_file_path))
+    print(f"--- Attempting to configure logging. Log file path will be: {os.path.abspath(log_file_path)} ---") # Print absolute path
+
+    try:
+        # Ensure directory exists
+        log_file_dir = os.path.dirname(log_file_path)
+        if not os.path.exists(log_file_dir):
+            print(f"--- Log file directory {log_file_dir} does not exist. Attempting to create it. ---")
+            os.makedirs(log_file_dir, exist_ok=True) # exist_ok=True to avoid error if it was created concurrently
+            print(f"--- Directory {log_file_dir} creation attempt finished. ---")
+        else:
+            print(f"--- Log file directory {log_file_dir} already exists. ---")
+
+        # Test write to the log file path directly
+        print(f"--- Attempting test write to: {log_file_path} ---")
+        with open(log_file_path, 'w') as test_f:
+            test_f.write("Initial test write to log file successful.\n")
+        print(f"--- Test write to {log_file_path} successful. File should exist now. ---")
+    except Exception as e_test_write:
+        print(f"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        print(f"!!! CRITICAL: Failed to perform test write to log file {log_file_path}")
+        print(f"!!! Exception: {e_test_write}")
+        print(f"!!! Please check permissions and path validity.")
+        print(f"!!! Logging to file will likely fail.")
+        print(f"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        # Optionally, exit here or re-raise if file logging is absolutely critical
+
+    create_dir_if_not_exists(os.path.dirname(log_file_path)) # This might be redundant now but keep for safety
     logging.basicConfig(level=logging.DEBUG, 
                         format='%(asctime)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s',
                         handlers=[

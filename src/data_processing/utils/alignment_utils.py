@@ -562,10 +562,11 @@ def generate_n5k_bboxes_from_sam_and_semseg(dish_id, raw_sam_masks_npy_path,
 
             output_bboxes_content["instances"].append({
                 "bbox_coco": bbox_coords,
-                "n5k_category_id": majority_n5k_id_int,
-                "n5k_category_name": n5k_class_name
+                "n5k_category_id": int(majority_n5k_id_int),
+                "n5k_category_name": n5k_class_name,
+                "score": 1.0
             })
-            logging.debug(f"[{dish_id}] Generated bbox for SAM mask {i} -> N5K ID {majority_n5k_id_int} ('{n5k_class_name}'). Box: {bbox_coords}")
+            logging.debug(f"[{dish_id}] Generated bbox for SAM mask {i} -> N5K ID {int(majority_n5k_id_int)} ('{n5k_class_name}'). Box: {bbox_coords}")
         
         logging.info(f"[{dish_id}] Generated {len(output_bboxes_content['instances'])} N5K bounding boxes for 4M format.")
         return output_bboxes_content
