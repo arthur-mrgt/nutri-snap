@@ -367,14 +367,14 @@ def main():
         log_line_parts = [dish_id, status_message]
 
         if success and metadata_content:
-            scores = metadata_content.get("scores", {})
+            scores_dict = metadata_content.get("confidence_scores", {})
             ingredients_list = metadata_content.get("ingredients", [])
             
-            final_confidence = scores.get("final_confidence_score", "N/A")
-            nutritional_score = scores.get("nutritional_score", "N/A")
-            ingredient_score = scores.get("ingredient_score", "N/A")
-            msre_nutritional = scores.get("msre_nutritional_values", "N/A")
-            jaccard_ingredient = scores.get("jaccard_ingredients", "N/A")
+            final_confidence = scores_dict.get("final_confidence", "N/A")
+            nutritional_score = scores_dict.get("nutritional_score", "N/A")
+            ingredient_score = scores_dict.get("ingredient_score", "N/A")
+            msre_nutritional = scores_dict.get("msre_nutritional", "N/A")
+            jaccard_ingredient = scores_dict.get("jaccard_ingredient", "N/A")
             nb_ingredient = len(ingredients_list)
 
             def format_score_value(val):
