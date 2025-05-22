@@ -1,6 +1,13 @@
 """
-Utilities for aligning FoodSAM detections with Nutrition5k categories and generating
-N5K-aligned modalities.
+Utilities for aligning FoodSAM detections with Nutrition5k (N5K) categories and
+generating N5K-aligned modalities for the final dataset.
+
+This module includes functions to:
+- Extract instances from FoodSAM outputs (raw masks and semantic predictions).
+- Align detected FoodSAM categories with N5K ingredients from ground truth dish metadata.
+- Generate a final metadata.json file with aligned ingredients and confidence scores.
+- Create N5K-aligned semantic segmentation masks.
+- Generate N5K-aligned bounding box annotations.
 """
 import os
 import numpy as np
@@ -16,8 +23,7 @@ SCORE_W_NUTR = 0.8
 SCORE_W_INGR = 0.2
 # Small value to prevent division by zero in relative error calculation,
 # or to assign a large penalty if original is 0 and merged is not.
-# Using a fixed large RE if X_orig=0 and X_merged!=0 might be more stable than division by epsilon.
-# For now, let's use RE=1 in that specific case, as user suggested.
+# Using RE=1 if X_orig=0 and X_merged!=0, as per prior implicit agreement.
 RE_X_ORIG_ZERO_MERGED_NON_ZERO_PENALTY = 1.0 
 
 
@@ -25,18 +31,22 @@ def extract_foodsam_instances_with_masks(raw_sam_masks_npy_path, raw_foodsam103_
     """
     Extracts FoodSAM instances, their raw masks, and their majority FoodSAM-103 category.
 
+    Each SAM mask is associated with a FoodSAM-103 category based on the majority
+    class ID within the mask region in the raw FoodSAM-103 semantic prediction.
+
     Args:
-        raw_sam_masks_npy_path (str): Path to masks.npy (raw SAM masks, (N, H, W) boolean array).
-        raw_foodsam103_semantic_pred_path (str): Path to semantic_pred_food103.png (H, W, class IDs).
-        foodsam103_id_to_name_map (dict): Mapping from FoodSAM-103 category ID to name.
+        raw_sam_masks_npy_path (str): Path to 'masks.npy' (raw SAM masks, (N, H, W) boolean array).
+        raw_foodsam103_semantic_pred_path (str): Path to 'semantic_pred_food103.png' 
+                                                (H, W, grayscale, FoodSAM-103 class IDs).
+        foodsam103_id_to_name_map (dict): Mapping from FoodSAM-103 category ID (int) to name (str).
 
     Returns:
-        list: List of dictionaries, e.g.,
-              [{'original_mask_index': int, 
-                'foodsam_category_id': int, 
-                'foodsam_category_name': str, 
-                'instance_mask': np.array((H,W), dtype=bool)}, ...]
-              Returns empty list on error or if no masks.
+        list: A list of dictionaries, where each dictionary represents a detected instance.
+              Example: [{'original_mask_index': int, 
+                         'foodsam_category_id': int, 
+                         'foodsam_category_name': str, 
+                         'instance_mask': np.array((H,W), dtype=bool)}, ...]
+              Returns an empty list if an error occurs or no masks are found.
     """
     detected_instances = []
     try:
@@ -66,7 +76,7 @@ def extract_foodsam_instances_with_masks(raw_sam_masks_npy_path, raw_foodsam103_
             pixels_in_mask = semantic_pred_img[instance_mask]
             
             if pixels_in_mask.size == 0:
-                majority_foodsam_cat_id = -1 # or some background/unknown ID
+                majority_foodsam_cat_id = -1 # Indicates background or unclassified
             else:
                 unique_ids, counts = np.unique(pixels_in_mask, return_counts=True)
                 majority_foodsam_cat_id = unique_ids[np.argmax(counts)]
@@ -95,32 +105,54 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, fo
                                            n5k_string_id_to_int_id_map, # New: for final mapping
                                            n5k_id_to_name_map): # Used for names, assuming it maps string N5K ID to name
     """
-    Generates N5K-aligned metadata.json content and a FoodSAM to N5K ID mapping.
-    It uses raw FoodSAM category observations (not tied to SAM masks at this stage).
-    Method:
-    1. Identify potential claims from each FoodSAM category observation to N5K ingredients in the dish.
-    2. Resolve claims: N5K ingredients are claimed by the best-ranked FoodSAM observation.
-    3. Group claimed N5K ingredients under each successful FoodSAM observation.
-    4. Determine a principal N5K ingredient for each such group (by weight).
-    5. If multiple observations of the same FoodSAM category ID lead to different groups,
-       select one "winning" group (principal N5K) for that FoodSAM category based on max total weight.
-    6. Construct final metadata with these winning principal N5K ingredients and summed nutrition.
-    7. Create a map from FoodSAM category ID to the final N5K integer ID.
-    8. Calculate confidence scores.
+    Generates N5K-aligned metadata content and a FoodSAM-to-N5K ID mapping.
+
+    This function implements the core logic for aligning FoodSAM category detections
+    (from `foodsam_category_observations`) with the ground truth N5K ingredients 
+    present in a specific dish (`original_n5k_metadata`). The alignment uses a
+    predefined mapping (`foodsam_id_to_n5k_map`) that lists potential N5K
+    equivalents for each FoodSAM category, ranked by preference.
+
+    Method Overview:
+    1.  Claiming: For each FoodSAM category observation, identify potential N5K ingredients
+        from the current dish that match candidates in `foodsam_id_to_n5k_map`.
+    2.  Adjudication (N5K-centric): Each N5K ingredient in the dish can only be claimed once,
+        by the highest-ranking (lowest rank value) FoodSAM observation that lists it.
+    3.  Grouping: Group all N5K ingredients claimed by the same FoodSAM observation.
+    4.  Principal N5K Selection (per group): For each group, determine a principal N5K
+        ingredient (e.g., by highest weight within that group).
+    5.  Consolidation (per FoodSAM category ID): If multiple observations of the *same*
+        FoodSAM category ID result in different groups of claimed N5K items (due to different
+        observation_indices having different ranks or successfully claiming different items),
+        select one "winning" group/principal N5K for that FoodSAM category. This is typically
+        based on the group with the maximum total weight of its claimed N5K items.
+    6.  Final Metadata Construction: Build the list of final ingredients for `metadata.json`.
+        Each entry corresponds to a winning principal N5K ingredient, with its nutritional
+        values potentially summed from all N5K items contributing to its group.
+    7.  FoodSAM to N5K ID Map: Create a mapping from the FoodSAM category ID (string) to the
+        final N5K *integer* ID chosen for it in this dish.
+    8.  Confidence Scoring: Calculate nutritional and ingredient-based confidence scores.
 
     Args:
-        dish_id (str): Dish identifier.
+        dish_id (str): Identifier for the current dish.
         original_n5k_metadata (dict): Parsed ground truth N5K metadata for the dish.
-        foodsam_category_observations (list): List of dicts, e.g.,
-            [{'foodsam_category_id': '16', 'foodsam_category_name': 'cheese butter', 'observation_index': 0}, ...].
-            'observation_index' is a unique identifier for each detected FoodSAM category instance.
-        foodsam_id_to_n5k_map (dict): Maps FoodSAM-103 string ID to ranked N5K string IDs.
-        n5k_string_id_to_int_id_map (dict): Maps N5K string ID (e.g., "ingr_0000000025") to N5K integer ID (e.g., 25).
-        n5k_id_to_name_map (dict): Maps N5K string ID to N5K name.
+        foodsam_category_observations (list): A list of dictionaries, where each represents
+            a FoodSAM category detected for the dish, independent of specific masks initially.
+            Example: `[{'foodsam_category_id': '16', 'foodsam_category_name': 'cheese butter', 'observation_index': 0}, ...]`.
+            The 'observation_index' provides a unique ID for each observation.
+        foodsam_id_to_n5k_map (dict): Maps FoodSAM-103 category IDs (str) to a list of
+            potential N5K ingredient IDs (int), ranked by preference.
+            Example: `{"16": {"mapped_n5k_categories": [{"n5k_id": 25, "n5k_name": "Butter"}, ...]}}`
+        n5k_string_id_to_int_id_map (dict): Maps N5K string IDs (e.g., "ingr_0000000025") 
+                                            to N5K integer IDs (e.g., 25).
+        n5k_id_to_name_map (dict): Maps N5K string IDs (e.g., "ingr_0000000025") to N5K names.
 
     Returns:
-        tuple: (final_metadata_dict, foodsam_cat_id_to_n5k_int_id_map)
-               Returns (empty_metadata_dict, {}) on error or if no alignment.
+        tuple: `(final_metadata_dict, foodsam_cat_id_to_n5k_int_id_map)`
+               - `final_metadata_dict`: The structured content for the output `metadata.json`.
+               - `foodsam_cat_id_to_n5k_int_id_map`: A dictionary mapping FoodSAM category IDs (str)
+                 that were successfully aligned to their final N5K integer ID (int).
+               Returns `(empty_metadata_structure, {})` if alignment is not possible or fails.
     """
     empty_metadata_default = {
         "dish_id": dish_id, "ingredients": [], "total_nutritional_values": {},
@@ -139,13 +171,13 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, fo
         return empty_metadata_default, {}
     logging.debug(f"[{dish_id}] Original N5K ingredients in dish (by ID): {list(original_n5k_ingredients_in_dish_by_id.keys())}")
 
-    # --- Phase 1: Build All Potential Claims with Ranks from FoodSAM Observations ---
-    potential_claims = [] # List of tuples: (rank, observation_idx, foodsam_cat_id, foodsam_cat_name, original_n5k_ingredient_object_from_dish)
+    # Phase 1: Build all potential claims from FoodSAM observations to N5K ingredients in the dish.
+    # Each claim includes the rank from the foodsam_id_to_n5k_map.
+    potential_claims = [] # List of tuples: (rank, observation_idx, foodsam_cat_id_str, foodsam_cat_name, original_n5k_ingredient_object_from_dish)
     
     if not foodsam_category_observations:
         logging.warning(f"[{dish_id}] No FoodSAM category observations provided. No claims will be generated.")
-        # Proceed to return default empty metadata, as no alignment is possible.
-        # Scores will be calculated based on empty final_ingredients_for_json_list later.
+        # Scores will be calculated later based on an empty final_ingredients_for_json_list.
 
     for observation in foodsam_category_observations:
         obs_idx = observation['observation_index']
@@ -186,10 +218,11 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, fo
                 potential_claims.append((rank, obs_idx, foodsam_cat_id_str, foodsam_cat_name, original_n5k_ingredient_object))
                 logging.debug(f"[{dish_id}] Potential claim: Rank {rank}, ObsIdx {obs_idx} (FS ID: {foodsam_cat_id_str}, Name: {foodsam_cat_name}), N5K: {original_n5k_ingredient_object['ingredient_name']} ({original_n5k_ingredient_object['ingredient_id']})")
 
-    # --- Phase 2: Resolve Claims (N5K-Centric Adjudication) ---
+    # Phase 2: Resolve claims. Each N5K ingredient in the dish can be claimed by only one FoodSAM observation,
+    # prioritizing the observation that lists the N5K ingredient with the best (lowest) rank.
     potential_claims.sort(key=lambda x: (x[4]['ingredient_id'], x[0])) # Sort by N5K ID, then rank
 
-    # food_observation_claims: obs_idx -> {"foodsam_category_id": id, "foodsam_category_name": name, "claimed_items": [n5k_obj1, ...]}
+    # foodsam_observation_claims: obs_idx -> {"foodsam_category_id": id, "foodsam_category_name": name, "claimed_items": [n5k_obj1, ...]}
     foodsam_observation_claims = {} 
     for obs in foodsam_category_observations: # Initialize for all observations
         foodsam_observation_claims[obs['observation_index']] = {
@@ -198,7 +231,7 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, fo
             "claimed_items": []
         }
 
-    claimed_original_n5k_ids = set() # Tracks N5K string IDs that have been claimed
+    claimed_original_n5k_ids = set() # Tracks N5K string IDs that have been successfully claimed.
 
     logging.debug(f"[{dish_id}] Starting claim resolution. Total potential claims: {len(potential_claims)}")
     for rank, obs_idx, fs_cat_id, fs_cat_name, n5k_obj in potential_claims:
@@ -210,9 +243,11 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, fo
         else:
             logging.debug(f"[{dish_id}] Skipped claim: N5K '{n5k_obj['ingredient_name']}' ({original_n5k_ingr_id_str}) already claimed. Attempt by Obs {obs_idx} (FS ID: {fs_cat_id}, Rank {rank})")
 
-    # --- Phase 3: Group Claims by FoodSAM Category ID and Select Principal N5K for Each Group ---
-    # foodsam_category_to_candidate_groups: fs_cat_id -> [group1, group2, ...]
-    # group: {"principal_n5k_string_id", "principal_n5k_name", "total_weight", "summed_nutrition", "contributing_n5k_objects"}
+    # Phase 3: Group claims by FoodSAM category ID. For each FoodSAM category ID,
+    # there might be multiple observations, each potentially claiming a set of N5K items.
+    # For each such set (group), determine a principal N5K ingredient (by weight).
+    # Result: foodsam_category_to_candidate_groups: fs_cat_id_str -> [group1_details, group2_details, ...]
+    # Each group_details contains info about the principal N5K and summed nutrition for that specific observation's claims.
     foodsam_category_to_candidate_groups = {}
 
     for obs_idx, data in foodsam_observation_claims.items():
@@ -220,12 +255,12 @@ def generate_aligned_n5k_metadata_with_scores(dish_id, original_n5k_metadata, fo
         claimed_items = data["claimed_items"]
 
         if not claimed_items:
-            continue # This FoodSAM observation claimed nothing
+            continue # This FoodSAM observation claimed nothing.
 
-        # Determine Principal N5K ingredient for this observation's group (by weight)
+        # Determine Principal N5K ingredient for this observation's group (by weight within the group)
         principal_n5k_obj = sorted(claimed_items, key=lambda x: x.get('weight_g', 0), reverse=True)[0]
         principal_n5k_string_id = principal_n5k_obj['ingredient_id']
-        principal_n5k_name = principal_n5k_obj['ingredient_name'] # Or use n5k_id_to_name_map[principal_n5k_string_id]
+        principal_n5k_name = principal_n5k_obj['ingredient_name']
 
         total_weight_of_group = sum(item.get('weight_g', 0) for item in claimed_items)
         summed_nutrition_of_group = {
@@ -363,18 +398,28 @@ def generate_n5k_semseg_from_foodsam_pred(raw_foodsam103_semseg_path,
                                           foodsam_cat_id_to_final_n5k_int_id_map,
                                           n5k_int_id_to_name_map=None): # For logging N5K names
     """
-    Generates an N5K category-based semantic segmentation image by re-coloring
-    FoodSAM's raw semantic prediction map (semantic_pred_food103.png).
+    Generates an N5K-aligned semantic segmentation mask from a FoodSAM raw semantic prediction.
+
+    This function takes the raw semantic prediction from FoodSAM (where pixel values are
+    FoodSAM-103 category IDs) and re-colors it based on the final N5K integer IDs
+    determined during the metadata alignment phase. 
+
+    FoodSAM categories that were not successfully mapped to an N5K ID in the current dish
+    (i.e., not present in `foodsam_cat_id_to_final_n5k_int_id_map`) will be mapped to
+    a background value (0) in the output N5K semantic mask.
 
     Args:
-        raw_foodsam103_semseg_path (str): Path to semantic_pred_food103.png (H, W, FoodSAM-103 class IDs).
-        foodsam_cat_id_to_final_n5k_int_id_map (dict): Maps FoodSAM-103 category string ID 
-                                                      to the final N5K integer ID.
-        n5k_int_id_to_name_map (dict, optional): Maps N5K integer ID to N5K name (for logging).
+        raw_foodsam103_semseg_path (str): Path to the FoodSAM raw semantic prediction image
+                                          (grayscale, pixel values are FoodSAM-103 class IDs).
+        foodsam_cat_id_to_final_n5k_int_id_map (dict): A mapping from FoodSAM category IDs (str)
+                                                      to their final N5K integer IDs (int) for this dish.
+                                                      Example: `{"16": 25, "52": 101}`.
+        n5k_int_id_to_name_map (dict, optional): Mapping from N5K integer ID to N5K name,
+                                                 used for logging. Defaults to None.
 
     Returns:
-        np.array: N5K semantic segmentation image (H, W) with final N5K integer IDs,
-                  or None on error.
+        np.ndarray: A 2D numpy array (H, W) representing the N5K-aligned semantic mask.
+                    Pixel values are N5K integer IDs. Returns None on error.
     """
     try:
         foodsam_pred_img = cv2.imread(raw_foodsam103_semseg_path, cv2.IMREAD_GRAYSCALE)
@@ -440,35 +485,41 @@ def generate_n5k_bboxes_from_sam_and_semseg(dish_id, raw_sam_masks_npy_path,
                                             n5k_semseg_image, # The newly generated N5K semseg
                                             n5k_int_id_to_name_map=None): 
     """
-    Generates bounding_box.json in 4M format.
-    Uses SAM masks for geometry and the N5K semantic segmentation image (generated by
-    generate_n5k_semseg_from_foodsam_pred) to determine the majority N5K ID for each SAM mask.
+    Generates N5K-aligned bounding box annotations.
+
+    This function uses the raw SAM instance masks to define the geometry of each detected object.
+    The N5K category ID and name for each bounding box are determined by looking up the
+    majority pixel value within that SAM mask in the *N5K-aligned semantic segmentation image*
+    (generated by `generate_n5k_semseg_from_foodsam_pred`).
 
     Args:
-        dish_id (str): The ID of the dish.
-        raw_sam_masks_npy_path (str): Path to masks.npy (raw SAM masks from FoodSAM).
-        n5k_semseg_image (np.array): The N5K semantic segmentation image (H, W, N5K integer IDs).
-                                     Output of generate_n5k_semseg_from_foodsam_pred.
-        n5k_int_id_to_name_map (dict, optional): Maps N5K integer ID to N5K name (for "class_name").
+        dish_id (str): Identifier for the current dish.
+        raw_sam_masks_npy_path (str): Path to 'masks.npy' (raw SAM masks, (N, H, W) boolean array).
+        n5k_semseg_image (np.ndarray): The N5K-aligned semantic segmentation image (H, W),
+                                      where pixel values are N5K integer IDs.
+        n5k_int_id_to_name_map (dict, optional): Mapping from N5K integer ID to N5K name.
+                                                 Used to include names in the output. Defaults to None.
 
     Returns:
-        dict: Content for bounding_box.json in 4M format: {"instances": [{"boxes": ..., "class_name": ..., "score": ...}]}
-              Returns None on error or if no valid bboxes are generated.
+        dict: A dictionary structured for `bounding_box.json`, containing a list of instances.
+              Each instance includes 'bbox_coco', 'n5k_category_id', and 'n5k_category_name'.
+              Example: `{"dish_id": ..., "instances": [{"bbox_coco": [x,y,w,h], ...}]}`
+              Returns an empty dict or a dict with an empty instances list on error or if no valid boxes.
     """
-    instances_for_json = []
+    output_bboxes_content = {"dish_id": dish_id, "instances": []}
     try:
         sam_masks = np.load(raw_sam_masks_npy_path) # (N, H, W) boolean array
         if sam_masks.ndim != 3 or sam_masks.shape[0] == 0:
             logging.warning(f"[{dish_id}] SAM masks at {raw_sam_masks_npy_path} are not valid or empty for N5K bbox. Shape: {sam_masks.shape}")
-            return {"instances": []}
+            return output_bboxes_content
         
         if n5k_semseg_image is None:
             logging.error(f"[{dish_id}] Provided N5K semantic segmentation image is None. Cannot generate bounding boxes.")
-            return {"instances": []}
+            return output_bboxes_content
 
         if sam_masks.shape[1:3] != n5k_semseg_image.shape:
             logging.error(f"[{dish_id}] Shape mismatch: SAM masks {sam_masks.shape[1:3]} vs N5K SemSeg {n5k_semseg_image.shape}. Cannot generate bounding boxes.")
-            return {"instances": []}
+            return output_bboxes_content
 
         num_masks = sam_masks.shape[0]
         for i in range(num_masks):
@@ -509,19 +560,19 @@ def generate_n5k_bboxes_from_sam_and_semseg(dish_id, raw_sam_masks_npy_path,
             # 4M format: [x_min, y_min, x_max, y_max]
             bbox_coords = [int(x), int(y), int(x + w), int(y + h)]
 
-            instances_for_json.append({
-                "boxes": bbox_coords,
-                "class_name": n5k_class_name,
-                "score": 1.0 # Placeholder score, as we don't have a direct confidence for this N5K assignment here
+            output_bboxes_content["instances"].append({
+                "bbox_coco": bbox_coords,
+                "n5k_category_id": majority_n5k_id_int,
+                "n5k_category_name": n5k_class_name
             })
             logging.debug(f"[{dish_id}] Generated bbox for SAM mask {i} -> N5K ID {majority_n5k_id_int} ('{n5k_class_name}'). Box: {bbox_coords}")
         
-        logging.info(f"[{dish_id}] Generated {len(instances_for_json)} N5K bounding boxes for 4M format.")
-        return {"instances": instances_for_json}
+        logging.info(f"[{dish_id}] Generated {len(output_bboxes_content['instances'])} N5K bounding boxes for 4M format.")
+        return output_bboxes_content
 
     except FileNotFoundError:
         logging.error(f"[{dish_id}] SAM masks file not found for N5K bbox: {raw_sam_masks_npy_path}")
-        return {"instances": []}
+        return output_bboxes_content
     except Exception as e:
         logging.error(f"[{dish_id}] Error generating N5K bounding boxes: {e}", exc_info=True)
-        return {"instances": []} # Return empty structure on other errors 
+        return output_bboxes_content # Return empty structure on other errors 
