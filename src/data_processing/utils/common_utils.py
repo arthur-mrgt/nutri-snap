@@ -6,14 +6,14 @@ import shutil
 import json
 import logging
 
-# Setup basic logging
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s')
+# Setup basic logging - REMOVED to allow main script to control configuration.
+# logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s')
 
 def create_dir_if_not_exists(dir_path):
     """Creates a directory if it doesn't already exist."""
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
-        logging.info(f"Created directory: {dir_path}")
+        logging.debug(f"Created directory: {dir_path}")
 
 def copy_file(src_path, dest_path):
     """Copies a file from src_path to dest_path."""

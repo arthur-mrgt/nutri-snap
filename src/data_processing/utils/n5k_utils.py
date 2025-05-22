@@ -152,7 +152,7 @@ def parse_dish_metadata_csv(dish_id):
 # Example usage for standalone testing of this module.
 if __name__ == '__main__':
     # Configure basic logging for the test.
-    logging.basicConfig(level=logging.DEBUG,
+    logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s')
 
     print("Testing get_dish_ids_and_splits...")

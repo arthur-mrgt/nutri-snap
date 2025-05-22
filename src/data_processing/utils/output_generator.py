@@ -60,7 +60,7 @@ def save_n5k_ground_truth_metadata(dish_id, split_name):
 # Example usage for standalone testing of this module.
 if __name__ == '__main__':
     # Basic configuration for logging during tests.
-    logging.basicConfig(level=logging.DEBUG,
+    logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s')
 
     # To run this test, ensure that:
