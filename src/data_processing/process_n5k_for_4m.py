@@ -382,12 +382,12 @@ def main():
                     return f"{val:.4f}"
                 return str(val)
 
-            log_line_parts.append(f"final_confidence{format_score_value(final_confidence)}")
-            log_line_parts.append(f"nutritional_score{format_score_value(nutritional_score)}")
-            log_line_parts.append(f"ingredient_score{format_score_value(ingredient_score)}")
-            log_line_parts.append(f"msre_nutritional{format_score_value(msre_nutritional)}")
-            log_line_parts.append(f"jaccard_ingredient{format_score_value(jaccard_ingredient)}")
-            log_line_parts.append(f"nb_ingredient{nb_ingredient}")
+            log_line_parts.append(format_score_value(final_confidence))
+            log_line_parts.append(format_score_value(nutritional_score))
+            log_line_parts.append(format_score_value(ingredient_score))
+            log_line_parts.append(format_score_value(msre_nutritional))
+            log_line_parts.append(format_score_value(jaccard_ingredient))
+            log_line_parts.append(str(nb_ingredient)) # Ensure nb_ingredient is also just the value
             
         with open(processed_ids_log_path, 'a', encoding='utf-8') as f_processed_log:
             f_processed_log.write(" ".join(log_line_parts) + "\n")
