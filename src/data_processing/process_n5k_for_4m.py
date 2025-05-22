@@ -209,15 +209,16 @@ def process_single_dish(dish_id, split_name, processed_data_root_dir, loaded_res
 
 def main():
     parser = argparse.ArgumentParser(description="Process Nutrition5k dataset for 4M model compatibility, aligning to N5K categories.")
-    parser.add_argument("--n5k_root", type=str, default=None, 
+    parser.add_argument("--n5k_root", type=str, default=None, \
                         help=f"Path to the root of the Nutrition5k dataset (default from config: {config.N5K_ROOT}).")
-    parser.add_argument("--output_root", type=str, default=None, 
+    parser.add_argument("--output_root", type=str, default=None, \
                         help=f"Path to save the processed dataset (default from config: {config.PROCESSED_DATA_DIR}).")
-    parser.add_argument("--foodsam_dir", type=str, default=None,
+    parser.add_argument("--foodsam_dir", type=str, default=None,\
                         help=f"Path to the FoodSAM library directory (default from config: {config.FOODSAM_DIR}).")
-    parser.add_argument("--intermediate_output_root", type=str, default=None, 
+    parser.add_argument("--intermediate_output_root", type=str, default=None, \
                         help=f"Path to save intermediate FoodSAM outputs (default from config: {config.INTERMEDIATE_FOODSAM_OUTPUT_DIR}).")
     parser.add_argument("--limit", type=int, default=None, help="Limit the number of dishes to process (for testing).")
+    parser.add_argument("--starting_from", type=str, default=None, help="Dish ID to start processing from (skips dishes before it in the ordered list).")
 
     args = parser.parse_args()
 
@@ -230,6 +231,23 @@ def main():
     config.SAM_CHECKPOINT = os.path.join(config.FOODSAM_DIR, "ckpts", "sam_vit_h_4b8939.pth")
     # SEMANTIC_CHECKPOINT_FILENAME and SEMANTIC_CONFIG_FILENAME are relative to FOODSAM_DIR in foodsam_handler
     
+    # --- Setup Logging ---
+    log_file_path = os.path.join(config.PROCESSED_DATA_DIR, "processing_log.txt")
+    create_dir_if_not_exists(os.path.dirname(log_file_path))
+    logging.basicConfig(level=logging.DEBUG, 
+                        format='%(asctime)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s',
+                        handlers=[
+                            logging.FileHandler(log_file_path, mode='w'), # Overwrite log file each run
+                            logging.StreamHandler()
+                        ])
+
+    # --- Prepare processed_ids.txt tracker ---
+    processed_ids_log_path = os.path.join(config.PROCESSED_DATA_DIR, "processed_ids.txt")
+    # Create/clear the file at the beginning of the run
+    with open(processed_ids_log_path, 'w', encoding='utf-8') as f_processed_log:
+        f_processed_log.write("# dish_id status\n") # Header
+    logging.info(f"Tracking processed dish IDs in: {processed_ids_log_path}")
+
     # --- Pre-load all necessary mapping files and category info --- 
     global LOADED_RESOURCES
     try:
@@ -295,31 +313,40 @@ def main():
     logging.info(f"FoodSAM Directory (for tools/ckpts): {config.FOODSAM_DIR}")
     logging.info(f"Intermediate Outputs (FoodSAM raw, N5K GT): {config.INTERMEDIATE_FOODSAM_OUTPUT_DIR}")
 
-    dish_id_to_split = get_dish_ids_and_splits()
-    if not dish_id_to_split:
-        logging.error("No dish IDs found or splits could not be determined. Exiting.")
+    # --- Get all dish IDs and their splits, now in a defined order ---
+    ordered_dish_processing_list = get_dish_ids_and_splits()
+
+    if not ordered_dish_processing_list:
+        logging.error("No dishes found to process. Exiting.")
         return
 
-    dish_ids_to_process = list(dish_id_to_split.keys())
-    if args.limit:
-        dish_ids_to_process = dish_ids_to_process[:args.limit]
-        logging.info(f"Processing a limit of {args.limit} dishes.")
+    # Apply limit if specified
+    if args.limit is not None:
+        logging.info(f"Limiting processing to the first {args.limit} dishes from the ordered list.")
+        ordered_dish_processing_list = ordered_dish_processing_list[:args.limit]
 
-    processed_count = 0
-    failed_count = 0
-    for dish_id in tqdm(dish_ids_to_process, desc="Processing Dishes"):
-        split_name = dish_id_to_split[dish_id]
-        
+    # Apply starting_from if specified
+    if args.starting_from is not None:
+        start_dish_id = args.starting_from
+        try:
+            # Find the index of the starting_from dish_id
+            # The list contains tuples (dish_id, split_name)
+            start_index = next(i for i, (d_id, _) in enumerate(ordered_dish_processing_list) if d_id == start_dish_id)
+            logging.info(f"Starting processing from dish_id: {start_dish_id} at index {start_index}.")
+            ordered_dish_processing_list = ordered_dish_processing_list[start_index:]
+        except StopIteration: # Raised if next() doesn't find the item
+            logging.warning(f"Dish ID '{start_dish_id}' specified with --starting_from not found in the current processing list. Processing will start from the beginning of the current list.")
+
+    logging.info(f"Starting processing for {len(ordered_dish_processing_list)} dishes.")
+
+    # --- Process each dish ---
+    for dish_id, split_name in tqdm(ordered_dish_processing_list, desc="Processing Dishes"):
         success = process_single_dish(dish_id, split_name, config.PROCESSED_DATA_DIR, LOADED_RESOURCES)
-        if success:
-            processed_count += 1
-        else:
-            failed_count += 1
-            logging.error(f"Failed to process dish {dish_id}.") # process_single_dish should log specifics
-    
-    logging.info(f"Dataset processing complete.")
-    logging.info(f"Successfully processed dishes: {processed_count}")
-    logging.info(f"Failed dishes: {failed_count}")
+        status_message = "successful" if success else "failed"
+        with open(processed_ids_log_path, 'a', encoding='utf-8') as f_processed_log:
+            f_processed_log.write(f"{dish_id} {status_message}\n")
+
+    logging.info("Finished processing all dishes.")
 
 if __name__ == "__main__":
     main() 

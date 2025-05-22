@@ -10,31 +10,59 @@ from .common_utils import read_text_file_lines
 def get_dish_ids_and_splits():
     """
     Loads all dish IDs and determines their train/test split.
-    Returns: A dictionary mapping dish_id to its split ('train' or 'test').
+    The order of processing will be: all train_ids in order, then all test_ids in order.
+    Dishes in all_ids but not in specific train/test files will be processed last, assigned to 'train'.
+
+    Returns:
+        list: A list of tuples, where each tuple is (dish_id, split_name),
+              ordered by train split first, then test split, then fallbacks.
     """
     all_dish_ids_path = os.path.join(config.N5K_SPLITS_DIR, "..", "dish_ids_all.txt") # one level up from splits
-    train_ids_path = os.path.join(config.N5K_SPLITS_DIR, "rgb_train_ids.txt")
-    test_ids_path = os.path.join(config.N5K_SPLITS_DIR, "rgb_test_ids.txt")
+    train_ids_path = os.path.join(config.N5K_SPLITS_DIR, "depth_train_ids.txt")
+    test_ids_path = os.path.join(config.N5K_SPLITS_DIR, "depth_test_ids.txt")
 
-    all_ids = set(read_text_file_lines(all_dish_ids_path))
-    train_ids = set(read_text_file_lines(train_ids_path))
-    test_ids = set(read_text_file_lines(test_ids_path))
+    all_ids_set = set(read_text_file_lines(all_dish_ids_path))
+    # Read train and test IDs, preserving their order from the files
+    train_ids_ordered = read_text_file_lines(train_ids_path)
+    test_ids_ordered = read_text_file_lines(test_ids_path)
 
-    dish_splits = {}
-    for dish_id in all_ids:
-        if dish_id in train_ids:
-            dish_splits[dish_id] = "train"
-        elif dish_id in test_ids:
-            dish_splits[dish_id] = "test"
-        else:
-            # Fallback if not in specific rgb lists, could assign to train or skip
-            logging.warning(f"Dish ID {dish_id} not found in train/test RGB splits. Assigning to 'train' by default.")
-            dish_splits[dish_id] = "train"
+    ordered_dish_processing_list = []
+    processed_ids_set = set() # To keep track of IDs already added to the list
+
+    # Add train IDs in their original order
+    for dish_id in train_ids_ordered:
+        if dish_id in all_ids_set and dish_id not in processed_ids_set:
+            ordered_dish_processing_list.append((dish_id, "train"))
+            processed_ids_set.add(dish_id)
+        elif dish_id not in all_ids_set:
+            logging.warning(f"Dish ID {dish_id} from depth_train_ids.txt not found in dish_ids_all.txt. Skipping.")
+        # If dish_id was already processed (e.g. duplicate in train_ids_ordered), it's skipped here.
+
+    # Add test IDs in their original order
+    for dish_id in test_ids_ordered:
+        if dish_id in all_ids_set and dish_id not in processed_ids_set:
+            ordered_dish_processing_list.append((dish_id, "test"))
+            processed_ids_set.add(dish_id)
+        elif dish_id in train_ids_ordered: # Already processed as train
+             logging.warning(f"Dish ID {dish_id} from depth_test_ids.txt was already listed in depth_train_ids.txt. Kept as 'train'.")
+        elif dish_id not in all_ids_set:
+            logging.warning(f"Dish ID {dish_id} from depth_test_ids.txt not found in dish_ids_all.txt. Skipping.")
+        # If dish_id was already processed (e.g. duplicate in test_ids_ordered), it's skipped here.
+
+    # Add any remaining IDs from all_ids_set that weren't in train/test specific files
+    # These will be sorted alphabetically for deterministic fallback order
+    remaining_ids = sorted(list(all_ids_set - processed_ids_set))
+    for dish_id in remaining_ids:
+        logging.warning(f"Dish ID {dish_id} from dish_ids_all.txt not found in specific train/test depth splits. Assigning to 'train' and processing last.")
+        ordered_dish_processing_list.append((dish_id, "train"))
+        processed_ids_set.add(dish_id) # Should already be covered, but for safety
             
-    if not all_ids:
-        logging.error(f"No dish IDs found. Check path: {all_dish_ids_path}")
-
-    return dish_splits
+    if not ordered_dish_processing_list and all_ids_set: # If all_ids had content but nothing matched splits
+        logging.error(f"No processable dish IDs after checking splits, though dish_ids_all.txt was not empty. Check split files: {train_ids_path}, {test_ids_path}")
+    elif not all_ids_set:
+        logging.error(f"No dish IDs found in dish_ids_all.txt. Check path: {all_dish_ids_path}")
+        
+    return ordered_dish_processing_list
 
 def parse_dish_metadata_csv(dish_id):
     """
@@ -143,7 +171,7 @@ if __name__ == '__main__':
     
     print("Testing get_dish_ids_and_splits...")
     splits = get_dish_ids_and_splits()
-    print(f"Found {len(splits)} dishes. First 5: {list(splits.items())[:5]}")
+    print(f"Found {len(splits)} dishes. First 5: {splits[:5]}")
 
     # Test parse_dish_metadata_csv
     # You would need actual or dummy dish_metadata_cafe1/2.csv files for this to work.
