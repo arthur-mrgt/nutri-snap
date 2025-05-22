@@ -81,7 +81,7 @@ def process_single_dish(dish_id, split_name, processed_data_root_dir, loaded_res
 
     if not os.path.exists(src_rgb_path):
         logging.error(f"RGB image not found for dish {dish_id} at {src_rgb_path}")
-        return False
+        return False, None
     # Depth image is optional; copy_file handles its existence.
 
     # Create final output directories for each modality
@@ -106,7 +106,7 @@ def process_single_dish(dish_id, split_name, processed_data_root_dir, loaded_res
         image_h, image_w = rgb_image_for_shape.shape[:2]
     except Exception as e:
         logging.error(f"[{dish_id}] Could not read RGB image {src_rgb_path} to get shape: {e}")
-        return False
+        return False, None
 
     # --- 2. Generate intermediate FoodSAM outputs ---
     intermediate_foodsam_paths = generate_direct_foodsam_outputs(dish_id, split_name, src_rgb_path)
@@ -115,7 +115,7 @@ def process_single_dish(dish_id, split_name, processed_data_root_dir, loaded_res
        not intermediate_foodsam_paths.get("raw_semantic_pred_path") or \
        not intermediate_foodsam_paths.get("sam_mask_label_path"):
         logging.error(f"FoodSAM intermediate modality generation failed for dish {dish_id}. Skipping.")
-        return False
+        return False, None
     raw_sam_masks_path = intermediate_foodsam_paths["masks_npy_path"]
     raw_foodsam103_semseg_path = intermediate_foodsam_paths["raw_semantic_pred_path"]
     foodsam_mask_labels_path = intermediate_foodsam_paths["sam_mask_label_path"]
@@ -124,7 +124,7 @@ def process_single_dish(dish_id, split_name, processed_data_root_dir, loaded_res
     original_n5k_metadata = save_n5k_ground_truth_metadata(dish_id, split_name)
     if not original_n5k_metadata:
         logging.error(f"Failed to save or parse original N5K metadata for dish {dish_id}. Skipping.")
-        return False
+        return False, None
 
     # --- 4. Parse FoodSAM's detected category observations ---
     raw_foodsam_observations = parse_foodsam_mask_labels(foodsam_mask_labels_path)
@@ -149,7 +149,7 @@ def process_single_dish(dish_id, split_name, processed_data_root_dir, loaded_res
 
     if not aligned_metadata_content or foodsam_cat_id_to_final_n5k_int_id_map is None:
         logging.error(f"Failed to generate N5K-aligned metadata or FoodSAM-N5K map for dish {dish_id}. Skipping.")
-        return False
+        return False, None
     final_metadata_path = os.path.join(final_modality_dirs[MODALITY_METADATA_N5K], f"{dish_id}.json")
     save_json(aligned_metadata_content, final_metadata_path)
 
@@ -163,7 +163,7 @@ def process_single_dish(dish_id, split_name, processed_data_root_dir, loaded_res
         final_semseg_path = os.path.join(final_modality_dirs[MODALITY_SEMSEG_N5K], f"{dish_id}.png")
         try:
             cv2.imwrite(final_semseg_path, n5k_semseg_image)
-            logging.info(f"Saved N5K semseg to {final_semseg_path}")
+            # logging.info(f"Saved N5K semseg to {final_semseg_path}") # Reduced verbosity
         except Exception as e_imwrite:
             logging.error(f"Failed to save N5K semseg image {final_semseg_path}: {e_imwrite}")
     else:
@@ -173,7 +173,7 @@ def process_single_dish(dish_id, split_name, processed_data_root_dir, loaded_res
         try:
             blank_semseg = np.zeros((image_h, image_w), dtype=np.uint8)
             cv2.imwrite(final_semseg_path, blank_semseg)
-            logging.info(f"Saved BLANK N5K semseg placeholder to {final_semseg_path}")
+            # logging.info(f"Saved BLANK N5K semseg placeholder to {final_semseg_path}") # Reduced verbosity
         except Exception as e_imwrite_blank:
             logging.error(f"Failed to save BLANK N5K semseg placeholder {final_semseg_path}: {e_imwrite_blank}")
 
@@ -195,8 +195,16 @@ def process_single_dish(dish_id, split_name, processed_data_root_dir, loaded_res
     final_sam_instance_path = os.path.join(final_modality_dirs[MODALITY_SAM_INSTANCE], f"{dish_id}.npy")
     copy_file(raw_sam_masks_path, final_sam_instance_path)
 
-    logging.info(f"Successfully processed dish: {dish_id}")
-    return True
+    log_message = f"Successfully processed dish: {dish_id}"
+    if aligned_metadata_content and 'scores' in aligned_metadata_content and \
+       'final_confidence_score' in aligned_metadata_content['scores']:
+        final_score = aligned_metadata_content['scores']['final_confidence_score']
+        if isinstance(final_score, (float, int)):
+            log_message += f" - Final Confidence: {final_score:.4f}"
+        else:
+            log_message += f" - Final Confidence: {final_score}"
+    logging.info(log_message)
+    return True, aligned_metadata_content
 
 def main():
     """
@@ -232,17 +240,17 @@ def main():
         # Ensure directory exists
         log_file_dir = os.path.dirname(log_file_path)
         if not os.path.exists(log_file_dir):
-            print(f"--- Log file directory {log_file_dir} does not exist. Attempting to create it. ---")
+            # print(f"--- Log file directory {log_file_dir} does not exist. Attempting to create it. ---")
             os.makedirs(log_file_dir, exist_ok=True) # exist_ok=True to avoid error if it was created concurrently
-            print(f"--- Directory {log_file_dir} creation attempt finished. ---")
-        else:
-            print(f"--- Log file directory {log_file_dir} already exists. ---")
+            # print(f"--- Directory {log_file_dir} creation attempt finished. ---")
+        # else:
+            # print(f"--- Log file directory {log_file_dir} already exists. ---")
 
         # Test write to the log file path directly
-        print(f"--- Attempting test write to: {log_file_path} ---")
+        # print(f"--- Attempting test write to: {log_file_path} ---")
         with open(log_file_path, 'w') as test_f:
-            test_f.write("Initial test write to log file successful.\n")
-        print(f"--- Test write to {log_file_path} successful. File should exist now. ---")
+            test_f.write("Initial test write to log file successful.\\n")
+        # print(f"--- Test write to {log_file_path} successful. File should exist now. ---")
     except Exception as e_test_write:
         print(f"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         print(f"!!! CRITICAL: Failed to perform test write to log file {log_file_path}")
@@ -253,7 +261,7 @@ def main():
         # Optionally, exit here or re-raise if file logging is absolutely critical
 
     create_dir_if_not_exists(os.path.dirname(log_file_path)) # This might be redundant now but keep for safety
-    logging.basicConfig(level=logging.DEBUG, 
+    logging.basicConfig(level=logging.INFO, 
                         format='%(asctime)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s',
                         handlers=[
                             logging.FileHandler(log_file_path, mode='w'), # Overwrite log file each run
@@ -264,7 +272,7 @@ def main():
     processed_ids_log_path = os.path.join(config.PROCESSED_DATA_DIR, "processed_ids.txt")
     # Create/clear the tracker file
     with open(processed_ids_log_path, 'w', encoding='utf-8') as f_processed_log:
-        f_processed_log.write("# dish_id status\n") # Header
+        f_processed_log.write("# dish_id status final_confidence nutritional_score ingredient_score msre_nutritional jaccard_ingredient nb_ingredient\n") # Header
     logging.info(f"Tracking processed dish IDs in: {processed_ids_log_path}")
 
     # Pre-load mappings and category information
@@ -321,10 +329,10 @@ def main():
 
 
     logging.info(f"Starting dataset processing with N5K alignment.")
-    logging.info(f"Nutrition5k Root: {config.N5K_ROOT}")
-    logging.info(f"Processed Data Output (Final): {config.PROCESSED_DATA_DIR}")
-    logging.info(f"FoodSAM Directory (for tools/ckpts): {config.FOODSAM_DIR}")
-    logging.info(f"Intermediate Outputs (FoodSAM raw, N5K GT): {config.INTERMEDIATE_FOODSAM_OUTPUT_DIR}")
+    # logging.info(f"Nutrition5k Root: {config.N5K_ROOT}") # Reduced verbosity
+    # logging.info(f"Processed Data Output (Final): {config.PROCESSED_DATA_DIR}") # Reduced verbosity
+    # logging.info(f"FoodSAM Directory (for tools/ckpts): {config.FOODSAM_DIR}") # Reduced verbosity
+    # logging.info(f"Intermediate Outputs (FoodSAM raw, N5K GT): {config.INTERMEDIATE_FOODSAM_OUTPUT_DIR}") # Reduced verbosity
 
     # Get ordered list of dish IDs and their splits
     ordered_dish_processing_list = get_dish_ids_and_splits()
@@ -353,10 +361,36 @@ def main():
 
     # Process each dish in the determined order
     for dish_id, split_name in tqdm(ordered_dish_processing_list, desc="Processing Dishes"):
-        success = process_single_dish(dish_id, split_name, config.PROCESSED_DATA_DIR, LOADED_RESOURCES)
+        success, metadata_content = process_single_dish(dish_id, split_name, config.PROCESSED_DATA_DIR, LOADED_RESOURCES)
         status_message = "successful" if success else "failed"
+        
+        log_line_parts = [dish_id, status_message]
+
+        if success and metadata_content:
+            scores = metadata_content.get("scores", {})
+            ingredients_list = metadata_content.get("ingredients", [])
+            
+            final_confidence = scores.get("final_confidence_score", "N/A")
+            nutritional_score = scores.get("nutritional_score", "N/A")
+            ingredient_score = scores.get("ingredient_score", "N/A")
+            msre_nutritional = scores.get("msre_nutritional_values", "N/A")
+            jaccard_ingredient = scores.get("jaccard_ingredients", "N/A")
+            nb_ingredient = len(ingredients_list)
+
+            def format_score_value(val):
+                if isinstance(val, (float, int)):
+                    return f"{val:.4f}"
+                return str(val)
+
+            log_line_parts.append(f"final_confidence{format_score_value(final_confidence)}")
+            log_line_parts.append(f"nutritional_score{format_score_value(nutritional_score)}")
+            log_line_parts.append(f"ingredient_score{format_score_value(ingredient_score)}")
+            log_line_parts.append(f"msre_nutritional{format_score_value(msre_nutritional)}")
+            log_line_parts.append(f"jaccard_ingredient{format_score_value(jaccard_ingredient)}")
+            log_line_parts.append(f"nb_ingredient{nb_ingredient}")
+            
         with open(processed_ids_log_path, 'a', encoding='utf-8') as f_processed_log:
-            f_processed_log.write(f"{dish_id} {status_message}\n")
+            f_processed_log.write(" ".join(log_line_parts) + "\n")
 
     logging.info("Finished processing all dishes.")
 

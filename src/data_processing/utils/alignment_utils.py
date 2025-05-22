@@ -502,8 +502,8 @@ def generate_n5k_bboxes_from_sam_and_semseg(dish_id, raw_sam_masks_npy_path,
 
     Returns:
         dict: A dictionary structured for `bounding_box.json`, containing a list of instances.
-              Each instance includes 'bbox_coco', 'n5k_category_id', and 'n5k_category_name'.
-              Example: `{"dish_id": ..., "instances": [{"bbox_coco": [x,y,w,h], ...}]}`
+              Each instance includes 'boxes', 'n5k_category_id', and 'n5k_category_name'.
+              Example: `{"dish_id": ..., "instances": [{"boxes": [x,y,w,h], ...}]}`
               Returns an empty dict or a dict with an empty instances list on error or if no valid boxes.
     """
     output_bboxes_content = {"dish_id": dish_id, "instances": []}
@@ -561,7 +561,7 @@ def generate_n5k_bboxes_from_sam_and_semseg(dish_id, raw_sam_masks_npy_path,
             bbox_coords = [int(x), int(y), int(x + w), int(y + h)]
 
             output_bboxes_content["instances"].append({
-                "bbox_coco": bbox_coords,
+                "boxes": bbox_coords,
                 "n5k_category_id": int(majority_n5k_id_int),
                 "n5k_category_name": n5k_class_name,
                 "score": 1.0
