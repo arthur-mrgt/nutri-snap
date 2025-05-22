@@ -79,9 +79,11 @@ def analyze_processed_ids(file_path):
 
         count_filtered_dishes = len(filtered_stats_df)
         avg_ingredients_filtered = filtered_stats_df['nb_ingredient'].mean() if count_filtered_dishes > 0 else 0
+        avg_final_confidence_filtered = filtered_stats_df['final_confidence'].mean() if count_filtered_dishes > 0 else 0
 
         print(f"- Nombre de plats correspondants: {count_filtered_dishes}")
         print(f"- Nombre moyen d'ingrédients pour ces plats: {avg_ingredients_filtered:.4f}")
+        print(f"- Final Confidence moyenne pour ces plats: {avg_final_confidence_filtered:.4f}")
 
     except FileNotFoundError:
         print(f"ERREUR: Le fichier {file_path} n'a pas été trouvé lors de la tentative de lecture.")
@@ -109,18 +111,20 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
     
-    # Si vous souhaitez utiliser un chemin absolu fixe sans argument en ligne de commande, 
-    # vous pouvez commenter les lignes de l'argparse et décommenter et modifier la ligne ci-dessous :
-    # fixed_path = "/work/com-304/nutri-snap/data/processed/processed_ids.txt"
-    # print(f"Utilisation du chemin fixe : {fixed_path}")
-    # analyze_processed_ids(fixed_path)
-    
-    # Ligne pour exécuter avec l'argument ou le défaut:
-    # print(f"Analyse du fichier : {args.file_path}") 
-    # analyze_processed_ids(args.file_path)
+    # Déterminez quel chemin utiliser (argument, défaut, ou un chemin fixe spécifié par l'utilisateur)
+    # Par défaut, nous utilisons le chemin absolu spécifié par l'utilisateur si aucune autre logique n'est décommentée.
+    path_to_analyze = "/work/com-304/nutri-snap/data/processed/processed_ids.txt"
 
-    # Ligne pour exécuter avec le chemin absolu que vous avez spécifié
-    # (commentez les lignes de l'argparse ci-dessus si vous utilisez celle-ci):
-    user_specific_path = "/work/com-304/nutri-snap/data/processed/processed_ids.txt"
-    print(f"Analyse du fichier : {user_specific_path}")
-    analyze_processed_ids(user_specific_path) 
+    # Option 1: Utiliser le chemin passé en argument ou le chemin relatif par défaut
+    # Si vous décommentez cette section, commentez la section "Option 2"
+    # path_to_analyze = args.file_path 
+    # print(f"Analyse du fichier (via argument ou défaut relatif): {path_to_analyze}")
+
+    # Option 2: Utiliser le chemin absolu codé en dur (celui que vous avez fourni)
+    # Si vous utilisez cette section, assurez-vous que les lignes de l'argparse sont soit commentées,
+    # soit que vous comprenez que path_to_analyze sera écrasé ici.
+    # path_to_analyze = "/work/com-304/nutri-snap/data/processed/processed_ids.txt"
+    # print(f"Analyse du fichier (chemin absolu codé en dur): {path_to_analyze}")
+
+    # Ligne finale pour l'exécution avec le chemin déterminé
+    analyze_processed_ids(path_to_analyze) 
