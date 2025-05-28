@@ -59,8 +59,8 @@ data_path: '/work/com-304/nutri-snap/data/processed/train
 eval_data_path: '/work/com-304/nutri-snap/data/processed/test'
 
 # Wandb logging
-log_wandb: False # Set to True to log to Weights & Biases
-wandb_project: 'nutrisnap-tokenizers' # Or your preferred project name
-wandb_entity: null # Change if needed
+log_wandb: True # Set to True to log to Weights & Biases
+wandb_project: 'nutrisnap-semseg_n5k_tokenizers' # Or your preferred project name
+wandb_entity: arthur_mrgt # Change if needed
 wandb_run_name: semseg_n5k_tokenizer_ViTB_4k_448 # Or auto
 output_dir: 'output/semseg_n5k_tokenizer_ViTB_4k_448' # Or auto
