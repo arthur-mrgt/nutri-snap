@@ -33,7 +33,7 @@ blr: 0.0001 # base_lr = 1e-4, lr = base_lr * batch_size / 256
 warmup_lr: 0.000001 # 1e-6
 min_lr: 0.
 warmup_epochs: 5
-batch_size: 16 # per GPU
+batch_size: 8 # per GPU
 hflip: 0.5
 clip_grad: 1.0
 model_ema: True
