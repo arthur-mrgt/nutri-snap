@@ -55,7 +55,7 @@ input_size_eval: 448
 # Data
 domain: semseg_n5k
 min_crop_scale: 0.8
-data_path: '/work/com-304/nutri-snap/data/processed/train
+data_path: '/work/com-304/nutri-snap/data/processed/train'
 eval_data_path: '/work/com-304/nutri-snap/data/processed/test'
 
 # Wandb logging
