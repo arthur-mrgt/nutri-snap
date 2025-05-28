@@ -1,4 +1,4 @@
-run_name: semseg_n5k_tokenizer_ViTB_4k_448
+run_name: semseg_n5k_tokenizer_ViTB_8k_224
 
 # Architecture
 encoder_type: vit_b_enc
@@ -60,5 +60,5 @@ eval_data_path: '/work/com-304/nutri-snap/data/processed/test'
 log_wandb: True # Set to True to log to Weights & Biases
 wandb_project: 'nutri-snap' # Or your preferred project name
 wandb_entity: arthur_mrgt-epfl # Change if needed
-wandb_run_name: semseg_n5k_tokenizer_ViTB_4k_448 # Or auto
-output_dir: '/work/com-304/nutri-snap/output/semseg_n5k_tokenizer_ViTB_4k_448' # Or auto
+wandb_run_name: semseg_n5k_tokenizer_ViTB_8k_224 # Or auto
+output_dir: '/work/com-304/nutri-snap/output/semseg_n5k_tokenizer_ViTB_8k_224' # Or auto
