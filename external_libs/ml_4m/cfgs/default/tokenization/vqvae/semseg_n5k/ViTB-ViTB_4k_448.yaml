@@ -47,7 +47,7 @@ epoch_eval: True
 eval_freq: 1 # Evaluate every epoch
 eval_metrics_freq: 0 # Currently not supported for this modality
 eval_image_log_freq: 1 # Log images every epoch
-num_logged_images: 16
+num_logged_images: 1
 input_size_eval: 448
 
 # Data
