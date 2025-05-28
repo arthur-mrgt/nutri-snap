@@ -1,4 +1,9 @@
 data/raw/
 data/processed
 data/tmp_foodsamp_outputs
-external_libs/
+external_libs/*
+!external_libs/ml_4m/fourm/utils/data_constants.py
+!external_libs/ml_4m/fourm/data/modality_info.py
+!external_libs/ml_4m/run_training_vqvae.py
+!external_libs/ml_4m/cfgs/default/tokenization/vqvae/semseg_n5k/ViTB-ViTB_4k_448.yaml
+
