@@ -23,7 +23,7 @@ import warnings
 
 # PyTorch & friends
 import numpy as np
-import torc
+import torch
 import torch.backends.cudnn as cudnn
 from torchvision import transforms
 import torchvision.transforms.functional as TF 
