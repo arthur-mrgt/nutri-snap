@@ -1,0 +1,66 @@
+run_name: semseg_n5k_tokenizer_ViTB_4k_448
+
+# Architecture
+encoder_type: vit_b_enc
+decoder_type: vit_b_dec
+input_size_min: 448
+input_size_max: 448
+resolution_step: 16
+patch_size: 16
+post_mlp: True # tanh MLP before quantizer
+
+# Quantizer
+codebook_size: 4096
+latent_dim: 32
+norm_codes: True
+quantizer_type: lucid
+coef_ema_dead_code: 32.0
+code_replacement_policy: batch_random
+commitment_weight: 1.0
+quantizer_ema_decay: 0.99
+kmeans_init: False
+
+# Losses
+loss_fn: cross_entropy
+codebook_weight: 1.0
+
+# Train
+dtype: fp16 # fp32, fp16 or bf16
+epochs: 20
+opt: adamw
+opt_betas: [0.9, 0.99]
+blr: 0.0001 # base_lr = 1e-4, lr = base_lr * batch_size / 256
+warmup_lr: 0.000001 # 1e-6
+min_lr: 0.
+warmup_epochs: 5
+batch_size: 32 # per GPU
+hflip: 0.5
+clip_grad: 1.0
+model_ema: True
+model_ema_decay: 0.99
+model_ema_update_freq: 1
+loss_fn: cross_entropy
+save_ckpt_freq: 1
+
+# Eval
+step_eval: False
+epoch_eval: True
+eval_freq: 1 # Evaluate every epoch
+eval_metrics_freq: 0 # Currently not supported for this modality
+eval_image_log_freq: 1 # Log images every epoch
+num_eval_metrics_samples: 50000 # Number of samples to use for evaluating image metrics during training.
+num_logged_images: 100
+input_size_eval: 448
+
+# Data
+domain: semseg_n5k
+min_crop_scale: 0.8
+data_path: '/work/com-304/nutri-snap/data/processed/train
+eval_data_path: '/work/com-304/nutri-snap/data/processed/test'
+
+# Wandb logging
+log_wandb: False # Set to True to log to Weights & Biases
+wandb_project: 'nutrisnap-tokenizers' # Or your preferred project name
+wandb_entity: null # Change if needed
+wandb_run_name: semseg_n5k_tokenizer_ViTB_4k_448 # Or auto
+output_dir: 'output/semseg_n5k_tokenizer_ViTB_4k_448' # Or auto
