@@ -39,7 +39,6 @@ clip_grad: 1.0
 model_ema: True
 model_ema_decay: 0.99
 model_ema_update_freq: 1
-loss_fn: cross_entropy
 save_ckpt_freq: 1
 
 # Eval
@@ -48,8 +47,7 @@ epoch_eval: True
 eval_freq: 1 # Evaluate every epoch
 eval_metrics_freq: 0 # Currently not supported for this modality
 eval_image_log_freq: 1 # Log images every epoch
-num_eval_metrics_samples: 50000 # Number of samples to use for evaluating image metrics during training.
-num_logged_images: 100
+num_logged_images: 16
 input_size_eval: 448
 
 # Data
