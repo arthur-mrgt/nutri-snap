@@ -66,6 +66,7 @@ def main():
             if dish_folder.is_dir():
                 dish_id = dish_folder.name # e.g., "dish_1558031526"
                 metadata_file_name = f"{dish_id}.json"
+                caption_file_name = f"{dish_id}.txt" # Changed extension to .txt
                 metadata_file_path = dish_folder / metadata_file_name
 
                 if not metadata_file_path.is_file():
@@ -79,12 +80,11 @@ def main():
                     output_caption_folder = caption_base_path / dish_id
                     output_caption_folder.mkdir(parents=True, exist_ok=True)
 
-                    output_caption_file_path = output_caption_folder / metadata_file_name # Save as dish_id.json
+                    output_caption_file_path = output_caption_folder / caption_file_name # Use .txt file name
 
                     try:
                         with open(output_caption_file_path, 'w') as f:
-                            # The user specified the caption string directly as the content of the .json file
-                            f.write(caption_content)
+                            f.write(caption_content) # Write raw string content
                         print(f"    Successfully generated caption: {output_caption_file_path}")
                     except IOError:
                         print(f"    Error: Could not write caption file: {output_caption_file_path}")
