@@ -74,16 +74,17 @@ class SaveVQDataset(Dataset):
         self.force_load_crop = force_load_crop
 
         self.dryrun = dryrun
-        self.force_load_crop = force_load_crop
         
         self.loader = lambda path: Image.open(path)
         
-        self.classes, self.class_to_idx = find_classes(os.path.join(root, task))
+        actual_task_data_path = os.path.join(self.data_root, task)
+        self.classes, self.class_to_idx = find_classes(actual_task_data_path)
+
         if corrupt_samples_log is not None:
-            task_ext = find_image_extension(os.path.join(root, task))
+            task_ext = find_image_extension(actual_task_data_path)
             self.samples = self.get_corrupt_samples(corrupt_samples_log, task_ext)
         else:
-            self.samples = make_dataset(os.path.join(root, task), self.class_to_idx, IMG_EXTENSIONS, None)
+            self.samples = make_dataset(actual_task_data_path, self.class_to_idx, IMG_EXTENSIONS, None)
         
         self.center_crop_augmenter = CenterCropImageAugmenter(
             target_size=self.input_size, hflip=0.0, main_domain=task
@@ -94,6 +95,39 @@ class SaveVQDataset(Dataset):
             crop_ratio=(0.75, 1.3333),
             main_domain=task
         )
+
+        if self.samples:
+            original_num_samples = len(self.samples)
+            valid_samples = []
+            invalid_image_paths_skipped_count = 0
+            
+            print(f"Validating {original_num_samples} image samples for task '{self.task}' in '{actual_task_data_path}'...")
+            try:
+                from tqdm import tqdm
+                iterator = tqdm(self.samples, desc="Validating samples")
+            except ImportError:
+                iterator = self.samples
+
+            for sample_path, sample_class_idx in iterator:
+                try:
+                    img = Image.open(sample_path)
+                    img.load()
+                    valid_samples.append((sample_path, sample_class_idx))
+                except (PIL.UnidentifiedImageError, IOError) as e:
+                    invalid_image_paths_skipped_count += 1
+                except Exception as e:
+                    invalid_image_paths_skipped_count += 1
+            
+            self.samples = valid_samples
+            num_actually_skipped = original_num_samples - len(self.samples)
+
+            if num_actually_skipped > 0:
+                print(f"Warning: Skipped {num_actually_skipped} invalid or unreadable image samples for task '{self.task}'.")
+            elif original_num_samples > 0 :
+                print(f"All {original_num_samples} image samples for task '{self.task}' appear to be valid.")
+        
+        if not self.samples:
+             print(f"Warning: No valid samples found for task '{self.task}' in '{actual_task_data_path}'. Tokenization for this task might be skipped or result in no output.")
 
     def get_corrupt_samples(self, corrupt_samples_log, task_ext):
         # Load the log file from find_corrupted_pseudolabels.py
