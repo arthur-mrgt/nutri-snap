@@ -6,7 +6,7 @@
 run_name: 4m-b_mod7_nutrisnap_finetune
 
 # Path to the pre-trained model checkpoint for fine-tuning
-# IMPORTANT: You need to replace this with the actual path to your 4M-B COYO700M .pth model file.
+# IMPORTANT: This should be the direct URL to the model checkpoint file.
 finetune: "https://huggingface.co/EPFL-VILAB/4M-7_B_COYO700M/resolve/main/model.safetensors"
 
 # Input & output
@@ -19,7 +19,8 @@ model: fm_base_12e_12d_swiglu_nobias
 patch_size: 16
 input_size: 224
 dtype: bfloat16
-tokenizer_path: "fourm/utils/tokenizer/trained/text_tokenizer_4m_wordpiece_30k.json"
+# Path to the text tokenizer for caption modality, relative to project root
+text_tokenizer_path: "external_libs/ml_4m/fourm/utils/tokenizer/trained/text_tokenizer_4m_wordpiece_30k.json"
 
 # Train
 epochs: 10 # Number of full passes over the training data (13,000 samples)
