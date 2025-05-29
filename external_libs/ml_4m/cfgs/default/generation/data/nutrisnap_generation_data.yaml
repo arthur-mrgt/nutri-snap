@@ -1,0 +1,18 @@
+# nutrisnap_generation_data.yaml
+
+data_name: 'nutrisnap_inference'
+data_type: 'simple_hierarchical' # Type for loading tokenized data from a simple directory structure
+
+# Path to the root directory of your tokenized test data
+# This directory should contain a sub-folder for the input modality (e.g., 'tok_rgb@224')
+data_root: '/work/com-304/nutri-snap/data/processed/test/' # Modify if your test data is located elsewhere
+
+# Specify the sub-folder containing the input RGB tokens (e.g., .npy files)
+input_modality_folder: 'tok_rgb@224' # Folder name for the tokenized RGB input, should match directory in data_root
+# Internal name of the input modality, must match cond_domains in generation_settings
+input_modality_name: 'tok_rgb@224'
+
+# Optional: Number of samples to generate from the dataset
+# num_samples: 100
+# Optional: Specify data split if subdirectories like 'train'/'val'/'test' exist within data_root and contain the input_modality_folder
+# split: 'test'
