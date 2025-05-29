@@ -21,7 +21,7 @@ from typing import Optional
 import numpy as np
 import torch
 from einops import rearrange, repeat
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 from torch.utils.data import Dataset
 from torchvision.datasets import DatasetFolder
 from torchvision.datasets.folder import find_classes, make_dataset
@@ -32,7 +32,6 @@ import fourm.utils.clip as clip
 from fourm.data import CenterCropImageAugmenter, RandomCropImageAugmenter
 from fourm.data.modality_info import MODALITY_TRANSFORMS_DIVAE
 from fourm.vq import get_image_tokenizer
-import fourm.utils.clip as clip
 
 FEATURE_TASKS = ['CLIP-B16', 'DINOv2-B14', 'DINOv2-B14-global']
 IMG_EXTENSIONS = (".jpg", ".jpeg", ".png", ".ppm", ".bmp", ".pgm", ".tif", ".tiff", ".webp", ".jpx", ".gif")
@@ -113,7 +112,7 @@ class SaveVQDataset(Dataset):
                     img = Image.open(sample_path)
                     img.load()
                     valid_samples.append((sample_path, sample_class_idx))
-                except (PIL.UnidentifiedImageError, IOError) as e:
+                except (UnidentifiedImageError, IOError) as e:
                     invalid_image_paths_skipped_count += 1
                 except Exception as e:
                     invalid_image_paths_skipped_count += 1
