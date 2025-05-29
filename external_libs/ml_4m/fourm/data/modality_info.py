@@ -313,6 +313,19 @@ MODALITY_INFO = {
         'num_channels': 1280,
         'id': generate_uint15_hash('ImageBind-H14-global'),
     },
+    'tok_semseg_n5k@224': { # Added for NutriSnap custom semantic segmentation
+        'input_size': 224,
+        'patch_size': 16,
+        'vocab_size': 8192, # Corrected to match VQ-VAE codebook_size from training config
+        'encoder_embedding': partial(ImageTokenEncoderEmbedding, vocab_size=8192),
+        'decoder_embedding': partial(ImageTokenDecoderEmbedding, vocab_size=8192),
+        'min_tokens': 0,
+        'max_tokens': None, # Will be set to (224 // 16) ** 2 = 196
+        'type': 'img', # Important for max_tokens calculation and transform selection
+        'id': generate_uint15_hash('tok_semseg_n5k@224'),
+        'pretokenized': True,
+        'path': 'tok_semseg_n5k@224', # Matches folder name
+    },
 
     ### 224->448 super resolution modalities
     'rgb@448': {
@@ -375,18 +388,6 @@ MODALITY_INFO = {
         'id': generate_uint15_hash('tok_semseg@448'),
         'pretokenized': True,
     },
-    'tok_semseg_n5k@448': {
-        'input_size': 448,
-        'patch_size': 16,
-        'vocab_size': 4096, # Matches ViTB-ViTB_4k_224.yaml codebook_size
-        'encoder_embedding': partial(ImageTokenEncoderEmbedding, vocab_size=4096),
-        'decoder_embedding': partial(ImageTokenDecoderEmbedding, vocab_size=4096),
-        'min_tokens': 0,
-        'max_tokens': None, # Will be set to (448/16)**2 = 784
-        'type': 'img',
-        'id': generate_uint15_hash('tok_semseg_n5k@448'),
-        'pretokenized': True,
-    },
     'tok_clip@448': {
         'input_size': 448,
         'patch_size': 16,
@@ -397,18 +398,6 @@ MODALITY_INFO = {
         'max_tokens': None, # Will be set to 784
         'type': 'img',
         'id': generate_uint15_hash('tok_clip@448'),
-        'pretokenized': True,
-    },
-    'tok_semseg_n5k@224': {
-        'input_size': 224,
-        'patch_size': 16,
-        'vocab_size': 8192,
-        'encoder_embedding': partial(ImageTokenEncoderEmbedding, vocab_size=8192),
-        'decoder_embedding': partial(ImageTokenDecoderEmbedding, vocab_size=8192),
-        'min_tokens': 0,
-        'max_tokens': 196, # (224 // 16)**2
-        'type': 'img',
-        'id': generate_uint15_hash('tok_semseg_n5k@224'),
         'pretokenized': True,
     },
 }
@@ -423,6 +412,7 @@ MODALITY_TRANSFORMS = {
     'tok_depth': TokTransform(),
     'tok_normal': TokTransform(),
     'tok_semseg': TokTransform(),
+    'tok_semseg_n5k': TokTransform(),
     'tok_clip': TokTransform(),
     # 4M-21 modalities
     't5_caption': CaptionEmbTransform(),
