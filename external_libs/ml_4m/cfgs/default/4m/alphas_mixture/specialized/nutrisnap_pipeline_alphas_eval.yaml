@@ -1,0 +1,38 @@
+# Alphas configuration for NutriSnap EVALUATION pipeline:
+# Goal: Evaluate full pipeline generation from tok_rgb@224.
+# Input: tok_rgb@224
+# Output: tok_depth@224 -> tok_semseg_n5k@224 -> caption
+
+# This configuration defines a single mixture component (the list for alphas has one element).
+
+tok_rgb@224:
+  # Always provide tok_rgb@224 as input.
+  input_alphas: [1000.0]
+  # Never expect tok_rgb@224 as a target (it's the starting point).
+  target_alphas: [0.0]
+
+tok_depth@224:
+  # Never provide tok_depth@224 as input during this evaluation.
+  input_alphas: [0.0]
+  # Always expect tok_depth@224 as a target to be generated.
+  target_alphas: [1000.0]
+
+tok_semseg_n5k@224:
+  # Never provide tok_semseg_n5k@224 as input during this evaluation.
+  input_alphas: [0.0]
+  # Always expect tok_semseg_n5k@224 as a target to be generated.
+  target_alphas: [1000.0]
+
+caption:
+  # Never provide caption as input during this evaluation.
+  input_alphas: [0.0]
+  # Always expect the full caption as a target to be generated.
+  target_alphas: [1000.0]
+  # 'full': The model is expected to generate the entire caption sequence.
+  # 'random' could be used if evaluating completion of partial captions, but 'full' is typical for generation.
+  keep: ['full']
+
+# Notes on alpha values for this eval file:
+# - 1000.0: Practically guarantees the modality is used as specified (input or target).
+# - 0.0: Practically guarantees the modality is NOT used as specified.
+# This setup ensures a deterministic input/output configuration for pipeline evaluation.

@@ -1,36 +1,37 @@
 train:
   datasets:
-    nutrisnap_dataset: # Name of your dataset for the configuration
+    n5k: # Name of your dataset for the configuration
       type: multimodal # Indicates a standard multimodal dataset
 
-      # Input and output domains (your 4 modalities)
-      # For fine-tuning, we want the model to learn all directions
-      in_domains: "rgb@224-depth_toks-semseg_n5k_toks-caption"
-      out_domains: "rgb@224-depth_toks-semseg_n5k_toks-caption"
+      # Input and output domains for fine-tuning.
+      # tok_rgb@224 is input only, not a target for reconstruction.
+      in_domains: "tok_rgb@224-tok_depth@224-tok_semseg_n5k@224-caption"
+      out_domains: "tok_depth@224-tok_semseg_n5k@224-caption" # tok_rgb@224 removed from targets
 
       # Path to the alphas configuration file for masking
-      # You will need to create this file (e.g., cfgs/custom/nutrisnap_alphas_config.yaml)
-      # drawing inspiration from existing ones to favor your inference pipeline.
-      alphas_config: "cfgs/custom/nutrisnap_alphas_config.yaml" # TO CREATE
+      # This will define the masking strategy for your modalities.
+      alphas_config: "cfgs/default/4m/alphas_mixture/specialized/nutrisnap_pipeline_alphas.yaml"
 
       # Path to the parent directory of your training modalities
-      # (containing the rgb, depth, semseg, caption subfolders)
+      # (containing the tok_rgb@224, depth_toks, semseg_n5k_toks, caption subfolders)
       data_path: "/work/com-304/nutri-snap/data/processed/train/"
       
       # Important: Indicates not to use webdataset, but the simple hierarchical format
       use_wds: False 
 
       # Mapping of your modality folder names to the internal names expected by 4M
+      # Ensure your on-disk folder names match the keys here.
+      # For example, data for 'tok_depth@224' should be in a folder named 'depth' inside data_path.
       modality_name_map:
-        rgb: "rgb@224"             # Your '''rgb''' folder will be treated as '''rgb@224'''
-        depth: "depth_toks"         # Your '''depth''' folder will be treated as '''depth_toks'''
-        semseg: "semseg_n5k_toks"   # Your '''semseg''' folder will be treated as '''semseg_n5k_toks'''
-        caption: "caption"          # Your '''caption''' folder will be treated as '''caption'''
+        rgb_tok: "tok_rgb@224"          # Your 'rgb_tok' folder maps to internal 'tok_rgb@224'
+        depth_tok: "tok_depth@224"      # Your 'depth_tok' folder maps to internal 'tok_depth@224'
+        semseg_n5k_tok: "tok_semseg_n5k@224" # Your 'semseg_n5k_tok' folder maps to internal 'tok_semseg_n5k@224'
+        caption: "caption"              # Your 'caption' folder maps to internal 'caption'
 
       # Generally useful parameters, to be kept or adjusted if needed
-      main_augment_domain: "rgb@224" # Reference modality for image size during augmentations
+      main_augment_domain: "tok_rgb@224" # Reference modality for image size during augmentations (if any apply to tokens)
       aligned_captions: True       # If captions should be aligned with image augmentations
-      tok_train_aug: True          # Apply augmentations to tokens (if applicable)
+      tok_train_aug: False          # Usually False for tokenized inputs, augmentations are done pre-tokenization
 
   # Sampling weights if you had multiple training datasets.
   # Here, only one dataset, so weight is 1.0.
@@ -40,19 +41,21 @@ val: # Section for validation data (highly recommended)
   datasets:
     nutrisnap_dataset_val:
       type: multimodal
-      in_domains: "rgb@224-depth_toks-semseg_n5k_toks-caption"
-      out_domains: "rgb@224-depth_toks-semseg_n5k_toks-caption"
+      # tok_rgb@224 is input only, not a target for reconstruction.
+      in_domains: "tok_rgb@224-tok_depth@224-tok_semseg_n5k@224-caption"
+      out_domains: "tok_depth@224-tok_semseg_n5k@224-caption" # tok_rgb@224 removed from targets
       
-      # Adapt the path for your validation data
-      alphas_config: "cfgs/custom/nutrisnap_alphas_config_eval.yaml" # Can be the same or different for eval
-      data_path: "/work/com-304/nutri-snap/data/processed/val/" # TO MODIFY if you have a validation set
+      # Path to the alphas configuration file for validation masking
+      # Can be the same as train or a different one (e.g., for full generation)
+      alphas_config: "cfgs/default/4m/alphas_mixture/specialized/nutrisnap_pipeline_alphas_eval.yaml" # TO CREATE or use same as train
+      data_path: "/work/com-304/nutri-snap/data/processed/val/" # Ensure this path is correct for your validation set
       use_wds: False
       modality_name_map:
-        rgb: "rgb@224"
-        depth: "depth_toks"
-        semseg: "semseg_n5k_toks"
+        rgb_tok: "tok_rgb@224"
+        depth_tok: "tok_depth@224"
+        semseg_n5k_tok: "tok_semseg_n5k@224"
         caption: "caption"
-      main_augment_domain: "rgb@224"
+      main_augment_domain: "tok_rgb@224"
       aligned_captions: True
       tok_train_aug: False # Generally, no augmentation on the validation set
 

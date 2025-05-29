@@ -1,0 +1,52 @@
+# Config for DDP
+
+# Arch: SwiGLU No Bias
+# Modalities: Mix of rgb2all and all2all, with alphas=0.5 # This comment might be outdated, actual mix defined in data_config's alpha_config
+# To be run on 1 V100 GPU for fine-tuning NutriSnap
+run_name: 4m-b_mod7_nutrisnap_finetune
+
+# Path to the pre-trained model checkpoint for fine-tuning
+# IMPORTANT: You need to replace this with the actual path to your 4M-B COYO700M .pth model file.
+finetune: "/path/to/your/4M-B_7_COYO700M_checkpoint.pth"
+
+# Input & output
+num_input_tokens: 128
+num_target_tokens: 128
+loss_type: mod
+
+# Architecture
+model: fm_base_12e_12d_swiglu_nobias
+patch_size: 16
+input_size: 224
+dtype: bfloat16
+tokenizer_path: "fourm/utils/tokenizer/trained/text_tokenizer_4m_wordpiece_30k.json"
+
+# Train
+epochs: 10 # Number of full passes over the training data (13,000 samples)
+# total_tokens: 50 # Commented out or set to -1; using epochs for fine-tuning control
+opt: adamw
+blr: 0.00001 # Base learning rate
+min_blr: 0.
+warmup_epochs: 1 # Number of epochs for learning rate warmup
+# warmup_tokens: 1 # Commented out or set to -1; using warmup_epochs
+# Batch size for a single V100. Start with 8, 16, or 32.
+# Monitor VRAM and adjust if Out-Of-Memory errors occur.
+# 16GB V100 might need 8 or 16. 32GB V100 might handle 32.
+batch_size: 16 
+
+# Data
+data_config: "cfgs/default/4m/data/nutrition5k/nutrisnap_data_config.yaml"
+# s3_data_endpoint: "/path/to/endpoint" # Commented out as data is local
+eval_freq: 1 # Evaluate after each epoch (if epoch_size is dataset size)
+fixed_eval: True
+epoch_size: 13000 # Number of samples in one epoch (1300 dishes * 10 crops)
+
+# Saving
+save_ckpt_freq: 1 # Save checkpoint after each epoch
+output_dir: 'output/nutrisnap_finetune'
+
+# Wandb
+log_wandb: True
+wandb_project: 'nutri-snap'
+wandb_entity: 'arthur_mrgt-epfl'
+wandb_run_name: auto # Or specify a unique run name, e.g., finetune_v100_bs16_lr1e-5

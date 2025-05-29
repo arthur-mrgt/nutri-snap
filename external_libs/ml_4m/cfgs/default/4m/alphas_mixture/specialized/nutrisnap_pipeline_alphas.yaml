@@ -1,0 +1,46 @@
+# Alphas configuration for NutriSnap fine-tuning pipeline: 
+# tok_rgb@224 -> tok_depth@224 -> tok_semseg_n5k@224 -> caption
+# We define two main mixture components for training:
+# 1. Pipeline: Enforces the specified generation order.
+# 2. All-to-some: Allows more flexible conditioning for general representation learning.
+
+# Modality definitions using standard names from modality_info.py
+# Each modality has input_alphas and target_alphas.
+# These are lists, corresponding to each mixture component defined implicitly by the list length.
+# Here, we will have 4 mixture components to define the pipeline steps and one all-to-some.
+# - Component 1: tok_rgb@224 -> tok_depth@224
+# - Component 2: tok_rgb@224, tok_depth@224 -> tok_semseg_n5k@224
+# - Component 3: tok_rgb@224, tok_depth@224, tok_semseg_n5k@224 -> caption
+# - Component 4: All-to-some (e.g., predict any one from the others)
+
+tok_rgb@224:
+  # Input alphas for [Comp1, Comp2, Comp3, Comp4]
+  input_alphas: [1000.0, 1000.0, 1000.0, 0.5] # Always input for pipeline, sometimes for Comp4
+  # Target alphas for [Comp1, Comp2, Comp3, Comp4]
+  target_alphas: [0.0, 0.0, 0.0, 0.5]      # Never target in pipeline, sometimes for Comp4
+
+tok_depth@224: # Standard name from modality_info.py
+  input_alphas: [0.0, 1000.0, 1000.0, 0.5] # Input for Comp2, Comp3, sometimes for Comp4
+  target_alphas: [1000.0, 0.0, 0.0, 0.5]   # Target for Comp1, sometimes for Comp4
+
+tok_semseg_n5k@224: # Standard name from modality_info.py
+  input_alphas: [0.0, 0.0, 1000.0, 0.5] # Input for Comp3, sometimes for Comp4
+  target_alphas: [0.0, 1000.0, 0.0, 0.5]   # Target for Comp2, sometimes for Comp4
+
+caption:
+  input_alphas: [0.0, 0.0, 0.0, 0.5]      # Never input in pipeline, sometimes for Comp4
+  target_alphas: [0.0, 0.0, 1000.0, 0.5]   # Target for Comp3, sometimes for Comp4
+  keep: ['random', 'random', 'random', 'random'] # Keep strategy for captions (can be important)
+
+# Notes on alpha values:
+# - 1000.0: Practically guarantees the modality is used as specified (input or target).
+# - 0.0: Practically guarantees the modality is NOT used as specified.
+# - 0.5: Gives a 50% chance. Good for the 'all-to-some' or more flexible components.
+# The sum of probabilities for a modality being input, target, or masked out is 1.
+# High alpha values bias the selection.
+
+# You might need to adjust the number of components and their specific alpha values
+# based on how strictly you want to enforce the pipeline vs. general learning.
+# For a pure pipeline, you could have fewer components, each representing one step.
+# For evaluation, you might have a different alpha config that sets one input (e.g., tok_rgb@224)
+# and everything else as target to test full generation.
