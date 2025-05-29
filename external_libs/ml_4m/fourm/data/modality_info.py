@@ -136,7 +136,7 @@ MODALITY_INFO = {
         'num_channels': 1, # Single channel label map
         'num_labels': data_constants.N5K_SEMSEG_NUM_CLASSES,
         'id': generate_uint15_hash('semseg_n5k'),
-        'path': 'semseg', # Assumed path, can be overridden
+        'path': 'semseg_n5k',
     },
     'tok_clip@224': {
         'input_size': 224,
@@ -397,6 +397,18 @@ MODALITY_INFO = {
         'max_tokens': None, # Will be set to 784
         'type': 'img',
         'id': generate_uint15_hash('tok_clip@448'),
+        'pretokenized': True,
+    },
+    'tok_semseg_n5k@224': {
+        'input_size': 224,
+        'patch_size': 16,
+        'vocab_size': 8192,
+        'encoder_embedding': partial(ImageTokenEncoderEmbedding, vocab_size=8192),
+        'decoder_embedding': partial(ImageTokenDecoderEmbedding, vocab_size=8192),
+        'min_tokens': 0,
+        'max_tokens': 196, # (224 // 16)**2
+        'type': 'img',
+        'id': generate_uint15_hash('tok_semseg_n5k@224'),
         'pretokenized': True,
     },
 }
