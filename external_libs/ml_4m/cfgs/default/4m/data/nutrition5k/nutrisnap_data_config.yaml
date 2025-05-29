@@ -47,8 +47,8 @@ val: # Section for validation data (highly recommended)
       
       # Path to the alphas configuration file for validation masking
       # Can be the same as train or a different one (e.g., for full generation)
-      alphas_config: "cfgs/default/4m/alphas_mixture/specialized/nutrisnap_pipeline_alphas_eval.yaml" # TO CREATE or use same as train
-      data_path: "/work/com-304/nutri-snap/data/processed/val/" # Ensure this path is correct for your validation set
+      alphas_config: "cfgs/default/4m/alphas_mixture/specialized/nutrisnap_pipeline_alphas_eval.yaml"
+      data_path: "/work/com-304/nutri-snap/data/processed/test/" # Ensure this path is correct for your validation set
       use_wds: False
       modality_name_map:
         rgb_tok: "tok_rgb@224"

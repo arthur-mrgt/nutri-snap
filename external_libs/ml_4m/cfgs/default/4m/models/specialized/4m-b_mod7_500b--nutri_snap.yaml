@@ -32,7 +32,7 @@ warmup_epochs: 1 # Number of epochs for learning rate warmup
 # Batch size for a single V100. Start with 8, 16, or 32.
 # Monitor VRAM and adjust if Out-Of-Memory errors occur.
 # 16GB V100 might need 8 or 16. 32GB V100 might handle 32.
-batch_size: 16 
+batch_size: 32 
 
 # Data
 data_config: "cfgs/default/4m/data/nutrition5k/nutrisnap_data_config.yaml"
