@@ -7,7 +7,7 @@ run_name: 4m-b_mod7_nutrisnap_finetune
 
 # Path to the pre-trained model checkpoint for fine-tuning
 # IMPORTANT: You need to replace this with the actual path to your 4M-B COYO700M .pth model file.
-finetune: "/path/to/your/4M-B_7_COYO700M_checkpoint.pth"
+finetune: "https://huggingface.co/EPFL-VILAB/4M-7_B_COYO700M/resolve/main/model.safetensors"
 
 # Input & output
 num_input_tokens: 128
