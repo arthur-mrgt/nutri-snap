@@ -98,7 +98,7 @@ def get_image_tokenizer(tokenizer_id: str,
         
         pth_file_path = os.path.join(tokenizers_root, f'{tokenizer_id}.pth')
         try:
-            ckpt = torch.load(pth_file_path, map_location='cpu', weights_only=True)
+            ckpt = torch.load(pth_file_path, map_location='cpu', weights_only=False)
         except FileNotFoundError as e:
             if return_None_on_fail:
                 if verbose: print(f"File not found: {pth_file_path}")
