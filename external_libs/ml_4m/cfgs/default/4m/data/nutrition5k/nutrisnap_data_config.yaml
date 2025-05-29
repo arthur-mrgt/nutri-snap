@@ -31,7 +31,7 @@ train:
 
 val: # Section for validation data (highly recommended)
   datasets:
-    nutrisnap_dataset_val:
+    n5k: # Changed from nutrisnap_dataset_val to match a train dataset name
       type: multimodal
       # tok_rgb@224 is input only, not a target for reconstruction.
       in_domains: "tok_rgb@224-tok_depth@224-tok_semseg_n5k@224-caption"
