@@ -8,12 +8,10 @@ train:
       in_domains: "tok_rgb@224-tok_depth@224-tok_semseg_n5k@224-caption"
       out_domains: "tok_depth@224-tok_semseg_n5k@224-caption" # tok_rgb@224 removed from targets
 
-      # Path to the alphas configuration file for masking
-      # This will define the masking strategy for your modalities.
-      alphas_config: "cfgs/default/4m/alphas_mixture/specialized/nutrisnap_pipeline_alphas.yaml"
+      # Path to the alphas configuration file for masking, relative to project root
+      alphas_config: "external_libs/ml_4m/cfgs/default/4m/alphas_mixture/specialized/nutrisnap_pipeline_alphas.yaml"
 
-      # Path to the parent directory of your training modalities
-      # (containing the tok_rgb@224, depth_toks, semseg_n5k_toks, caption subfolders)
+      # Path to the parent directory of your training modalities (absolute path)
       data_path: "/work/com-304/nutri-snap/data/processed/train/"
       
       # Important: Indicates not to use webdataset, but the simple hierarchical format
@@ -45,9 +43,9 @@ val: # Section for validation data (highly recommended)
       in_domains: "tok_rgb@224-tok_depth@224-tok_semseg_n5k@224-caption"
       out_domains: "tok_depth@224-tok_semseg_n5k@224-caption" # tok_rgb@224 removed from targets
       
-      # Path to the alphas configuration file for validation masking
-      # Can be the same as train or a different one (e.g., for full generation)
-      alphas_config: "cfgs/default/4m/alphas_mixture/specialized/nutrisnap_pipeline_alphas_eval.yaml"
+      # Path to the alphas configuration file for validation masking, relative to project root
+      alphas_config: "external_libs/ml_4m/cfgs/default/4m/alphas_mixture/specialized/nutrisnap_pipeline_alphas_eval.yaml"
+      # Path to the parent directory of your validation modalities (absolute path)
       data_path: "/work/com-304/nutri-snap/data/processed/test/" # Ensure this path is correct for your validation set
       use_wds: False
       modality_name_map:
