@@ -29,6 +29,8 @@ import torch
 import torch.backends.cudnn as cudnn
 import yaml
 from tokenizers import Tokenizer
+import wandb
+from safetensors.torch import load_file as load_safetensors
 
 import fourm.utils as utils
 from fourm.data import build_mixture_dataloader, get_train_dataloader, get_val_dataloader, setup_sampling_mod_info
@@ -474,10 +476,28 @@ def main(args):
     ## Starting from pre-trained model
     if args.finetune:
         if args.finetune.startswith('https'):
-            checkpoint = torch.hub.load_state_dict_from_url(
-                args.finetune, map_location='cpu')
-        else:
-            checkpoint = torch.load(args.finetune, map_location='cpu')
+            # For URLS, torch.hub.load_state_dict_from_url will download it first.
+            # We need to get the local path to check the extension.
+            hub_dir = torch.hub.get_dir()
+            model_dir = os.path.join(hub_dir, 'checkpoints')
+            # Construct the local filename similar to how torch.hub does it.
+            # This might need adjustment if torch.hub's naming convention changes.
+            filename = os.path.basename(args.finetune)
+            cached_file = os.path.join(model_dir, filename)
+            
+            if not os.path.exists(cached_file):
+                 torch.hub.load_state_dict_from_url(args.finetune, map_location='cpu', model_dir=model_dir, file_name=filename) # download if not present
+
+            if cached_file.endswith(".safetensors"):
+                checkpoint = {"model": load_safetensors(cached_file, device="cpu")}
+            else:
+                checkpoint = torch.hub.load_state_dict_from_url(
+                    args.finetune, map_location='cpu') # This will load from cache
+        else: # local file
+            if args.finetune.endswith(".safetensors"):
+                checkpoint = {"model": load_safetensors(args.finetune, device="cpu")}
+            else:
+                checkpoint = torch.load(args.finetune, map_location='cpu')
 
         # Remove pos_emb
         # TODO: In the future, find a way to not have to store the pos_embs here
