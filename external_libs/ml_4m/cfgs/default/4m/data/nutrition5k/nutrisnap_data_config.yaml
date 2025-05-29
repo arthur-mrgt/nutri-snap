@@ -12,19 +12,13 @@ train:
       alphas_config: "external_libs/ml_4m/cfgs/default/4m/alphas_mixture/specialized/nutrisnap_pipeline_alphas.yaml"
 
       # Path to the parent directory of your training modalities (absolute path)
+      # Subfolders here should now match internal modality names (e.g., tok_rgb@224, tok_depth@224, etc.)
       data_path: "/work/com-304/nutri-snap/data/processed/train/"
       
       # Important: Indicates not to use webdataset, but the simple hierarchical format
       use_wds: False 
 
-      # Mapping of your modality folder names to the internal names expected by 4M
-      # Ensure your on-disk folder names match the keys here.
-      # For example, data for 'tok_depth@224' should be in a folder named 'depth' inside data_path.
-      modality_name_map:
-        rgb_tok: "tok_rgb@224"          # Your 'rgb_tok' folder maps to internal 'tok_rgb@224'
-        depth_tok: "tok_depth@224"      # Your 'depth_tok' folder maps to internal 'tok_depth@224'
-        semseg_n5k_tok: "tok_semseg_n5k@224" # Your 'semseg_n5k_tok' folder maps to internal 'tok_semseg_n5k@224'
-        caption: "caption"              # Your 'caption' folder maps to internal 'caption'
+      # modality_name_map is removed as folder names now match internal modality names.
 
       # Generally useful parameters, to be kept or adjusted if needed
       main_augment_domain: "tok_rgb@224" # Reference modality for image size during augmentations (if any apply to tokens)
@@ -46,13 +40,12 @@ val: # Section for validation data (highly recommended)
       # Path to the alphas configuration file for validation masking, relative to project root
       alphas_config: "external_libs/ml_4m/cfgs/default/4m/alphas_mixture/specialized/nutrisnap_pipeline_alphas_eval.yaml"
       # Path to the parent directory of your validation modalities (absolute path)
+      # Subfolders here should now match internal modality names
       data_path: "/work/com-304/nutri-snap/data/processed/test/" # Ensure this path is correct for your validation set
       use_wds: False
-      modality_name_map:
-        rgb_tok: "tok_rgb@224"
-        depth_tok: "tok_depth@224"
-        semseg_n5k_tok: "tok_semseg_n5k@224"
-        caption: "caption"
+      # modality_name_map is removed as folder names now match internal modality names.
+
+      # Generally useful parameters, to be kept or adjusted if needed
       main_augment_domain: "tok_rgb@224"
       aligned_captions: True
       tok_train_aug: False # Generally, no augmentation on the validation set
