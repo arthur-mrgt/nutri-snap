@@ -51,7 +51,7 @@ num_logged_images: 4
 input_size_eval: 224
 
 # Data
-domain: semseg_n5k_UNUSED
+domain: semseg_n5k
 min_crop_scale: 0.5
 data_path: '/work/com-304/nutri-snap/data/processed/train'
 eval_data_path: '/work/com-304/nutri-snap/data/processed/test'
