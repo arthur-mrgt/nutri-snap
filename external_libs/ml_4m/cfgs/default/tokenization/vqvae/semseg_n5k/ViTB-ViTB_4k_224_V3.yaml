@@ -1,4 +1,4 @@
-run_name: semseg_n5k_tokenizer_ViTS_8k_224_V3
+run_name: semseg_n5k_tokenizer_ViTS_4k_224_V3
 
 # Architecture
 encoder_type: vit_s_enc
@@ -33,7 +33,7 @@ blr: 0.000005 # base_lr = 1e-4, lr = base_lr * batch_size / 256
 warmup_lr: 0.0000002 # 1e-6
 min_lr: 0.0000001 # 0.
 warmup_epochs: 5
-batch_size: 64 # per GPU
+batch_size: 32 # per GPU
 hflip: 0.5
 clip_grad: 1.0
 model_ema: True
@@ -60,5 +60,5 @@ eval_data_path: '/work/com-304/nutri-snap/data/processed/test'
 log_wandb: True # Set to True to log to Weights & Biases
 wandb_project: 'nutri-snap' # Or your preferred project name
 wandb_entity: arthur_mrgt-epfl # Change if needed
-wandb_run_name: semseg_n5k_tokenizer_ViTS_8k_224_V3
-output_dir: '/work/com-304/nutri-snap/output/semseg_n5k_tokenizer_ViTS_8k_224_V3'
+wandb_run_name: semseg_n5k_tokenizer_ViTS_4k_224_V3
+output_dir: '/work/com-304/nutri-snap/output/semseg_n5k_tokenizer_ViTS_4k_224_V3'
