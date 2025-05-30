@@ -21,7 +21,7 @@ quantizer_ema_decay: 0.99
 kmeans_init: False
 
 # Losses
-loss_fn: l1
+loss_fn: cross_entropy
 codebook_weight: 1.0
 
 # Train

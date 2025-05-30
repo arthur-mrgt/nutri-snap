@@ -385,6 +385,8 @@ def get_model(args: argparse.Namespace, device: Union[torch.device, str]) -> VQV
     if args.mask_value is not None:
         n_channels += 1
 
+    print(f"DEBUG VQVAE Constructor Pre-Call: domain={args.domain}, n_channels={n_channels}, n_labels={n_labels}, encoder_type={args.encoder_type}, decoder_type={args.decoder_type}")
+
     model = VQVAE(
         image_size=input_size_max,
         image_size_enc=args.input_size_enc,
@@ -1092,6 +1094,7 @@ def compute_reconst_loss(
     Returns:
         Reconstruction loss.
     """
+    print(f"DEBUG compute_reconst_loss: model_output.shape={model_output.shape}, images.shape={images.shape}, loss_fn='{loss_fn}'") # DEBUG PRINT
     if loss_fn == 'mse':
         reconst_loss = F.mse_loss(model_output, images)
     elif loss_fn == 'l1':
