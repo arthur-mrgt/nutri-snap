@@ -127,7 +127,7 @@ def get_args() -> argparse.Namespace:
     parser.add_argument('--encoder_ckpt', default=None, type=str,
                         help='Optional path to encoder checkpoint (default: %(default)s)')
     parser.add_argument('--full_ckpt', default=None, type=str,
-                        help='Optional path to encoder + quantizer + decoder checkpoint (default: %(default)s)')   
+                        help='Optional path to encoder + quantizer + decoder checkpoint (default: %(default)s')   
     parser.add_argument('--freeze_enc', action='store_true')
     parser.add_argument('--no_freeze_enc', action='store_false', dest='freeze_enc')
     parser.set_defaults(freeze_enc=False)
@@ -329,6 +329,14 @@ def get_args() -> argparse.Namespace:
     parser.add_argument('--s3_path', default='', type=str, help='S3 path to model')
     parser.add_argument('--s3_save_dir', type=str, default="")
 
+    # Dataset filtering arguments
+    parser.add_argument('--filter_dish_ids_file', default=None, type=str,
+                        help='Path to file containing dish_ids and criteria for filtering (e.g., processed_ids.txt)')
+    parser.add_argument('--filter_min_confidence', default=0.65, type=float,
+                        help='Minimum final_confidence for a dish_id to be included.')
+    parser.add_argument('--filter_min_nb_ingredients_exclusive', default=1, type=int,
+                        help='Samples must have nb_ingredient greater than this value (default: 1, meaning nb_ingredient >= 2).')
+
     # Parse config file if there is one
     args_config, remaining = config_parser.parse_known_args()
     if args_config.config:
@@ -524,7 +532,96 @@ def main(args: argparse.Namespace) -> None:
         MODALITY_TRANSFORMS_DIVAE[args.domain] = SAMInstanceTransform(mask_size=args.mask_size, max_instance_n=1)
         MODALITY_TRANSFORMS_DIVAE_VAL[args.domain] = SAMInstanceTransform(mask_size=args.mask_size, max_instance_n=200)
 
+    allowed_dish_ids = set()
+    if args.filter_dish_ids_file:
+        print(f"Attempting to filter dataset using criteria from: {args.filter_dish_ids_file}")
+        print(f"Min confidence: {args.filter_min_confidence}, Min nb_ingredients (exclusive): {args.filter_min_nb_ingredients_exclusive}")
+        try:
+            with open(args.filter_dish_ids_file, 'r') as f:
+                header_line = next(f).strip()
+                if not header_line.startswith('#'): # Simple check if it's a header line
+                    # If not a comment, assume it's data and reset file pointer
+                    f.seek(0)
+                    header = ['dish_id', 'status', 'final_confidence', 'nutritional_score', 
+                              'ingredient_score', 'msre_nutritional', 'jaccard_ingredient', 'nb_ingredient']
+                    print("Warning: No header comment line found in filter file, assuming default column order.")
+                else:
+                    header = header_line.lstrip('#').strip().split()
+                
+                try:
+                    dish_id_col = header.index('dish_id')
+                    confidence_col = header.index('final_confidence')
+                    nb_ingredient_col = header.index('nb_ingredient')
+                except ValueError as e:
+                    print(f"ERROR: Header in {args.filter_dish_ids_file} is missing required columns (dish_id, final_confidence, nb_ingredient). Found: {header}. Error: {e}")
+                    sys.exit(1)
+
+                for line_num, line in enumerate(f, 2): # Start line count from 2 for error reporting
+                    parts = line.strip().split()
+                    if not parts: continue 
+                    try:
+                        dish_id = parts[dish_id_col]
+                        final_confidence = float(parts[confidence_col])
+                        nb_ingredient = int(parts[nb_ingredient_col])
+                        
+                        if final_confidence > args.filter_min_confidence and \
+                           nb_ingredient > args.filter_min_nb_ingredients_exclusive:
+                            allowed_dish_ids.add(dish_id)
+                    except IndexError:
+                        print(f"Warning: Skipping malformed line {line_num} in {args.filter_dish_ids_file}: '{line.strip()}' - not enough columns for expected header.")
+                    except ValueError:
+                        print(f"Warning: Skipping malformed line {line_num} in {args.filter_dish_ids_file}: '{line.strip()}' - could not parse confidence/nb_ingredient.")
+            
+            if not allowed_dish_ids:
+                print("Warning: Dataset filtering enabled, but no dish_ids met the criteria or filter file was empty. Proceeding with the full dataset for safety, but this might be unintended.")
+                # We don't set args.filter_dish_ids_file to None here, to allow _filter_dataset_samples_inplace to still log "No filtering applied"
+            else:
+                print(f"Loaded {len(allowed_dish_ids)} dish_ids meeting filtering criteria.")
+        except FileNotFoundError:
+            print(f"ERROR: filter_dish_ids_file '{args.filter_dish_ids_file}' not found. Please check the path.")
+            sys.exit(1)
+        except Exception as e:
+            print(f"Error processing filter_dish_ids_file '{args.filter_dish_ids_file}': {e}. Exiting.")
+            sys.exit(1)
+
+    def _filter_dataset_samples_inplace(dataset, allowed_dish_ids_set, dataset_name="dataset"):
+        if not args.filter_dish_ids_file: # If file wasn't specified, don't filter.
+            print(f"No filter file specified. No filtering applied to {dataset_name}.")
+            return False # Indicates no filtering was attempted due to missing file arg
+
+        if not allowed_dish_ids_set and args.filter_dish_ids_file: # File specified, but set is empty
+            print(f"Filter file specified but no allowed_dish_ids were loaded (e.g. empty file or no matches). No filtering applied to {dataset_name}.")
+            return False # Indicates no filtering was done as the set was empty
+
+        if not hasattr(dataset, 'samples') or not isinstance(dataset.samples, list):
+            print(f"Warning: {dataset_name} does not have a 'samples' list attribute. Cannot apply filtering.")
+            return False
+
+        original_samples = dataset.samples
+        if not original_samples:
+            print(f"Warning: {dataset_name} has no samples to filter.")
+            return True # Filtering "succeeded" on an empty list
+            
+        original_len = len(original_samples)
+        filtered_samples = []
+        for sample_path, class_idx in original_samples:
+            dish_id_from_file = Path(sample_path).stem
+            if dish_id_from_file in allowed_dish_ids_set:
+                filtered_samples.append((sample_path, class_idx))
+        
+        dataset.samples = filtered_samples
+        if hasattr(dataset, 'imgs'): 
+            dataset.imgs = filtered_samples
+        
+        print(f"Filtered {dataset_name}: {original_len} -> {len(dataset.samples)} samples.")
+        if original_len > 0 and len(dataset.samples) == 0:
+             print(f"Warning: All samples were filtered out from {dataset_name}. The dataset is now empty.")
+        return True
+
+
     if args.use_wds:
+        if args.filter_dish_ids_file:
+            print("Warning: Dataset filtering based on dish_ids from --filter_dish_ids_file is not implemented for WebDataset (use_wds=True) in this script. Training with full WDS dataset.")
         if args.data_path.startswith("s3"):
             # When loading from S3 using boto3, hijack webdatasets tar loading
             MB = 1024 ** 2
@@ -577,12 +674,25 @@ def main(args: argparse.Namespace) -> None:
         transforms_train = UnifiedDataTransform(transforms_dict=MODALITY_TRANSFORMS_DIVAE, image_augmenter=image_augmenter_train)
         dataset_train = MultiModalDatasetFolder(root=args.data_path, modalities=args.all_domains, modality_paths=modality_paths, 
                                                 modality_transforms=MODALITY_TRANSFORMS_DIVAE, transform=transforms_train, cache=args.cache_datasets)
+        
+        _filter_dataset_samples_inplace(dataset_train, allowed_dish_ids, "dataset_train")
+
+        if len(dataset_train) == 0:
+            if args.filter_dish_ids_file and allowed_dish_ids:
+                 print("ERROR: Training dataset is empty after filtering. Please check your filter criteria or data. Exiting.")
+            else:
+                 print("ERROR: Training dataset is empty (possibly no filtering applied, or filter file specified but resulted in empty). Exiting.")
+            sys.exit(1)
 
         num_training_steps_per_epoch = len(dataset_train) // (args.batch_size * num_tasks)
+        if num_training_steps_per_epoch == 0 and len(dataset_train) > 0 :
+            print(f"WARNING: num_training_steps_per_epoch is 0 for training. Global batch size ({args.batch_size * num_tasks}) may be larger than filtered dataset size ({len(dataset_train)}). This can happen if drop_last=True for the sampler. Consider reducing batch_size if this is not intended.")
+
+
         sampler_train = torch.utils.data.DistributedSampler(
             dataset_train, num_replicas=num_tasks, rank=sampler_rank, shuffle=True, drop_last=True,
         )
-        print("Sampler_train = %s" % str(sampler_train))
+        print("Sampler_train (potentially filtered) = %s" % str(sampler_train))
 
         data_loader_train = torch.utils.data.DataLoader(
             dataset_train, sampler=sampler_train,
@@ -601,8 +711,11 @@ def main(args: argparse.Namespace) -> None:
 
         dataset_val = MultiModalDatasetFolder(root=args.eval_data_path, modalities=args.all_domains, modality_paths=modality_paths, 
                                               modality_transforms=MODALITY_TRANSFORMS_DIVAE_VAL, transform=transforms_val, cache=args.cache_datasets)
+        
+        _filter_dataset_samples_inplace(dataset_val, allowed_dish_ids, "dataset_val")
+        
         if args.dist_eval:
-            if len(dataset_val) % num_tasks != 0:
+            if len(dataset_val) % num_tasks != 0 and len(dataset_val) > 0:
                 print('Warning: Enabling distributed evaluation with an eval dataset not divisible by process number. '
                     'This will slightly alter validation results as extra duplicate entries are added to achieve '
                     'equal num of samples per-process.')
@@ -624,8 +737,11 @@ def main(args: argparse.Namespace) -> None:
             dataset_metrics = MultiModalDatasetFolder(root=args.eval_data_path, modalities=args.all_domains, modality_paths=modality_paths, 
                                                     modality_transforms=MODALITY_TRANSFORMS_DIVAE_VAL, transform=transforms_val, 
                                                     pre_shuffle=True, max_samples=args.num_eval_metrics_samples, cache=args.cache_datasets)
+            
+            _filter_dataset_samples_inplace(dataset_metrics, allowed_dish_ids, "dataset_metrics")
+
             if args.dist_eval:
-                if len(dataset_metrics) % num_tasks != 0:
+                if len(dataset_metrics) % num_tasks != 0 and len(dataset_metrics) > 0:
                     print('Warning: Enabling distributed evaluation with an eval dataset not divisible by process number. '
                         'This will slightly alter validation results as extra duplicate entries are added to achieve '
                         'equal num of samples per-process.')
@@ -648,6 +764,9 @@ def main(args: argparse.Namespace) -> None:
             dataset_image_log = MultiModalDatasetFolder(root=args.eval_data_path, modalities=args.all_domains, modality_paths=modality_paths, 
                                                     modality_transforms=MODALITY_TRANSFORMS_DIVAE_VAL, transform=transforms_val, 
                                                     pre_shuffle=True, max_samples=args.num_logged_images, cache=args.cache_datasets)
+            
+            _filter_dataset_samples_inplace(dataset_image_log, allowed_dish_ids, "dataset_image_log")
+            
             # No dist eval, we only run it on the main process
             sampler_image_log = torch.utils.data.SequentialSampler(dataset_image_log)
             data_loader_image_log = torch.utils.data.DataLoader(
