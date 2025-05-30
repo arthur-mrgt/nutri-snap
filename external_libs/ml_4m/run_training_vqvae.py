@@ -330,12 +330,12 @@ def get_args() -> argparse.Namespace:
     parser.add_argument('--s3_save_dir', type=str, default="")
 
     # Dataset filtering arguments
-    parser.add_argument('--filter_dish_ids_file', type=str, default=None, help='Path to a file containing dish_ids to use for training/validation.')
-    parser.add_argument('--filter_confidence_threshold', type=float, default=0.0, help='Minimum final_confidence for filtering dish_ids.')
-    parser.add_argument('--filter_min_ingredients', type=int, default=0, help='Minimum nb_ingredient for filtering dish_ids.')
-
-    # Evaluation batch size
-    parser.add_argument('--eval_batch_size', type=int, default=None, help="Batch size for evaluation. Defaults to half of training batch_size if not set.")
+    parser.add_argument('--filter_dish_ids_file', default=None, type=str,
+                        help='Path to file containing dish_ids and criteria for filtering (e.g., processed_ids.txt)')
+    parser.add_argument('--filter_min_confidence', default=0.65, type=float,
+                        help='Minimum final_confidence for a dish_id to be included.')
+    parser.add_argument('--filter_min_nb_ingredients_exclusive', default=1, type=int,
+                        help='Samples must have nb_ingredient greater than this value (default: 1, meaning nb_ingredient >= 2).')
 
     # Parse config file if there is one
     args_config, remaining = config_parser.parse_known_args()
