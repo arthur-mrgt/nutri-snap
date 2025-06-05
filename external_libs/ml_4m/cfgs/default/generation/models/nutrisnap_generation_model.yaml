@@ -1,38 +1,30 @@
 # nutrisnap_generation_model.yaml
 
 # Base model for generation
-model_base_id: '/work/com-304/nutri-snap/output/nutrisnap_finetune/checkpoint-final.pth' # IMPORTANT: Path to your fine-tuned model checkpoint (e.g., from output_dir of training)
-model_base_load_from_hf: False # Set to True if loading from Hugging Face Hub, False for local checkpoint
+# This key must match the '--model' argument in run_generation.py
+# IMPORTANT: Path to your fine-tuned model checkpoint (e.g., from output_dir of training)
+model: '/work/com-304/nutri-snap/output/nutrisnap_finetune/checkpoint-final.pth'
 
-# Tokenizer definitions
-# Ensure these names (rgb, depth, semseg, caption) and their 'domain' configs
-# match the modalities your model was trained on and expects.
+# Tokenizer definitions for run_generation.py
+# These keys (e.g., rgb_tok_id) must match the script's arguments.
 
-tokenizers:
-  rgb: # Tokenizer for the input tok_rgb@224. Used for loading/passing the input.
-    tokenizer_id: 'EPFL-VILAB/4M_tokenizers_rgb_16k_224-448' # Or the path to your converted .pth for rgb_vq_tokens_for_224
-    tokenizer_root: '/work/com-304/nutri-snap/external_libs/ml_4m/tokenizer_ckpts'
-    config:
-      target_size: 224
-      domain: 'tok_rgb@224' # This is the input conditioning modality
+# Tokenizer for the input tok_rgb@224.
+rgb_tok_id: 'EPFL-VILAB/4M_tokenizers_rgb_16k_224-448'
 
-  depth:
-    tokenizer_id: 'EPFL-VILAB/4M_tokenizers_depth_8k_224-448' # IMPORTANT: Specify your depth tokenizer ID or path (e.g., HF ID or path to .pth)
-    tokenizer_root: '/work/com-304/nutri-snap/external_libs/ml_4m/tokenizer_ckpts'
-    config:
-      domain: 'tok_depth@224' # Internal modality name for depth tokens, must match training
+# Tokenizer for tok_depth@224
+depth_tok_id: 'EPFL-VILAB/4M_tokenizers_depth_8k_224-448'
 
-  semseg:
-    tokenizer_id: '/work/com-304/nutri-snap/output/semseg_n5k_tokenizer_ViTB_8k_224/checkpoint-35.pth' # Path to your custom-trained semseg tokenizer checkpoint
-    tokenizer_root: '' # Empty as tokenizer_id is a full path
-    config:
-      domain: 'tok_semseg_n5k@224' # Internal modality name for segmentation tokens, must match training
+# Tokenizer for tok_semseg_n5k@224
+# Path to your custom-trained semseg tokenizer checkpoint
+semseg_tok_id: '/work/com-304/nutri-snap/output/semseg_n5k_tokenizer_ViTB_8k_224/checkpoint-35.pth'
 
-  caption:
-    tokenizer_id: 'external_libs/ml_4m/fourm/utils/tokenizer/trained/text_tokenizer_4m_wordpiece_30k.json' # Path to the text tokenizer used during training
-    tokenizer_root: '' # Can be empty if tokenizer_id is a full path or HF ID not needing a root
-    config:
-      domain: 'caption' # Internal modality name for captions, must match training
+# Tokenizer for caption
+# Path to the text tokenizer used during training
+text_tok_path: 'external_libs/ml_4m/fourm/utils/tokenizer/trained/text_tokenizer_4m_wordpiece_30k.json'
+
+# NOTE: The script `run_generation.py` does not seem to use other parameters from the original file
+# like `tokenizer_root` or `model_base_load_from_hf`. Tokenizers are loaded by their ID,
+# which can be a Hugging Face ID or a local path.
 
 # Super-resolution model configuration (if used, otherwise can be removed or commented out)
 # model_sr_id: ...

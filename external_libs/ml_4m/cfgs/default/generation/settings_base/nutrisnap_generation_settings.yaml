@@ -1,55 +1,59 @@
 # nutrisnap_generation_settings.yaml
 
 # Initial conditioning domains
-cond_domains: ['tok_rgb@224'] # Input modality for the generation pipeline
+cond_domains: 'tok_rgb@224' # Input modality for the generation pipeline
 
 # Target domains to be generated in sequence. Use hyphens to separate.
 # Ensure these names match the domains in nutrisnap_generation_model.yaml and your training.
-target_domains: ['tok_depth@224-tok_semseg_n5k@224-caption']
+target_domains: 'tok_depth@224-tok_semseg_n5k@224-caption'
 
 # --- Generation Parameters --- #
-# These are specified as lists with hyphen-separated values if they differ per target_domain.
+# These are specified as strings with hyphen-separated values if they differ per target_domain.
 # Order corresponds to target_domains: [depth_settings, semseg_settings, caption_settings]
 
 # Number of tokens to decode per target modality.
 # For 224x224 images with 16x16 patches: (224/16)^2 = 196 tokens.
 # For captions, adjust based on expected length.
-tokens_per_target: [196-196-128] # Example: 196 for depth & semseg (image-like), 128 for caption
+tokens_per_target: '196-196-128' # Example: 196 for depth & semseg (image-like), 128 for caption
 
 # Autoregression schemes: 'maskgit' or 'roar' for image-like modalities, 'autoregressive' for sequence modalities.
-autoregression_schemes: ['maskgit-maskgit-autoregressive'] # e.g., maskgit for depth & semseg, autoregressive for caption
+autoregression_schemes: 'maskgit-maskgit-autoregressive' # e.g., maskgit for depth & semseg, autoregressive for caption
 
 # Number of decoding steps for each target modality.
 # More steps can yield better quality but are slower.
-decoding_steps: [16-16-128] # Example: 16 steps for depth & semseg, 1 token/step for caption (128 steps)
+decoding_steps: '16-16-128' # Example: 16 steps for depth & semseg, 1 token/step for caption (128 steps)
 
 # Token decoding schedules: 'cosine' or 'linear'.
 # 'cosine' often used for image-like, 'linear' for text/sequential.
-token_decoding_schedules: ['cosine-cosine-linear']
+token_decoding_schedules: 'cosine-cosine-linear'
 
 # --- Temperature Settings --- #
 # Sampling temperatures. Higher values = more diversity, lower = more deterministic.
-temps: [1.0-1.0-0.7] # Values to be tuned based on observed generation quality
+temps: '1.0-1.0-0.7' # Values to be tuned based on observed generation quality
 
 # Temperature schedules: 'constant', 'linear', 'onex:{min_t}:{power}'.
-temp_schedules: ['linear-linear-constant']
+temp_schedules: 'linear-linear-constant'
 
 # --- Classifier-Free Guidance (CFG) Settings --- #
 # CFG scales (1.0 = no guidance). >1.0 strengthens conditioning influence.
-cfg_scales: [2.0-2.0-1.5] # Values to be tuned
+cfg_scales: '2.0-2.0-1.5' # Values to be tuned
 
 # CFG schedules ('constant' is typically used).
-cfg_schedules: ['constant-constant-constant']
+cfg_schedules: 'constant-constant-constant'
 
 # If True, each completed modality is added to the conditioning set for CFG of subsequent modalities.
 cfg_grow_conditioning: True
 
 # --- Top-k & Top-p Sampling --- #
+# NOTE: The run_generation.py script expects single float values for top_p and top_k,
+# not per-modality values. The values below are chosen based on your comments.
+# You may need to adjust them based on desired behavior.
+
 # Top-p nucleus sampling (0.0 to disable). Keep tokens with cumulative probability >= top_p.
-top_p: [0.9-0.9-0.0] # Example: 0.9 for image-like, can be 0.0 for text if using top_k
+top_p: 0.9 # Using value for image-like modalities.
 
 # Top-k sampling (0 to disable). Keep top k tokens with highest probability.
-top_k: [0-0-50]     # Example: 0 for image-like if using top_p, non-zero (e.g., 50) for text
+top_k: 50     # Using value for text modality.
 
 # --- Output Settings --- #
 # Save the generated modalities in the chain

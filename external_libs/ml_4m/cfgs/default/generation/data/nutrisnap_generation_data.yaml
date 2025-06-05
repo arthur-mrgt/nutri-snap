@@ -13,6 +13,6 @@ input_modality_folder: 'tok_rgb@224' # Folder name for the tokenized RGB input, 
 input_modality_name: 'tok_rgb@224'
 
 # Optional: Number of samples to generate from the dataset
-# num_samples: 100
+num_samples: 10
 # Optional: Specify data split if subdirectories like 'train'/'val'/'test' exist within data_root and contain the input_modality_folder
 # split: 'test'
