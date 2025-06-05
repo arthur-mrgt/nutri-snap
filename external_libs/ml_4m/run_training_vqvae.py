@@ -598,6 +598,38 @@ def main(args: argparse.Namespace) -> None:
             print(f"Filter file specified but no allowed_dish_ids were loaded (e.g. empty file or no matches). No filtering applied to {dataset_name}.")
             return False # Indicates no filtering was done as the set was empty
 
+        if not hasattr(dataset, 'samples') or not isinstance(dataset.samples, list) or not dataset.samples:
+            print(f"Warning: '{dataset_name}.samples' attribute not found or empty. Attempting to build it by walking the root directory.")
+            if not hasattr(dataset, 'root') or not os.path.isdir(dataset.root):
+                print(f"ERROR: Cannot build samples list. '{dataset_name}.root' is not a valid directory.")
+                return False
+
+            IMG_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.ppm', '.bmp', '.pgm', '.tif', '.tiff', '.webp')
+            
+            new_samples = []
+            root_dir = os.path.expanduser(dataset.root)
+            
+            for root, _, fnames in sorted(os.walk(root_dir, followlinks=True)):
+                for fname in sorted(fnames):
+                    path = os.path.join(root, fname)
+                    if path.lower().endswith(IMG_EXTENSIONS):
+                        # Using dummy class_idx=0 as it's not used by the filter.
+                        item = (path, 0)
+                        new_samples.append(item)
+
+            if not new_samples:
+                print(f"Warning: No image files found in {root_dir}. Filtering cannot be applied.")
+                return False
+            
+            print(f"INFO: Manually discovered {len(new_samples)} image samples in {root_dir}.")
+            dataset.samples = new_samples
+            if not hasattr(dataset, 'imgs'):
+                dataset.imgs = new_samples
+            # Override the __len__ method to reflect the actual number of samples
+            dataset.__len__ = lambda: len(dataset.samples)
+            print(f"INFO: Patched '{dataset_name}.samples' and '__len__' method.")
+
+
         if not hasattr(dataset, 'samples') or not isinstance(dataset.samples, list):
             print(f"Warning: {dataset_name} does not have a 'samples' list attribute. Cannot apply filtering.")
             return False
