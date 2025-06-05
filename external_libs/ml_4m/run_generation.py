@@ -343,53 +343,6 @@ def load_model(model_id, model_class, device):
         ckpt, config = load_safetensors(model_id)
         model = model_class(config=config)
         model.load_state_dict(ckpt)
-    elif model_id.endswith('.pth'):
-        ckpt_path = Path(model_id)
-        if not ckpt_path.is_file():
-            raise FileNotFoundError(f"Checkpoint file not found: {model_id}")
-        
-        # We need to use weights_only=False because the file might contain a pickled config dict
-        ckpt = torch.load(ckpt_path, map_location='cpu')
-        
-        config = None
-        # Case 1: Checkpoint is a dict containing the config
-        if isinstance(ckpt, dict):
-            config = ckpt.get('config')
-
-        # Case 2: Config is a separate file in the same directory
-        if config is None:
-            config_path = ckpt_path.parent / 'config.json'
-            if config_path.exists():
-                with open(config_path, 'r') as f:
-                    config = json.load(f)
-            else:
-                config_path = ckpt_path.parent / 'params.yaml'
-                if config_path.exists():
-                    with open(config_path, 'r') as f:
-                        config = yaml.safe_load(f)
-
-        if config is None:
-            raise ValueError(
-                f"Could not find 'config' in the checkpoint dictionary for {model_id}, "
-                f"nor was a 'config.json' or 'params.yaml' file found in its directory."
-            )
-        
-        # Instantiate model with the found config
-        model = model_class(config=config)
-
-        # Find the state dictionary
-        state_dict = None
-        if isinstance(ckpt, dict):
-            state_dict = ckpt.get('model', ckpt.get('state_dict'))
-        
-        if state_dict is None:
-            # If not found, assume the whole file is the state_dict
-            state_dict = ckpt
-            
-        # Remove DDP 'module.' prefix if present and load
-        state_dict = {k.replace('module.', ''): v for k, v in state_dict.items()}
-        model.load_state_dict(state_dict)
-
     else:
         model = model_class.from_pretrained(model_id)
     return model.eval().to(device)
