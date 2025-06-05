@@ -590,69 +590,79 @@ def main(args: argparse.Namespace) -> None:
             sys.exit(1)
 
     def _filter_dataset_samples_inplace(dataset, allowed_dish_ids_set, dataset_name="dataset"):
-        if not args.filter_dish_ids_file: # If file wasn't specified, don't filter.
+        if not args.filter_dish_ids_file:
             print(f"No filter file specified. No filtering applied to {dataset_name}.")
-            return False # Indicates no filtering was attempted due to missing file arg
+            return False
 
-        if not allowed_dish_ids_set and args.filter_dish_ids_file: # File specified, but set is empty
-            print(f"Filter file specified but no allowed_dish_ids were loaded (e.g. empty file or no matches). No filtering applied to {dataset_name}.")
-            return False # Indicates no filtering was done as the set was empty
+        if not allowed_dish_ids_set:
+            print(f"Filter file specified but no allowed_dish_ids were loaded. No filtering applied to {dataset_name}.")
+            return False
 
-        if not hasattr(dataset, 'samples') or not isinstance(dataset.samples, list) or not dataset.samples:
-            print(f"Warning: '{dataset_name}.samples' attribute not found or empty. Attempting to build it by walking the root directory.")
+        # Step 1: Ensure dataset.samples exists and is a dictionary.
+        if not hasattr(dataset, 'samples') or not dataset.samples:
+            print(f"Warning: '{dataset_name}.samples' is missing or empty. Building it now.")
             if not hasattr(dataset, 'root') or not os.path.isdir(dataset.root):
                 print(f"ERROR: Cannot build samples list. '{dataset_name}.root' is not a valid directory.")
                 return False
 
+            samples_dict = {mod: [] for mod in dataset.modalities}
             IMG_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.ppm', '.bmp', '.pgm', '.tif', '.tiff', '.webp')
             
-            new_samples = []
-            root_dir = os.path.expanduser(dataset.root)
+            for mod in dataset.modalities:
+                mod_subdir = dataset.modality_paths.get(mod, mod)
+                mod_path = os.path.join(dataset.root, mod_subdir)
+                if not os.path.isdir(mod_path):
+                    print(f"Warning: Modality path '{mod_path}' not found. Skipping.")
+                    continue
+                
+                for root, _, fnames in sorted(os.walk(mod_path, followlinks=True)):
+                    for fname in sorted(fnames):
+                        path = os.path.join(root, fname)
+                        if path.lower().endswith(IMG_EXTENSIONS):
+                            samples_dict[mod].append((path, 0)) # dummy class index
+
+            if not any(samples_dict.values()):
+                print(f"Warning: No image files found. Filtering cannot be applied.")
+                dataset.samples = samples_dict # ensure it's an empty dict
+                return True
             
-            for root, _, fnames in sorted(os.walk(root_dir, followlinks=True)):
-                for fname in sorted(fnames):
-                    path = os.path.join(root, fname)
-                    if path.lower().endswith(IMG_EXTENSIONS):
-                        # Using dummy class_idx=0 as it's not used by the filter.
-                        item = (path, 0)
-                        new_samples.append(item)
+            dataset.samples = samples_dict
+            print(f"INFO: Manually discovered samples: {{ {', '.join(f'{mod}: {len(s)}' for mod, s in dataset.samples.items())} }}")
 
-            if not new_samples:
-                print(f"Warning: No image files found in {root_dir}. Filtering cannot be applied.")
-                return False
-            
-            print(f"INFO: Manually discovered {len(new_samples)} image samples in {root_dir}.")
-            dataset.samples = new_samples
-            if not hasattr(dataset, 'imgs'):
-                dataset.imgs = new_samples
-            # Override the __len__ method to reflect the actual number of samples
-            dataset.__len__ = lambda: len(dataset.samples)
-            print(f"INFO: Patched '{dataset_name}.samples' and '__len__' method.")
-
-
-        if not hasattr(dataset, 'samples') or not isinstance(dataset.samples, list):
-            print(f"Warning: {dataset_name} does not have a 'samples' list attribute. Cannot apply filtering.")
+        if not isinstance(dataset.samples, dict):
+            print(f"ERROR: Dataset filtering requires `dataset.samples` to be a dictionary, but it is a {type(dataset.samples).__name__}. Aborting filter.")
             return False
-
-        original_samples = dataset.samples
-        if not original_samples:
-            print(f"Warning: {dataset_name} has no samples to filter.")
-            return True # Filtering "succeeded" on an empty list
             
-        original_len = len(original_samples)
-        filtered_samples = []
-        for sample_path, class_idx in original_samples:
-            dish_id_from_file = Path(sample_path).stem
-            if dish_id_from_file in allowed_dish_ids_set:
-                filtered_samples.append((sample_path, class_idx))
+        # Step 2: Filter the samples dictionary.
+        try:
+            original_len = len(list(dataset.samples.values())[0]) if dataset.samples else 0
+        except (IndexError, AttributeError):
+            original_len = 0 # Handle empty dict or malformed structure
+
+        for mod, samples_list in dataset.samples.items():
+            filtered_list = [
+                (path, c_idx) for path, c_idx in samples_list 
+                if Path(path).stem in allowed_dish_ids_set
+            ]
+            dataset.samples[mod] = filtered_list
         
-        dataset.samples = filtered_samples
-        if hasattr(dataset, 'imgs'): 
-            dataset.imgs = filtered_samples
+        # Step 3: Update related attributes like 'imgs' and 'targets' for compatibility.
+        if hasattr(dataset, 'imgs'):
+            main_modality = dataset.modalities[0] if dataset.modalities else ''
+            if main_modality in dataset.samples:
+                dataset.imgs = dataset.samples[main_modality]
+                if hasattr(dataset, 'targets'):
+                    dataset.targets = [s[1] for s in dataset.imgs]
+
+        try:
+            new_len = len(list(dataset.samples.values())[0]) if dataset.samples else 0
+        except (IndexError, AttributeError):
+            new_len = 0
+            
+        print(f"Filtered {dataset_name}: {original_len} -> {new_len} samples.")
+        if original_len > 0 and new_len == 0:
+            print(f"Warning: All samples were filtered out from {dataset_name}. The dataset is now empty.")
         
-        print(f"Filtered {dataset_name}: {original_len} -> {len(dataset.samples)} samples.")
-        if original_len > 0 and len(dataset.samples) == 0:
-             print(f"Warning: All samples were filtered out from {dataset_name}. The dataset is now empty.")
         return True
 
 
