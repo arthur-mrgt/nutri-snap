@@ -351,6 +351,11 @@ def get_args() -> argparse.Namespace:
     # Add the config path as a final args if given
     args.config_path = args_config.config
 
+    # Force caching if filtering is enabled, as the filtering function requires the samples list.
+    if args.filter_dish_ids_file and not args.cache_datasets:
+        print("INFO: Filtering is enabled, forcing --cache_datasets=True for the filtering logic to work.")
+        args.cache_datasets = True
+
     return args
 
 
