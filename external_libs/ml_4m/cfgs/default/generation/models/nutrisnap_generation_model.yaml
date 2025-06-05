@@ -5,27 +5,28 @@
 # IMPORTANT: Path to your fine-tuned model checkpoint (e.g., from output_dir of training)
 model: '/work/com-304/nutri-snap/output/nutrisnap_finetune/checkpoint-final.pth'
 
+image_size: 224
+
 # Tokenizer definitions for run_generation.py
 # These keys (e.g., rgb_tok_id) must match the script's arguments.
 
 # Tokenizer for the input tok_rgb@224.
-rgb_tok_id: 'EPFL-VILAB/4M_tokenizers_rgb_16k_224-448'
+rgb_tok_id: EPFL-VILAB/4M_tokenizers_rgb_16k_224-448
 
 # Tokenizer for tok_depth@224
-depth_tok_id: 'EPFL-VILAB/4M_tokenizers_depth_8k_224-448'
+depth_tok_id: EPFL-VILAB/4M_tokenizers_depth_8k_224-448
 
 # Tokenizer for tok_semseg_n5k@224
 # Path to your custom-trained semseg tokenizer checkpoint
-semseg_tok_id: '/work/com-304/nutri-snap/output/semseg_n5k_tokenizer_ViTB_8k_224/checkpoint-35.pth'
+semseg_tok_id: /work/com-304/nutri-snap/output/semseg_n5k_tokenizer_ViTB_8k_224/checkpoint-35.pth
 
 # Tokenizer for caption
 # Path to the text tokenizer used during training
-text_tok_path: 'external_libs/ml_4m/fourm/utils/tokenizer/trained/text_tokenizer_4m_wordpiece_30k.json'
+text_tok_path: external_libs/ml_4m/fourm/utils/tokenizer/trained/text_tokenizer_4m_wordpiece_30k.json
 
-# NOTE: The script `run_generation.py` does not seem to use other parameters from the original file
-# like `tokenizer_root` or `model_base_load_from_hf`. Tokenizers are loaded by their ID,
-# which can be a Hugging Face ID or a local path.
-
-# Super-resolution model configuration (if used, otherwise can be removed or commented out)
-# model_sr_id: ...
-# tokenizers_sr: ...
+# Wandb logging
+log_wandb: True # Set to True to log to Weights & Biases
+wandb_project: 'nutri-snap'
+wandb_entity: arthur_mrgt-epfl
+wandb_run_name: generation
+output_dir: '/work/com-304/nutri-snap/output/generation'

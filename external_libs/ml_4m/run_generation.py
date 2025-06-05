@@ -343,6 +343,21 @@ def load_model(model_id, model_class, device):
         ckpt, config = load_safetensors(model_id)
         model = model_class(config=config)
         model.load_state_dict(ckpt)
+    elif model_id.endswith('.pth'):
+        ckpt = torch.load(model_id, map_location='cpu')
+        # Standard ml-4m checkpoints contain config and model/state_dict
+        config = ckpt.get('config')
+        if config is None:
+            raise ValueError(f"Could not find 'config' in checkpoint {model_id}")
+        
+        state_dict = ckpt.get('model', ckpt.get('state_dict'))
+        if state_dict is None:
+            raise ValueError(f"Could not find 'model' or 'state_dict' in checkpoint {model_id}")
+
+        model = model_class(config=config)
+        # Remove DDP 'module.' prefix if present
+        state_dict = {k.replace('module.', ''): v for k, v in state_dict.items()}
+        model.load_state_dict(state_dict)
     else:
         model = model_class.from_pretrained(model_id)
     return model.eval().to(device)
