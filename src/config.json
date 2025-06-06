@@ -1,5 +1,4 @@
 {
-    "model_name": "fm_base_12e_12d_swiglu_nobias",
     "encoder_depth": 12,
     "decoder_depth": 12,
     "act_layer": "SiLU",
