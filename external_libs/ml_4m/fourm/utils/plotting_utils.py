@@ -24,12 +24,20 @@ from itertools import groupby
 
 # For visualizing CLIP feature maps
 from sklearn.decomposition import PCA
+import matplotlib.cm as cm
 
 # Detectron2 for semantic segmentation visualizations
 try:
     from detectron2.utils.visualizer import ColorMode, Visualizer
     from detectron2.data import MetadataCatalog
     coco_metadata = MetadataCatalog.get("coco_2017_val_panoptic")
+    
+    nutrisnap_categories = load_custom_categories()
+    if nutrisnap_categories:
+        nutrisnap_metadata = register_custom_metadata("nutrisnap_semseg", nutrisnap_categories)
+    else:
+        nutrisnap_metadata = None
+
     USE_DETECTRON = True
 except Exception as e:
     print(e)
@@ -259,8 +267,18 @@ def decode_tok_semseg(rgb_img, mod_dict, tokenizers, key='tok_semseg', image_siz
         imgs = []
         for rgb, semseg in zip(rgb_imgs, semsegs):
             if USE_DETECTRON:
-                v = Visualizer(255*rgb, coco_metadata, scale=1.2, instance_mode=ColorMode.IMAGE_BW)
-                img = v.draw_sem_seg((semseg-1).cpu()).get_image() / 255.0
+                metadata = coco_metadata
+                # Check for custom dataset key and if custom metadata was loaded
+                if 'n5k' in key and nutrisnap_metadata is not None:
+                    metadata = nutrisnap_metadata
+                
+                v = Visualizer(255*rgb, metadata, scale=1.2, instance_mode=ColorMode.IMAGE_BW)
+                
+                # For our custom dataset, class IDs start from 0, so no subtraction is needed.
+                if 'n5k' in key:
+                    img = v.draw_sem_seg(semseg.cpu()).get_image() / 255.0
+                else:
+                    img = v.draw_sem_seg((semseg-1).cpu()).get_image() / 255.0
             else:
                 colormap = plt.get_cmap('viridis')
                 img = colormap(semseg.cpu())[..., :3]
@@ -1345,3 +1363,42 @@ def plot_images_with_captions(images, captions, save_path=None, dpi=100, wrap_le
         plt.close()
     else:
         plt.show()
+
+def load_custom_categories(filepath='data/category_id_files/nutrition5k_category.txt'):
+    """Loads category names from a text file (format: id\tname)."""
+    try:
+        with open(filepath, 'r') as f:
+            lines = f.read().strip().split('\n')
+        # The file is id\tname. The name is what we need.
+        categories = [line.split('\t')[1] for line in lines]
+        return categories
+    except FileNotFoundError:
+        print(f"Warning: Category file not found at {filepath}. Custom labels will not be used.")
+        return None
+
+def register_custom_metadata(name, categories):
+    """Registers a new dataset's metadata in Detectron2's MetadataCatalog."""
+    # Avoid re-registering
+    try:
+        return MetadataCatalog.get(name)
+    except KeyError:
+        pass
+
+    num_classes = len(categories)
+    
+    # Generate a color palette
+    tab20 = cm.get_cmap('tab20').colors
+    colors = [tuple(c) for c in (np.array(tab20) * 255).astype(int)]
+    if num_classes > len(colors):
+        colors = colors * (num_classes // len(colors) + 1)
+    colors = colors[:num_classes]
+
+    # Register the metadata
+    metadata = MetadataCatalog.get(name)
+    metadata.set(
+        stuff_classes=categories,
+        stuff_colors=colors,
+        thing_classes=categories,
+        thing_colors=colors,
+    )
+    return metadata
