@@ -27,6 +27,45 @@ import matplotlib.patches as mpatches
 from sklearn.decomposition import PCA
 import matplotlib.cm as cm
 
+def load_custom_categories(filepath='data/category_id_files/nutrition5k_category.txt'):
+    """Loads category names from a text file (format: id\tname)."""
+    try:
+        with open(filepath, 'r') as f:
+            lines = f.read().strip().split('\n')
+        # The file is id\tname. The name is what we need.
+        categories = [line.split('\t')[1] for line in lines]
+        return categories
+    except FileNotFoundError:
+        print(f"Warning: Category file not found at {filepath}. Custom labels will not be used.")
+        return None
+
+def register_custom_metadata(name, categories):
+    """Registers a new dataset's metadata in Detectron2's MetadataCatalog."""
+    # Avoid re-registering
+    try:
+        return MetadataCatalog.get(name)
+    except KeyError:
+        pass
+
+    num_classes = len(categories)
+    
+    # Generate a color palette
+    tab20 = cm.get_cmap('tab20').colors
+    colors = [tuple(c) for c in (np.array(tab20) * 255).astype(int)]
+    if num_classes > len(colors):
+        colors = colors * (num_classes // len(colors) + 1)
+    colors = colors[:num_classes]
+
+    # Register the metadata
+    metadata = MetadataCatalog.get(name)
+    metadata.set(
+        stuff_classes=categories,
+        stuff_colors=colors,
+        thing_classes=categories,
+        thing_colors=colors,
+    )
+    return metadata
+
 # Detectron2 for semantic segmentation visualizations
 try:
     from detectron2.utils.visualizer import ColorMode, Visualizer
@@ -1215,7 +1254,6 @@ def plot_modality(dec_dict, key, ax, figscale=4.0):
 
         # --- Create and draw the legend ---
         class_ids = torch.unique(id_map).cpu().numpy()
-        print(f"[Debug Legend] Class IDs found in image: {class_ids}") # Debug print
 
         metadata = None
         if 'n5k' in key and nutrisnap_metadata is not None:
@@ -1231,11 +1269,10 @@ def plot_modality(dec_dict, key, ax, figscale=4.0):
             all_colors = np.array(metadata.stuff_colors) / 255.0
 
             # Get names and colors for classes present in the image, handle out of bounds
-            legend_labels = [all_class_names[i] for i in class_ids if i < len(all_class_names) and all_class_names[i] != 'background']
-            legend_colors = [all_colors[i] for i in class_ids if i < len(all_colors) and all_class_names[i] != 'background']
+            present_class_ids = [i for i in class_ids if i < len(all_class_names) and all_class_names[i] != 'background']
+            legend_labels = [all_class_names[i] for i in present_class_ids]
+            legend_colors = [all_colors[i] for i in present_class_ids]
             
-            print(f"[Debug Legend] Labels for legend: {legend_labels}") # Debug print
-
             if legend_labels:
                 patches = [mpatches.Patch(color=color, label=label) for color, label in zip(legend_colors, legend_labels)]
                 ax.legend(handles=patches, bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0., fontsize='small')
@@ -1310,7 +1347,7 @@ def plot_conds_and_targets(cond_domains, target_domains, dec_dicts, save_path=No
     plt.tight_layout()
     if save_path is not None:
         os.makedirs(os.path.dirname(save_path), exist_ok=True)
-        plt.savefig(save_path, bbox_inches='tight', dpi=dpi) #, pil_kwargs={'quality': 30})
+        plt.savefig(save_path, bbox_inches='tight', dpi=dpi)
         plt.close()
     else:
         plt.show()
@@ -1405,42 +1442,3 @@ def plot_images_with_captions(images, captions, save_path=None, dpi=100, wrap_le
         plt.close()
     else:
         plt.show()
-
-def load_custom_categories(filepath='data/category_id_files/nutrition5k_category.txt'):
-    """Loads category names from a text file (format: id\tname)."""
-    try:
-        with open(filepath, 'r') as f:
-            lines = f.read().strip().split('\n')
-        # The file is id\tname. The name is what we need.
-        categories = [line.split('\t')[1] for line in lines]
-        return categories
-    except FileNotFoundError:
-        print(f"Warning: Category file not found at {filepath}. Custom labels will not be used.")
-        return None
-
-def register_custom_metadata(name, categories):
-    """Registers a new dataset's metadata in Detectron2's MetadataCatalog."""
-    # Avoid re-registering
-    try:
-        return MetadataCatalog.get(name)
-    except KeyError:
-        pass
-
-    num_classes = len(categories)
-    
-    # Generate a color palette
-    tab20 = cm.get_cmap('tab20').colors
-    colors = [tuple(c) for c in (np.array(tab20) * 255).astype(int)]
-    if num_classes > len(colors):
-        colors = colors * (num_classes // len(colors) + 1)
-    colors = colors[:num_classes]
-
-    # Register the metadata
-    metadata = MetadataCatalog.get(name)
-    metadata.set(
-        stuff_classes=categories,
-        stuff_colors=colors,
-        thing_classes=categories,
-        thing_colors=colors,
-    )
-    return metadata
