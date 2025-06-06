@@ -44,6 +44,8 @@ except Exception as e:
     print(e)
     print("Detectron2 can be used for semseg visualizations. Please install detectron2 to use this feature, or plotting will fall back to matplotlib.")
     USE_DETECTRON = False
+    coco_metadata = None
+    nutrisnap_metadata = None
 
 from fourm.data.modality_transforms import get_transform_key, get_transform_resolution, MetadataTransform
 from fourm.utils.data_constants import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD, COCO_SEMSEG_NUM_CLASSES
@@ -980,7 +982,7 @@ def visualize_human_poses(pose, poses_tokenizer, mod_dict):
 
             for ii in range(len(full_gt)):
                 if full_gt[ii] == 'shape':
-                    all_params['pred_smpl_params']['betas'] = torch.Tensor([  (int(full_gt[ii+1][3:])-499.5)/166.5, (int(full_gt[ii+2][3:])-499.5)/166.5, (int(full_gt[ii+3][3:])-499.5)/166.5, (int(full_gt[ii+4][3:])-499.5)/166.5, (int(full_gt[ii+5][3:])-499.5)/166.5, (int(full_gt[ii+6][3:])-499.5)/166.5, (int(full_gt[ii+7][3:])-499.5)/166.5, (int(full_gt[ii+8][3:])-499.5)/166.5, (int(full_gt[ii+9][3:])-499.5)/166.5, (int(full_gt[ii+10][3:])-499.5)/166.5 ])
+                    all_params['pred_smpl_params']['betas'] = torch.Tensor([  (int(full_gt[ii+1][3:])-499.5)/166.5, (int(full_gt[ii+2][3:])-499.5)/166.5, (int(full_gt[ii+3][3:])-499.5)/166.5, (int(full_gt[ii+4][3:])-499.5)/166.5, (int(full_gt[ii+5][3:])-499.5)/166.5, (int(full_gt[ii+6][3:])-499.5)/166.5, (int(full_gt[ii+7][3:])-499.5)/166.5, (int(full_gt[ii+8][3:])-499.5)/166.5, (int(full_gt[ii+9][3:])-499.5)/166.5 ])
                     break
             all_params['pred_smpl_params']['betas'] = all_params['pred_smpl_params']['betas'].unsqueeze(0)
 
