@@ -338,7 +338,7 @@ def repeat_if_necessary(lst, n):
 
 def load_model(model_id, model_class, device):
     if model_id is None:
-        model = None
+        return None
     elif model_id.endswith('.safetensors'):
         ckpt, config = load_safetensors(model_id)
         model = model_class(config=config)
