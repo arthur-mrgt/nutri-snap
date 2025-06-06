@@ -5,10 +5,15 @@
     "patch_size": 16,
     "input_size": 224,
     "text_tokenizer": "external_libs/ml_4m/fourm/utils/tokenizer/trained/text_tokenizer_4m_wordpiece_30k.json",
-    "modalities": [
+    "domains_in": [
       "tok_rgb@224",
       "tok_depth@224",
       "tok_semseg_n5k@224",
       "caption"
+    ],
+    "domains_out": [
+      "tok_depth@224",
+      "tok_semseg_n5k@224",
+      "caption"
     ]
-  }
+  } 
