@@ -809,25 +809,15 @@ def generate(gen_sampler, gen_sampler_sr, tokenizers, text_tokenizer, data_loade
 
             # --- DEBUG: Check if generated tokens are identical ---
             if utils.is_main_process():
-                # Print the whole dictionary to inspect its structure and values
-                print(f"\n--- Raw out_dict for sample_idx: {sample_idx}, variation: {i} ---\n{out_dict}\n-----------------------------------------------------------\n")
-
-                print(f"--- Debugging tokens for sample_idx: {sample_idx}, variation: {i} ---")
-                print(f"out_dict keys: {list(out_dict.keys())}")
-
+                print(f"\n--- Debugging tokens for sample_idx: {sample_idx}, variation: {i} ---")
+                
                 depth_domain = 'tok_depth@224'
                 semseg_domain = next((d for d in out_dict if 'semseg' in d), None)
+                
+                print(f"Accessing tokens for Depth ('{depth_domain}') and Semseg ('{semseg_domain}')")
 
-                print(f"Depth domain: '{depth_domain}', Semseg domain: '{semseg_domain}'")
-
-                # The content of out_dict[domain] might be the token tensor itself, not a dict
-                depth_tokens = out_dict.get(depth_domain)
-                if isinstance(depth_tokens, dict):
-                    depth_tokens = depth_tokens.get('tokens')
-
-                semseg_tokens = out_dict.get(semseg_domain) if semseg_domain else None
-                if isinstance(semseg_tokens, dict):
-                    semseg_tokens = semseg_tokens.get('tokens')
+                depth_tokens = out_dict.get(depth_domain, {}).get('tensor')
+                semseg_tokens = out_dict.get(semseg_domain, {}).get('tensor') if semseg_domain else None
 
                 if depth_tokens is not None:
                     print(f"Depth tokens (first 10):  {depth_tokens[:, :10]}")
@@ -841,11 +831,11 @@ def generate(gen_sampler, gen_sampler_sr, tokenizers, text_tokenizer, data_loade
 
                 if depth_tokens is not None and semseg_tokens is not None:
                     if torch.equal(depth_tokens, semseg_tokens):
-                        print("!!! Verdict: Tokens for depth and semseg are IDENTICAL. Problem is the main FM model.")
+                        print("\n!!! Verdict: Tokens for depth and semseg are IDENTICAL. The issue is with the main FM model's generation process.")
                     else:
-                        print("--- Verdict: Tokens for depth and semseg are DIFFERENT. Problem is the tokenizer files. ---")
+                        print("\n--- Verdict: Tokens for depth and semseg are DIFFERENT. The main model is working correctly. The issue is likely in the tokenizer models or the final decoding/visualization step. ---")
                 else:
-                    print("Could not compare tokens because one or both were not found.")
+                    print("\nCould not compare tokens because one or both were not found.")
                 print("---------------------------------------------------------------------\n")
             # --- END DEBUG ---
 
