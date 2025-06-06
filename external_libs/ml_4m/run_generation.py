@@ -809,7 +809,10 @@ def generate(gen_sampler, gen_sampler_sr, tokenizers, text_tokenizer, data_loade
 
             # --- DEBUG: Check if generated tokens are identical ---
             if utils.is_main_process():
-                print(f"\n--- Debugging tokens for sample_idx: {sample_idx}, variation: {i} ---")
+                # Print the whole dictionary to inspect its structure and values
+                print(f"\n--- Raw out_dict for sample_idx: {sample_idx}, variation: {i} ---\n{out_dict}\n-----------------------------------------------------------\n")
+
+                print(f"--- Debugging tokens for sample_idx: {sample_idx}, variation: {i} ---")
                 print(f"out_dict keys: {list(out_dict.keys())}")
 
                 depth_domain = 'tok_depth@224'
