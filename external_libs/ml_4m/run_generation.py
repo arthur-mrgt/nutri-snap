@@ -485,6 +485,7 @@ def get_dataset(args, text_tokenizer):
             modality_info[k]["input_alphas"] = [0.]
             modality_info[k]["target_alphas"] = [0.]
             modality_info[k]["keep"] = ['all']
+            modality_info[k]['min_tokens'] = 0
 
         if 'tok' not in '-'.join(args.loaded_domains):
             image_augmenter = RandomCropImageAugmenter(
