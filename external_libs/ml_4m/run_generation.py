@@ -807,6 +807,25 @@ def generate(gen_sampler, gen_sampler_sr, tokenizers, text_tokenizer, data_loade
                     top_p=args.top_p, top_k=args.top_k
                 )
 
+            # --- DEBUG: Check if generated tokens are identical ---
+            if utils.is_main_process():
+                depth_tokens = out_dict.get('tok_depth@224', {}).get('tokens')
+                # Find the semseg domain name dynamically
+                semseg_domain = next((d for d in out_dict if 'semseg' in d), None)
+                semseg_tokens = out_dict.get(semseg_domain, {}).get('tokens') if semseg_domain else None
+
+                if depth_tokens is not None and semseg_tokens is not None:
+                    print("\n--- Token Debug ---")
+                    print(f"Sample Index: {sample_idx}")
+                    print(f"Depth tokens (first 10):  {depth_tokens[:, :10]}")
+                    print(f"Semseg tokens (first 10): {semseg_tokens[:, :10]}")
+                    if torch.equal(depth_tokens, semseg_tokens):
+                        print("!!! Verdict: Tokens for depth and semseg are IDENTICAL. Problem is the main FM model.")
+                    else:
+                        print("--- Verdict: Tokens for depth and semseg are DIFFERENT. Problem is the tokenizer files. ---")
+                    print("-------------------\n")
+            # --- END DEBUG ---
+
             # Decode tokens into images/text
             dec_dict = decode_dict(
                 out_dict, tokenizers, text_tokenizer, 
