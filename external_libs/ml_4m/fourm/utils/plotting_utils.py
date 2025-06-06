@@ -41,11 +41,18 @@ def load_custom_categories(filepath='data/category_id_files/nutrition5k_category
 
 def register_custom_metadata(name, categories):
     """Registers a new dataset's metadata in Detectron2's MetadataCatalog."""
-    # Avoid re-registering
+    # Check if metadata already exists and is populated.
+    # If it exists but is empty, we will overwrite it.
     try:
-        return MetadataCatalog.get(name)
+        metadata = MetadataCatalog.get(name)
+        if hasattr(metadata, 'stuff_classes') and len(metadata.stuff_classes) > 0:
+            return metadata
     except KeyError:
+        # This is the case where the catalog doesn't exist yet, which is fine.
         pass
+
+    # This will get a new or existing (but empty) catalog.
+    metadata = MetadataCatalog.get(name)
 
     num_classes = len(categories)
     
@@ -57,7 +64,6 @@ def register_custom_metadata(name, categories):
     colors = colors[:num_classes]
 
     # Register the metadata
-    metadata = MetadataCatalog.get(name)
     metadata.set(
         stuff_classes=categories,
         stuff_colors=colors,
