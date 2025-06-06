@@ -420,7 +420,22 @@ def load_tokenizers(args, device):
 
     # Semseg tokenizer
     if args.semseg_tok_id:
-        toks['tok_semseg'] = load_model(args.semseg_tok_id, VQVAE, device)
+        # Find the full semseg domain name from the config (e.g., 'tok_semseg_n5k@224')
+        semseg_domain_name = None
+        all_domains = args.target_domains + args.cond_domains
+        for d in all_domains:
+            if 'semseg' in d:
+                semseg_domain_name = d
+                break
+        
+        if semseg_domain_name:
+            # The key for the tokenizer dict must match the first part of the domain name
+            # e.g., 'tok_semseg_n5k' from 'tok_semseg_n5k@224'
+            key = semseg_domain_name.split('@')[0]
+            toks[key] = load_model(args.semseg_tok_id, VQVAE, device)
+        else:
+            # Fallback for safety, though it shouldn't be reached if config is sane
+            toks['tok_semseg'] = load_model(args.semseg_tok_id, VQVAE, device)
 
     # CLIP tokenizer
     if args.clip_tok_id:
