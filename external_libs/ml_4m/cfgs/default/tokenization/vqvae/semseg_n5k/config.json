@@ -1,7 +1,8 @@
 {
     "domain": "semseg_n5k",
-    "enc_type": "vit_s_enc",
-    "dec_type": "vit_s_dec",
+    "n_channels": 1,
+    "enc_type": "vit_b_enc",
+    "dec_type": "vit_b_dec",
     "patch_size": 16,
     "quant_type": "lucid",
     "codebook_size": 8192,
@@ -13,5 +14,4 @@
     "norm_latents": false,
     "commitment_weight": 1.0,
     "kmeans_init": false
-    
 }

@@ -18,7 +18,7 @@ depth_tok_id: EPFL-VILAB/4M_tokenizers_depth_8k_224-448
 
 # Tokenizer for tok_semseg_n5k@224
 # Path to your custom-trained semseg tokenizer checkpoint
-semseg_tok_id: /work/com-304/nutri-snap/output/semseg_n5k_tokenizer_ViTB_8k_224/checkpoint-final.pth
+semseg_tok_id: /work/com-304/nutri-snap/output/semseg_n5k_tokenizer_ViTB_8k_224/checkpoint-35.pth
 
 # Tokenizer for caption
 # Path to the text tokenizer used during training
