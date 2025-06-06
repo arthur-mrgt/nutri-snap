@@ -2,8 +2,6 @@
     "encoder_depth": 12,
     "decoder_depth": 12,
     "act_layer": "SiLU",
-    "num_input_tokens": 128,
-    "num_target_tokens": 128,
     "patch_size": 16,
     "image_size": 224,
     "text_tokenizer": "external_libs/ml_4m/fourm/utils/tokenizer/trained/text_tokenizer_4m_wordpiece_30k.json",
