@@ -21,6 +21,7 @@ import matplotlib.pyplot as plt
 from PIL import Image
 import cv2
 from itertools import groupby
+import matplotlib.patches as mpatches
 
 # For visualizing CLIP feature maps
 from sklearn.decomposition import PCA
@@ -260,31 +261,33 @@ def decode_tok_semseg(rgb_img, mod_dict, tokenizers, key='tok_semseg', image_siz
     semsegs = rec.argmax(1)
     B, H, W = semsegs.shape
 
-    if not use_detectron:
-        return semsegs if B > 1 else semsegs[0]
-    else:
-        rgb_imgs = [rgb_img] * B
-        imgs = []
-        for rgb, semseg in zip(rgb_imgs, semsegs):
-            if USE_DETECTRON:
-                metadata = coco_metadata
-                # Check for custom dataset key and if custom metadata was loaded
-                if 'n5k' in key and nutrisnap_metadata is not None:
-                    metadata = nutrisnap_metadata
-                
-                v = Visualizer(255*rgb, metadata, scale=1.2, instance_mode=ColorMode.IMAGE_BW)
-                
-                # For our custom dataset, class IDs start from 0, so no subtraction is needed.
-                if 'n5k' in key:
-                    img = v.draw_sem_seg(semseg.cpu()).get_image() / 255.0
-                else:
-                    img = v.draw_sem_seg((semseg-1).cpu()).get_image() / 255.0
+    vis_imgs = []
+    rgb_imgs = [rgb_img] * B
+
+    for rgb, semseg_map in zip(rgb_imgs, semsegs):
+        if USE_DETECTRON:
+            metadata = coco_metadata
+            # Check for custom dataset key and if custom metadata was loaded
+            if 'n5k' in key and nutrisnap_metadata is not None:
+                metadata = nutrisnap_metadata
+            
+            v = Visualizer(255*rgb, metadata, scale=1.2, instance_mode=ColorMode.IMAGE_BW)
+            
+            # For our custom dataset, class IDs start from 0, so no subtraction is needed.
+            if 'n5k' in key:
+                img = v.draw_sem_seg(semseg_map.cpu()).get_image() / 255.0
             else:
-                colormap = plt.get_cmap('viridis')
-                img = colormap(semseg.cpu())[..., :3]
-            imgs.append(img)
-        imgs = np_squeeze(np.stack(imgs), axis=0)
-        return imgs
+                img = v.draw_sem_seg((semseg_map-1).cpu()).get_image() / 255.0
+        else:
+            # Fallback to matplotlib
+            colormap = plt.get_cmap('viridis')
+            img = colormap(semseg_map.cpu().numpy())[..., :3]
+        vis_imgs.append(img)
+        
+    final_vis = np_squeeze(np.stack(vis_imgs), axis=0)
+    final_map = semsegs if B > 1 else semsegs[0]
+
+    return final_vis, final_map
 
 def decode_tok_clip(mod_dict, tokenizers, key='tok_clip', image_size=224, patch_size=16):
     """
@@ -1198,7 +1201,35 @@ def plot_modality(dec_dict, key, ax, figscale=4.0):
     modality = dec_dict[key]
     k = get_transform_key(key)
     
-    if 'tok' in k or k == 'rgb' or k == 'human_poses' or k == 'color_palette':
+    if 'semseg' in k:
+        vis_img, id_map = modality # Unpack the tuple
+        ax.imshow(vis_img.clip(0,1))
+
+        # --- Create and draw the legend ---
+        class_ids = torch.unique(id_map).cpu().numpy()
+
+        metadata = None
+        if 'n5k' in key and nutrisnap_metadata is not None:
+            metadata = nutrisnap_metadata
+        elif USE_DETECTRON:
+            metadata = coco_metadata
+            # COCO class IDs are 1-based, need to adjust
+            class_ids = class_ids - 1
+            class_ids = class_ids[class_ids >= 0]
+
+        if metadata:
+            all_class_names = metadata.stuff_classes
+            all_colors = np.array(metadata.stuff_colors) / 255.0
+
+            # Get names and colors for classes present in the image, handle out of bounds
+            legend_labels = [all_class_names[i] for i in class_ids if i < len(all_class_names) and all_class_names[i] != 'background']
+            legend_colors = [all_colors[i] for i in class_ids if i < len(all_colors) and all_class_names[i] != 'background']
+
+            if legend_labels:
+                patches = [mpatches.Patch(color=color, label=label) for color, label in zip(legend_colors, legend_labels)]
+                ax.legend(handles=patches, bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0., fontsize='small')
+
+    elif 'tok' in k or k == 'rgb' or k == 'human_poses' or k == 'color_palette':
         ax.imshow(modality.clip(0,1))
     elif k == 'caption':
         plot_text_in_square(ax, modality, wrap_width=max(1,int(7*figscale))) # 7*figscale turns out to make caption box fit nicely
