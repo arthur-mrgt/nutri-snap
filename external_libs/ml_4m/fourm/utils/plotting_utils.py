@@ -98,7 +98,6 @@ from fourm.utils import denormalize, get_sentinel_to_id_mapping, merge_span_mask
 from fourm.utils.generation import unbatch
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
-DETECTRON_LOGGED = False
 
 
 def tensor_to_images(tensor):
@@ -314,11 +313,6 @@ def decode_tok_semseg(rgb_img, mod_dict, tokenizers, key='tok_semseg', image_siz
 
     for rgb, semseg_map in zip(rgb_imgs, semsegs):
         if USE_DETECTRON:
-            global DETECTRON_LOGGED
-            if not DETECTRON_LOGGED:
-                print("--- Using Detectron2 for semantic segmentation visualization. ---")
-                DETECTRON_LOGGED = True
-            
             metadata = coco_metadata
             # Check for custom dataset key and if custom metadata was loaded
             if 'n5k' in key and nutrisnap_metadata is not None:
@@ -1276,7 +1270,7 @@ def plot_modality(dec_dict, key, ax, figscale=4.0):
 
             # Get names and colors for classes present in the image, handle out of bounds
             present_class_ids = [i for i in class_ids if i < len(all_class_names) and all_class_names[i] != 'background']
-            legend_labels = [all_class_names[i] for i in present_class_ids]
+            legend_labels = [f"{i}: {all_class_names[i]}" for i in present_class_ids]
             legend_colors = [all_colors[i] for i in present_class_ids]
             
             if legend_labels:
