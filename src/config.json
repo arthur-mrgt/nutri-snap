@@ -1,0 +1,14 @@
+{
+    "model_name": "fm_base_12e_12d_swiglu_nobias",
+    "num_input_tokens": 128,
+    "num_target_tokens": 128,
+    "patch_size": 16,
+    "input_size": 224,
+    "text_tokenizer": "external_libs/ml_4m/fourm/utils/tokenizer/trained/text_tokenizer_4m_wordpiece_30k.json",
+    "modalities": [
+      "tok_rgb@224",
+      "tok_depth@224",
+      "tok_semseg_n5k@224",
+      "caption"
+    ]
+  }
