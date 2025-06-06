@@ -817,8 +817,14 @@ def generate(gen_sampler, gen_sampler_sr, tokenizers, text_tokenizer, data_loade
 
                 print(f"Depth domain: '{depth_domain}', Semseg domain: '{semseg_domain}'")
 
-                depth_tokens = out_dict.get(depth_domain, {}).get('tokens')
-                semseg_tokens = out_dict.get(semseg_domain, {}).get('tokens') if semseg_domain else None
+                # The content of out_dict[domain] might be the token tensor itself, not a dict
+                depth_tokens = out_dict.get(depth_domain)
+                if isinstance(depth_tokens, dict):
+                    depth_tokens = depth_tokens.get('tokens')
+
+                semseg_tokens = out_dict.get(semseg_domain) if semseg_domain else None
+                if isinstance(semseg_tokens, dict):
+                    semseg_tokens = semseg_tokens.get('tokens')
 
                 if depth_tokens is not None:
                     print(f"Depth tokens (first 10):  {depth_tokens[:, :10]}")
