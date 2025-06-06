@@ -807,38 +807,6 @@ def generate(gen_sampler, gen_sampler_sr, tokenizers, text_tokenizer, data_loade
                     top_p=args.top_p, top_k=args.top_k
                 )
 
-            # --- DEBUG: Check if generated tokens are identical ---
-            if utils.is_main_process():
-                print(f"\n--- Debugging tokens for sample_idx: {sample_idx}, variation: {i} ---")
-                
-                depth_domain = 'tok_depth@224'
-                semseg_domain = next((d for d in out_dict if 'semseg' in d), None)
-                
-                print(f"Accessing tokens for Depth ('{depth_domain}') and Semseg ('{semseg_domain}')")
-
-                depth_tokens = out_dict.get(depth_domain, {}).get('tensor')
-                semseg_tokens = out_dict.get(semseg_domain, {}).get('tensor') if semseg_domain else None
-
-                if depth_tokens is not None:
-                    print(f"Depth tokens (first 10):  {depth_tokens[:, :10]}")
-                else:
-                    print("Depth tokens not found in out_dict.")
-
-                if semseg_tokens is not None:
-                    print(f"Semseg tokens (first 10): {semseg_tokens[:, :10]}")
-                else:
-                    print("Semseg tokens not found in out_dict.")
-
-                if depth_tokens is not None and semseg_tokens is not None:
-                    if torch.equal(depth_tokens, semseg_tokens):
-                        print("\n!!! Verdict: Tokens for depth and semseg are IDENTICAL. The issue is with the main FM model's generation process.")
-                    else:
-                        print("\n--- Verdict: Tokens for depth and semseg are DIFFERENT. The main model is working correctly. The issue is likely in the tokenizer models or the final decoding/visualization step. ---")
-                else:
-                    print("\nCould not compare tokens because one or both were not found.")
-                print("---------------------------------------------------------------------\n")
-            # --- END DEBUG ---
-
             # Decode tokens into images/text
             dec_dict = decode_dict(
                 out_dict, tokenizers, text_tokenizer, 

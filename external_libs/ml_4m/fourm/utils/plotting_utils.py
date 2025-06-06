@@ -732,7 +732,7 @@ def decode_dict(mod_dict, tokenizers, text_tokenizer, image_size=224, patch_size
                 image_size=res, patch_size=patch_size, 
                 t=decoding_steps, verbose=False, cmap='turbo' if to_rgb else None
             )
-        elif k == 'tok_semseg':
+        elif 'semseg' in k:
             decoded = decode_tok_semseg(
                 np.ones((res, res, 3)), mod_dict, tokenizers, key=key, 
                 image_size=res, patch_size=patch_size, return_logits=not to_rgb
