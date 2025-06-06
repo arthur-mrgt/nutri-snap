@@ -1,0 +1,17 @@
+{
+    "domain": "semseg_n5k",
+    "enc_type": "vit_s_enc",
+    "dec_type": "vit_s_dec",
+    "patch_size": 16,
+    "quant_type": "lucid",
+    "codebook_size": 8192,
+    "num_codebooks": 1,
+    "latent_dim": 32,
+    "post_mlp": true,
+    "out_conv": false,
+    "norm_codes": true,
+    "norm_latents": false,
+    "commitment_weight": 1.0,
+    "kmeans_init": false
+    
+}
