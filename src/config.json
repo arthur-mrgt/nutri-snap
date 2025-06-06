@@ -15,5 +15,6 @@
       "tok_depth@224",
       "tok_semseg_n5k@224",
       "caption"
-    ]
+    ],
+    "norm_bias": false
   } 
