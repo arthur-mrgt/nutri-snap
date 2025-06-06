@@ -4,6 +4,7 @@
     "act_layer": "SiLU",
     "patch_size": 16,
     "image_size": 224,
+    "text_tokenizer": "external_libs/ml_4m/fourm/utils/tokenizer/trained/text_tokenizer_4m_wordpiece_30k.json",
     "domains_in": [
       "tok_rgb@224",
       "tok_depth@224",
@@ -15,5 +16,6 @@
       "tok_semseg_n5k@224",
       "caption"
     ],
-    "norm_bias": false
+    "norm_bias": false,
+    "bias": false
   } 
