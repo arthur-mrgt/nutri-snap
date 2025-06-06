@@ -809,21 +809,35 @@ def generate(gen_sampler, gen_sampler_sr, tokenizers, text_tokenizer, data_loade
 
             # --- DEBUG: Check if generated tokens are identical ---
             if utils.is_main_process():
-                depth_tokens = out_dict.get('tok_depth@224', {}).get('tokens')
-                # Find the semseg domain name dynamically
+                print(f"\n--- Debugging tokens for sample_idx: {sample_idx}, variation: {i} ---")
+                print(f"out_dict keys: {list(out_dict.keys())}")
+
+                depth_domain = 'tok_depth@224'
                 semseg_domain = next((d for d in out_dict if 'semseg' in d), None)
+
+                print(f"Depth domain: '{depth_domain}', Semseg domain: '{semseg_domain}'")
+
+                depth_tokens = out_dict.get(depth_domain, {}).get('tokens')
                 semseg_tokens = out_dict.get(semseg_domain, {}).get('tokens') if semseg_domain else None
 
-                if depth_tokens is not None and semseg_tokens is not None:
-                    print("\n--- Token Debug ---")
-                    print(f"Sample Index: {sample_idx}")
+                if depth_tokens is not None:
                     print(f"Depth tokens (first 10):  {depth_tokens[:, :10]}")
+                else:
+                    print("Depth tokens not found in out_dict.")
+
+                if semseg_tokens is not None:
                     print(f"Semseg tokens (first 10): {semseg_tokens[:, :10]}")
+                else:
+                    print("Semseg tokens not found in out_dict.")
+
+                if depth_tokens is not None and semseg_tokens is not None:
                     if torch.equal(depth_tokens, semseg_tokens):
                         print("!!! Verdict: Tokens for depth and semseg are IDENTICAL. Problem is the main FM model.")
                     else:
                         print("--- Verdict: Tokens for depth and semseg are DIFFERENT. Problem is the tokenizer files. ---")
-                    print("-------------------\n")
+                else:
+                    print("Could not compare tokens because one or both were not found.")
+                print("---------------------------------------------------------------------\n")
             # --- END DEBUG ---
 
             # Decode tokens into images/text
