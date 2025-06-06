@@ -2,6 +2,7 @@
     "encoder_depth": 12,
     "decoder_depth": 12,
     "act_layer": "SiLU",
+    "gated_mlp": true,
     "patch_size": 16,
     "image_size": 224,
     "domains_in": [
